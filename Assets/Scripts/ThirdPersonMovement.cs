@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,9 +11,22 @@ public class ThirdPersonMovement : MonoBehaviour
 
     public CharacterController controller;
     public Transform cam;
+    public Transform Orogene;
+
+    private bool playingAnim;
+    public float animCounterInitialValue;
+    private float animCounter;
+
+    public Animation animation;
+
+    public Animator animator;
     // Start is called before the first frame update
     void Start()
     {
+        animator = Orogene.GetComponent<Animator>();
+        playingAnim = false;
+        animCounter = animCounterInitialValue;
+        //animator
     }
 
     // Update is called once per frame
@@ -34,6 +47,30 @@ public class ThirdPersonMovement : MonoBehaviour
             
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             controller.Move(moveDir.normalized * speed * Time.deltaTime);
+            //animator.Play("run");
+            
+            
         }
+
+        if(horizontal != 0 || veritical != 0){
+            if(playingAnim != true){
+                animator.Play("run");
+                playingAnim = true;
+                animCounter = animCounterInitialValue;
+            }
+        }
+
+        
+        if(playingAnim && animCounter > 0){
+            animCounter -= Time.deltaTime;
+        }
+
+        if(animCounter < 0){
+            playingAnim = false;
+        }
+
+        print(animCounter);
+
+        
     }
 }

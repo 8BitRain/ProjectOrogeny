@@ -290,7 +290,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e06f8fdc3e0146958afef95f5d92638, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thrust: 1
+  thrust: 25
   rock: {fileID: 1216788486}
 --- !u!143 &108379098
 CharacterController:
@@ -640,13 +640,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48dca54125bc8412680576e894fd65ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2
+  speed: 5
   turnSmoothTime: 0.1
   controller: {fileID: 108379098}
   cam: {fileID: 963194228}
   Orogene: {fileID: 108379095}
-  animCounter: 0
-  animator: {fileID: 0}
+  animCounterInitialValue: 0.1
+  animation: {fileID: 0}
 --- !u!1001 &640869022
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1037,8 +1037,8 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 1525902091}
-  m_Follow: {fileID: 1525902091}
+  m_LookAt: {fileID: 108379095}
+  m_Follow: {fileID: 108379095}
   m_CommonLens: 1
   m_Lens:
     FieldOfView: 40
