@@ -645,8 +645,9 @@ MonoBehaviour:
   controller: {fileID: 108379098}
   cam: {fileID: 963194228}
   Orogene: {fileID: 108379095}
-  animCounterInitialValue: 0.1
+  animCounterInitialValue: 0.533
   animation: {fileID: 0}
+  animator: {fileID: 0}
 --- !u!1001 &640869022
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -874,7 +875,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 711803983}
-  m_LocalRotation: {x: 0.21177524, y: 0.000000018800982, z: -0.000000004073987, w: 0.9773184}
+  m_LocalRotation: {x: 0.21177524, y: -0.000000018800984, z: 0.0000000040739874, w: 0.9773184}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -959,7 +960,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.19574751, y: 0.000000036343557, z: -0.000000007254504, w: 0.98065436}
+  m_LocalRotation: {x: 0.1957475, y: -0.000000036343557, z: 0.0000000072545037, w: 0.98065436}
   m_LocalPosition: {x: 0, y: 4.367591, z: -13.414757}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -1384,7 +1385,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1233623503}
-  m_LocalRotation: {x: 0.1939633, y: 0.000000018871978, z: -0.000000003731333, w: 0.9810088}
+  m_LocalRotation: {x: 0.19396329, y: -0.000000018871981, z: 0.000000003731334, w: 0.9810088}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

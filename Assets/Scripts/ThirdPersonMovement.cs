@@ -14,12 +14,14 @@ public class ThirdPersonMovement : MonoBehaviour
     public Transform Orogene;
 
     private bool playingAnim;
+    private bool running;
     public float animCounterInitialValue;
     private float animCounter;
 
     public Animation animation;
 
     public Animator animator;
+    public AnimatorClipInfo an;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +29,7 @@ public class ThirdPersonMovement : MonoBehaviour
         playingAnim = false;
         animCounter = animCounterInitialValue;
         //animator
+        running = false;
     }
 
     // Update is called once per frame
@@ -61,7 +64,7 @@ public class ThirdPersonMovement : MonoBehaviour
         }
 
         
-        if(playingAnim && animCounter > 0){
+        /*if(playingAnim && animCounter > 0){
             animCounter -= Time.deltaTime;
         }
 
@@ -69,7 +72,7 @@ public class ThirdPersonMovement : MonoBehaviour
             playingAnim = false;
         }
 
-        print(animCounter);
+        print(animCounter);*/
 
         
     }
