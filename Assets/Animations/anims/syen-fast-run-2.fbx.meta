@@ -30,7 +30,13 @@ ModelImporter:
   - first:
       74: -4791504522942941401
     second: Armature|Armature|mixamo.com|Layer0
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TextureAtlas
+    second: {fileID: -1794667394213951580, guid: d63e0f1c189f546b8b8cbe68516a4bff,
+      type: 3}
   materials:
     materialImportMode: 1
     materialName: 0
