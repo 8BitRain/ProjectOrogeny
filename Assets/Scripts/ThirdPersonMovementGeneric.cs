@@ -1,8 +1,8 @@
-﻿ using System.Collections;
+ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ThirdPersonMovement : MonoBehaviour
+public class ThirdPersonMovementGeneric : MonoBehaviour
 {
     public float speed = 6.0f;
 
@@ -11,32 +11,19 @@ public class ThirdPersonMovement : MonoBehaviour
 
     public CharacterController controller;
     public Transform cam;
-    public Transform Orogene;
 
-    private bool canMove = true;
+    private bool canMove = false;
 
-    private bool playingAnim;
-    private bool running;
-    public float animCounterInitialValue;
-    private float animCounter;
-
-    public Animation animation;
-
-    public Animator animator;
-    public AnimatorClipInfo an;
     // Start is called before the first frame update
     void Start()
     {
-        animator = Orogene.GetComponent<Animator>();
-        playingAnim = false;
-        animCounter = animCounterInitialValue;
-        //animator
-        running = false;
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        //print("Sess Moving?: " + canMove);
         if(canMove){
             float horizontal = Input.GetAxisRaw("Horizontal");
             float veritical = Input.GetAxisRaw("Vertical");
@@ -79,7 +66,8 @@ public class ThirdPersonMovement : MonoBehaviour
             print(animCounter);*/
             }
     }
-     void toggleMovement(bool toggle)
+
+    void toggleMovement(bool toggle)
     {
         canMove = toggle;
     }
