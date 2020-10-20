@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: cba8269d41b454b7f8140e3651143d65
+guid: 9fa9ea8cc9f454a78ad5bfa45cbd0573
 ModelImporter:
   serializedVersion: 19300
   internalIDToNameTable: []
@@ -7,8 +7,8 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: mountain_texture_atlas
-    second: {fileID: 2100000, guid: a1043ec91025046c5b05770b59094705, type: 2}
+      name: No Name
+    second: {fileID: 2100000, guid: 7e5e5000c3221496bb9534d7eaddf1a3, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
