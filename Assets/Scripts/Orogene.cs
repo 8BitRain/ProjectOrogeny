@@ -46,7 +46,7 @@ public class Orogene : MonoBehaviour
         }
 
         if(Input.GetKey(KeyCode.LeftShift)){
-            castTorus();
+            //castTorus();
         }
         
     }
@@ -124,8 +124,6 @@ public class Orogene : MonoBehaviour
         //Set Movable Player
         movementReference.gameObject.SendMessage("toggleMovement", false);
         torus.GetChild(0).gameObject.SendMessage("toggleMovement", true);
-
-
 
     }
 
