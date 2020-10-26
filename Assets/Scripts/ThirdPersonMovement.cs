@@ -13,6 +13,7 @@ public class ThirdPersonMovement : MonoBehaviour
     public float GroundDistance = 0.2f;
     public LayerMask Ground;
     public float JumpHeight = 2f;
+    public GameObject followTarget;
 
     public float turnSmoothTime = 0.1f;
     float turnSmoothVelocity;
@@ -65,13 +66,30 @@ public class ThirdPersonMovement : MonoBehaviour
                 //Atan2 returns angle between x axis and the angle between 0
                 //Gives us an angle in radians
                 //Add the rotation of the camera on the y axis on to the camera
+                /*===== ThirdPersonCamera_GamePad Rotation*/
+                /*
                 float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
                 float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
                 transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
+                Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+                _controller.Move(moveDir.normalized * speed * Time.deltaTime);
+                */
+                
+
+                /*===== Third Person Follow Rotation =====*/
+                
+                //Add the rotation of the targetFollow to the y axis
+                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + followTarget.transform.eulerAngles.y;
+                float angle = Mathf.SmoothDampAngle(followTarget.transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+                
+                //Removed as it conflicts with ThirdPerson Camera Script
+                //transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
+                followTarget.transform.rotation = Quaternion.Euler(0f, angle, 0f);
                 
                 Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
                 _controller.Move(moveDir.normalized * speed * Time.deltaTime);
                 //animator.Play("run");
+                
                 
                 
             }
