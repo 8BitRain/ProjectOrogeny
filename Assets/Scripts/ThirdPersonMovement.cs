@@ -7,12 +7,23 @@ public class ThirdPersonMovement : MonoBehaviour
     public float speed = 6.0f;
     public float gravity = -9.81f;
 
+    //Jump Related Code
     private Vector3 _velocity;
     private bool _isGrounded = true;
     public Transform _groundChecker;
     public float GroundDistance = 0.2f;
     public LayerMask Ground;
     public float JumpHeight = 2f;
+
+    //Wall Running
+    private bool _isWallRunning = false;
+    public Transform _wallRunChecker;
+    public float wallDistance = 0.2f;
+    public LayerMask Wall;
+    
+
+
+
     public GameObject followTarget;
 
     public float turnSmoothTime = 0.1f;
@@ -60,6 +71,15 @@ public class ThirdPersonMovement : MonoBehaviour
             {
                 _velocity.y = 0f;
             }
+
+            _isWallRunning = Physics.CheckSphere(_wallRunChecker.position, wallDistance, Wall, QueryTriggerInteraction.Ignore);
+            if (_isWallRunning)
+            {
+                print("WallRunning");
+                transform.rotation = Quaternion.Euler(0f, 0f, -90f);
+                _isGrounded = true;
+                _velocity.y = 0f;
+            }
             
             if(direction.magnitude >= .1f)
             {
@@ -67,19 +87,22 @@ public class ThirdPersonMovement : MonoBehaviour
                 //Gives us an angle in radians
                 //Add the rotation of the camera on the y axis on to the camera
                 /*===== ThirdPersonCamera_GamePad Rotation*/
-                /*
+                
                 float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
                 float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-                transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
+                if(!_isWallRunning)
+                {
+                    transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
+                }
                 Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
                 _controller.Move(moveDir.normalized * speed * Time.deltaTime);
-                */
+                
                 
 
                 /*===== Third Person Follow Rotation =====*/
                 
                 //Add the rotation of the targetFollow to the y axis
-                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + followTarget.transform.eulerAngles.y;
+                /*float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + followTarget.transform.eulerAngles.y;
                 float angle = Mathf.SmoothDampAngle(followTarget.transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
                 
                 //Removed as it conflicts with ThirdPerson Camera Script
@@ -87,7 +110,7 @@ public class ThirdPersonMovement : MonoBehaviour
                 followTarget.transform.rotation = Quaternion.Euler(0f, angle, 0f);
                 
                 Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-                _controller.Move(moveDir.normalized * speed * Time.deltaTime);
+                _controller.Move(moveDir.normalized * speed * Time.deltaTime);*/
                 //animator.Play("run");
                 
                 
@@ -96,6 +119,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
             if (Input.GetButton("PlayerJump") && _isGrounded){
                 print("JUMP");
+                //Better Jumping Arc //Getting a better jumping arc will probably be factored here
                 _velocity.y += Mathf.Sqrt(JumpHeight * -2f * gravity);
             }
             
@@ -111,6 +135,7 @@ public class ThirdPersonMovement : MonoBehaviour
             
             //Gravity
             _velocity.y += gravity * Time.deltaTime;
+            //Getting a better jumping arc will probably be factored here
             _controller.Move(_velocity * Time.deltaTime);
     
         
