@@ -78,7 +78,14 @@ public class ThirdPersonMovement : MonoBehaviour
                 print("WallRunning");
                 transform.rotation = Quaternion.Euler(0f, 0f, -90f);
                 _isGrounded = true;
+
+                //Modify code to use the same jumping function for wall run.
+                //Mathf.Sqrt(JumpHeight * -2f * gravity);
+
+                //Don't set velocity to let gravity effect Wall Run
                 _velocity.y = 0f;
+
+                
             }
             
             if(direction.magnitude >= .1f)
@@ -90,11 +97,19 @@ public class ThirdPersonMovement : MonoBehaviour
                 
                 float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
                 float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-                if(!_isWallRunning)
+                Vector3 moveDir;
+                if(_isWallRunning == false)
                 {
                     transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
+                    //Move Forward as normal
+                    moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+                    
                 }
-                Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+                else
+                {
+                    ///Move Forward and up slightly
+                    moveDir = Quaternion.Euler(0f, targetAngle, 0f) * new Vector3(0, 1, 1);
+                }
                 _controller.Move(moveDir.normalized * speed * Time.deltaTime);
                 
                 
@@ -117,7 +132,7 @@ public class ThirdPersonMovement : MonoBehaviour
                 
             }
 
-            if (Input.GetButton("PlayerJump") && _isGrounded){
+            if (Input.GetButton("PlayerJump") && _isGrounded && !_isWallRunning){
                 print("JUMP");
                 //Better Jumping Arc //Getting a better jumping arc will probably be factored here
                 _velocity.y += Mathf.Sqrt(JumpHeight * -2f * gravity);
