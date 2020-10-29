@@ -20,6 +20,7 @@ public class ThirdPersonMovement : MonoBehaviour
     public Transform _wallRunChecker;
     public float wallDistance = 0.2f;
     public LayerMask Wall;
+    public float WallRunMaxHeight = 1f;
     
 
 
@@ -75,15 +76,24 @@ public class ThirdPersonMovement : MonoBehaviour
             _isWallRunning = Physics.CheckSphere(_wallRunChecker.position, wallDistance, Wall, QueryTriggerInteraction.Ignore);
             if (_isWallRunning)
             {
+                print(direction);
                 print("WallRunning");
-                transform.rotation = Quaternion.Euler(0f, 0f, -90f);
-                _isGrounded = true;
+                //Rotating character while wall running. Temporary w/ no wall run animation
+                if(direction.z > 0)
+                {
+                    transform.rotation = Quaternion.Euler(0f, 0f, -90f);
+                } 
+                else 
+                {
+                    transform.rotation = Quaternion.Euler(0f, 180f, 90f);
+                }
+                //Enable to allow controlled movement on wall
+                //_isGrounded = true;
 
                 //Modify code to use the same jumping function for wall run.
                 //Mathf.Sqrt(JumpHeight * -2f * gravity);
-
                 //Don't set velocity to let gravity effect Wall Run
-                _velocity.y = 0f;
+                //_velocity.y = 0f;
 
                 
             }
@@ -103,12 +113,23 @@ public class ThirdPersonMovement : MonoBehaviour
                     transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
                     //Move Forward as normal
                     moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-                    
                 }
                 else
                 {
                     ///Move Forward and up slightly
-                    moveDir = Quaternion.Euler(0f, targetAngle, 0f) * new Vector3(0, 1, 1);
+                    moveDir = Quaternion.Euler(0f, targetAngle, 0f) * new Vector3(0, 0, 1);
+
+                    //Look up parabolic motion. There seem to be animation cuves, bezier curves, and other lines to use.
+                    //I'm curious what mathmatical functions simulate parbolas. How do you achieve x^2?
+
+                    //The square root function looks like an rotated > 
+                    //_velocity.y += (Mathf.Pow(Mathf.Sqrt(WallRunMaxHeight * -2f * gravity), 3));
+                    _velocity.y += Mathf.Sqrt(WallRunMaxHeight * -2f * gravity);
+
+
+                    
+                    //Enable for constant y axis movement
+                    //moveDir = Quaternion.Euler(0f, targetAngle, 0f) * new Vector3(0, 1, 1);
                 }
                 _controller.Move(moveDir.normalized * speed * Time.deltaTime);
                 
