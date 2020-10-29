@@ -10,6 +10,7 @@ public class ThirdPersonCamera : MonoBehaviour
     public GameObject aimReticle;
 
     private float aim = 0f;
+    private bool slowTime;
 
     public float rotationPower = 5.0f;
     private Vector3 _look;
@@ -17,6 +18,7 @@ public class ThirdPersonCamera : MonoBehaviour
     void Start()
     {
         aimReticle.SetActive(false);
+        slowTime = false;
     }
 
     // Update is called once per frame
@@ -57,12 +59,14 @@ public class ThirdPersonCamera : MonoBehaviour
             aimCamera.SetActive(true);
             //aimReticle.SetActive(true);
             StartCoroutine(ShowReticle());
+
         }
         else if(Input.GetAxis("Aim") != 1 && !mainCamera.activeInHierarchy)
         {
             mainCamera.SetActive(true);
             aimCamera.SetActive(false);
             aimReticle.SetActive(false);
+            SetSlowTime(false);
         }
 
 
@@ -72,5 +76,13 @@ public class ThirdPersonCamera : MonoBehaviour
     {
         yield return new WaitForSeconds(0.25f);
         aimReticle.SetActive(enabled);
+        SetSlowTime(true);
     }
+
+    public void SetSlowTime(bool on)
+    {
+        float time = on ? .1f : 1;
+        Time.timeScale = time;
+    }
+
 }
