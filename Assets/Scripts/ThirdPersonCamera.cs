@@ -5,12 +5,18 @@ using UnityEngine;
 public class ThirdPersonCamera : MonoBehaviour
 {
     public GameObject followTransform;
+    public GameObject mainCamera;
+    public GameObject aimCamera;
+    public GameObject aimReticle;
+
+    private float aim = 0f;
+
     public float rotationPower = 5.0f;
     private Vector3 _look;
     // Start is called before the first frame update
     void Start()
     {
-        
+        aimReticle.SetActive(false);
     }
 
     // Update is called once per frame
@@ -20,6 +26,7 @@ public class ThirdPersonCamera : MonoBehaviour
         _look.y = Input.GetAxis("Thumbstick Y");
 
         followTransform.transform.rotation *= Quaternion.AngleAxis(_look.x * rotationPower, Vector3.up);
+        followTransform.transform.rotation *= Quaternion.AngleAxis(_look.y * rotationPower, Vector3.right);
 
         var angles = followTransform.transform.localEulerAngles;
         angles.z = 0;
@@ -42,5 +49,28 @@ public class ThirdPersonCamera : MonoBehaviour
         followTransform.transform.localEulerAngles = new Vector3(angles.x, 0, 0);
 
 
+        //Controller Input
+        if(Input.GetAxis("Aim") == 1 && !aimCamera.activeInHierarchy)
+        {
+            print("AIM");
+            mainCamera.SetActive(false);
+            aimCamera.SetActive(true);
+            //aimReticle.SetActive(true);
+            StartCoroutine(ShowReticle());
+        }
+        else if(Input.GetAxis("Aim") != 1 && !mainCamera.activeInHierarchy)
+        {
+            mainCamera.SetActive(true);
+            aimCamera.SetActive(false);
+            aimReticle.SetActive(false);
+        }
+
+
+    }
+
+    IEnumerator ShowReticle()
+    {
+        yield return new WaitForSeconds(0.25f);
+        aimReticle.SetActive(enabled);
     }
 }

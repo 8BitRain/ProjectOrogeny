@@ -99,7 +99,7 @@ public class ThirdPersonMovement : MonoBehaviour
             else
             {
                 animator.SetBool("WallRunning", false);
-                print("OffWall");
+                //print("OffWall");
             }
             
             if(direction.magnitude >= .1f)
@@ -133,8 +133,6 @@ public class ThirdPersonMovement : MonoBehaviour
                     //_velocity.y += (Mathf.Pow(Mathf.Sqrt(WallRunMaxHeight * -2f * gravity), 3));
                     _velocity.y += Mathf.Sqrt(WallRunMaxHeight * -2f * gravity);
 
-
-                    
                     //Enable for constant y axis movement
                     //moveDir = Quaternion.Euler(0f, targetAngle, 0f) * new Vector3(0, 1, 1);
                 }
