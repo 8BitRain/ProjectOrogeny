@@ -76,6 +76,7 @@ public class ThirdPersonMovement : MonoBehaviour
             _isWallRunning = Physics.CheckSphere(_wallRunChecker.position, wallDistance, Wall, QueryTriggerInteraction.Ignore);
             if (_isWallRunning)
             {
+                animator.SetBool("WallRunning", true);
                 print(direction);
                 print("WallRunning");
                 //Rotating character while wall running. Temporary w/ no wall run animation
@@ -93,9 +94,12 @@ public class ThirdPersonMovement : MonoBehaviour
                 //Modify code to use the same jumping function for wall run.
                 //Mathf.Sqrt(JumpHeight * -2f * gravity);
                 //Don't set velocity to let gravity effect Wall Run
-                //_velocity.y = 0f;
-
-                
+                //_velocity.y = 0f; 
+            }
+            else
+            {
+                animator.SetBool("WallRunning", false);
+                print("OffWall");
             }
             
             if(direction.magnitude >= .1f)
@@ -117,6 +121,9 @@ public class ThirdPersonMovement : MonoBehaviour
                 else
                 {
                     ///Move Forward and up slightly
+                    //moveDir = Quaternion.Euler(0f, targetAngle, 0f) * new Vector3(0, 1, 1);
+
+                    //Move Forward along wall
                     moveDir = Quaternion.Euler(0f, targetAngle, 0f) * new Vector3(0, 0, 1);
 
                     //Look up parabolic motion. There seem to be animation cuves, bezier curves, and other lines to use.
@@ -163,10 +170,17 @@ public class ThirdPersonMovement : MonoBehaviour
 
             if(horizontal != 0 || veritical != 0)
             {
-                animator.SetBool("Running", true);
-            } else 
+                if(!_isWallRunning)
+                {
+                    animator.SetBool("Running", true);
+                }
+            } 
+            else 
             {
-                animator.SetBool("Running", false);
+                if(!_isWallRunning)
+                {
+                    animator.SetBool("Running", false);
+                }
             }
             
             //Gravity
