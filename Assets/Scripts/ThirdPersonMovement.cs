@@ -22,10 +22,15 @@ public class ThirdPersonMovement : MonoBehaviour
     public LayerMask Wall;
     public float WallRunMaxHeight = 1f;
     
+    //Camera Management
+    public GameObject mainCamera;
+    public GameObject aimCamera;
+    public GameObject aimReticle;
 
+    //Time Management
+    //TODO: Create a time manager
+     private bool slowTime;
 
-
-    public GameObject followTarget;
 
     public float turnSmoothTime = 0.1f;
     float turnSmoothVelocity;
@@ -35,6 +40,13 @@ public class ThirdPersonMovement : MonoBehaviour
     public Transform Orogene;
 
     private bool canMove = true;
+    
+    /* MESSAGE: CanRotate: This variable is to help define when the player should rotate. Use this tor situations where you want the player
+    *  to continue moving, but lock this scripts control of the rotation. I'm doing this so I can let the ThirdPersonCamera Script Drive Camera interaction
+    *  There's probably a more effecient way to do this, but this is an experiment. 
+    *
+    */
+    private bool canRotate = true;
 
     private bool playingAnim;
     private bool running;
@@ -56,6 +68,9 @@ public class ThirdPersonMovement : MonoBehaviour
         //animator
         running = false;
         m_running = false;
+
+        aimReticle.SetActive(false);
+        slowTime = false;
     }
 
     // Update is called once per frame
@@ -68,6 +83,7 @@ public class ThirdPersonMovement : MonoBehaviour
             Vector3 direction = new Vector3(horizontal, 0, veritical).normalized;
 
             _isGrounded = Physics.CheckSphere(_groundChecker.position, GroundDistance, Ground, QueryTriggerInteraction.Ignore);
+
             if (_isGrounded && _velocity.y < 0)
             {
                 _velocity.y = 0f;
@@ -136,35 +152,32 @@ public class ThirdPersonMovement : MonoBehaviour
                     //Enable for constant y axis movement
                     //moveDir = Quaternion.Euler(0f, targetAngle, 0f) * new Vector3(0, 1, 1);
                 }
-                _controller.Move(moveDir.normalized * speed * Time.deltaTime);
-                
-                
+                _controller.Move(moveDir.normalized * speed * Time.deltaTime);            
+            }
 
-                /*===== Third Person Follow Rotation =====*/
-                
-                //Add the rotation of the targetFollow to the y axis
-                /*float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + followTarget.transform.eulerAngles.y;
-                float angle = Mathf.SmoothDampAngle(followTarget.transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-                
-                //Removed as it conflicts with ThirdPerson Camera Script
-                //transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
-                followTarget.transform.rotation = Quaternion.Euler(0f, angle, 0f);
-                
-                Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-                _controller.Move(moveDir.normalized * speed * Time.deltaTime);*/
-                //animator.Play("run");
-                
-                
-                
+            //Controller Input
+            if(Input.GetAxis("Aim") == 1 && !aimCamera.activeInHierarchy)
+            {
+                print("AIM");
+                mainCamera.SetActive(false);
+                aimCamera.SetActive(true);
+                //aimReticle.SetActive(true);
+                StartCoroutine(ShowReticle());
+
+            }
+            else if(Input.GetAxis("Aim") != 1 && !mainCamera.activeInHierarchy)
+            {
+                mainCamera.SetActive(true);
+                aimCamera.SetActive(false);
+                aimReticle.SetActive(false);
+                SetSlowTime(false);
             }
 
             if (Input.GetButton("PlayerJump") && _isGrounded && !_isWallRunning){
                 print("JUMP");
-                //Better Jumping Arc //Getting a better jumping arc will probably be factored here
+                //TODO: Better Jumping Arc //Getting a better jumping arc will probably be factored here
                 _velocity.y += Mathf.Sqrt(JumpHeight * -2f * gravity);
             }
-            
-
 
             if(horizontal != 0 || veritical != 0)
             {
@@ -185,12 +198,25 @@ public class ThirdPersonMovement : MonoBehaviour
             _velocity.y += gravity * Time.deltaTime;
             //Getting a better jumping arc will probably be factored here
             _controller.Move(_velocity * Time.deltaTime);
-    
-        
             }
     }
-     void toggleMovement(bool toggle)
+
+    void toggleMovement(bool toggle)
     {
         canMove = toggle;
+    }
+
+    IEnumerator ShowReticle()
+    {
+        yield return new WaitForSeconds(0.25f);
+        aimReticle.SetActive(enabled);
+        SetSlowTime(true);
+    }
+
+    public void SetSlowTime(bool on)
+    {
+        float time = on ? .1f : 1;
+        Time.timeScale = time;
+        Time.fixedDeltaTime = time * .02f;
     }
 }

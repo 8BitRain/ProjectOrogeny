@@ -8,11 +8,14 @@ public class ThirdPersonCamera : MonoBehaviour
     public GameObject mainCamera;
     public GameObject aimCamera;
     public GameObject aimReticle;
+    public Transform cam;
 
     private float aim = 0f;
     private bool slowTime;
-
+    public float speed = 6.0f;
     public float rotationPower = 5.0f;
+
+    public CharacterController _controller;
     private Vector3 _look;
     // Start is called before the first frame update
     void Start()
@@ -24,6 +27,10 @@ public class ThirdPersonCamera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        float veritical = Input.GetAxisRaw("Vertical");
+        //Vector3 direction = new Vector3(horizontal, 0, veritical).normalized;
+        Vector3 direction = new Vector3(horizontal, 0, veritical).normalized;
         _look.x = Input.GetAxis("Thumbstick X");
         _look.y = Input.GetAxis("Thumbstick Y");
 
@@ -50,6 +57,15 @@ public class ThirdPersonCamera : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, followTransform.transform.rotation.eulerAngles.y, 0);
         followTransform.transform.localEulerAngles = new Vector3(angles.x, 0, 0);
 
+        //x and y axis movement
+         if(direction.magnitude >= .1f)
+        {
+            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
+            Vector3 moveDir;
+            moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+            //moveDir = Quaternion.Euler(0, followTransform.transform.rotation.eulerAngles.y, 0) * Vector3.forward;
+            _controller.Move(moveDir.normalized * speed * Time.deltaTime);
+        }
 
         //Controller Input
         if(Input.GetAxis("Aim") == 1 && !aimCamera.activeInHierarchy)
@@ -74,7 +90,7 @@ public class ThirdPersonCamera : MonoBehaviour
 
     IEnumerator ShowReticle()
     {
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(1f);
         aimReticle.SetActive(enabled);
         SetSlowTime(true);
     }
@@ -83,6 +99,7 @@ public class ThirdPersonCamera : MonoBehaviour
     {
         float time = on ? .1f : 1;
         Time.timeScale = time;
+        Time.fixedDeltaTime = time * .02f;
     }
 
 }
