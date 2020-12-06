@@ -1,4 +1,4 @@
-﻿ using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,12 +15,18 @@ public class ThirdPersonMovement : MonoBehaviour
     public LayerMask Ground;
     public float JumpHeight = 2f;
 
+    //Movement Related
+    private bool moveCharacter;
+
     //Wall Running
     private bool _isWallRunning = false;
     public Transform _wallRunChecker;
     public float wallDistance = 0.2f;
     public LayerMask Wall;
     public float WallRunMaxHeight = 1f;
+    bool isWallRight;
+    bool isWallLeft;
+    private Vector3 wallVector;
     
     //Camera Management
     public GameObject mainCamera;
@@ -65,6 +71,7 @@ public class ThirdPersonMovement : MonoBehaviour
         animator = Orogene.GetComponent<Animator>();
         playingAnim = false;
         animCounter = animCounterInitialValue;
+        moveCharacter = true;
         //animator
         running = false;
         m_running = false;
@@ -89,36 +96,23 @@ public class ThirdPersonMovement : MonoBehaviour
                 _velocity.y = 0f;
             }
 
-            _isWallRunning = Physics.CheckSphere(_wallRunChecker.position, wallDistance, Wall, QueryTriggerInteraction.Ignore);
-            if (_isWallRunning)
+            //WALLRUNNING 2.0 using Raycasts
+            CheckForWall();
+            if(isWallRight)
             {
-                animator.SetBool("WallRunning", true);
-                print(direction);
-                print("WallRunning");
-                //Rotating character while wall running. Temporary w/ no wall run animation
-                if(direction.z > 0)
-                {
-                    transform.rotation = Quaternion.Euler(0f, 0f, -90f);
-                } 
-                else 
-                {
-                    transform.rotation = Quaternion.Euler(0f, 180f, 90f);
-                }
-                //Enable to allow controlled movement on wall
-                //_isGrounded = true;
+                StartWallRun("right");
+            }
+            if(isWallLeft)
+            {
+                StartWallRun("left");
+            }
+            if(!isWallLeft && !isWallRight)
+            {
+                ExitWallRun();
+            }
 
-                //Modify code to use the same jumping function for wall run.
-                //Mathf.Sqrt(JumpHeight * -2f * gravity);
-                //Don't set velocity to let gravity effect Wall Run
-                //_velocity.y = 0f; 
-            }
-            else
-            {
-                animator.SetBool("WallRunning", false);
-                //print("OffWall");
-            }
-            
-            if(direction.magnitude >= .1f)
+            //MOVEMENT
+            if(direction.magnitude >= .1f && moveCharacter)
             {
                 //Atan2 returns angle between x axis and the angle between 0
                 //Gives us an angle in radians
@@ -128,48 +122,56 @@ public class ThirdPersonMovement : MonoBehaviour
                 float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
                 float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
                 Vector3 moveDir;
-                if(_isWallRunning == false)
+                if(!_isWallRunning)
                 {
                     transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
                     //Move Forward as normal
                     moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+                    _controller.Move(moveDir.normalized * speed * Time.deltaTime); 
                 }
                 else
                 {
-                    ///Move Forward and up slightly
-                    //moveDir = Quaternion.Euler(0f, targetAngle, 0f) * new Vector3(0, 1, 1);
+                    // The step size is equal to speed times frame time.
+                    float singleStep = speed * Time.deltaTime;
 
-                    //Move Forward along wall
-                    moveDir = Quaternion.Euler(0f, targetAngle, 0f) * new Vector3(0, 0, 1);
+                    // Rotate the forward vector towards the target direction by one step
+                    Vector3 turnDirection = Vector3.RotateTowards(transform.forward, wallVector, singleStep, 0.0f);
+                    // Draw a ray pointing at our target in
+                    Debug.DrawRay(transform.position, turnDirection, Color.red);
+
+                    // Calculate a rotation a step closer to the target and applies rotation to this object
+                    transform.rotation = Quaternion.LookRotation(turnDirection);
+
+                    
+                    moveDir = wallVector;
 
                     //Look up parabolic motion. There seem to be animation cuves, bezier curves, and other lines to use.
                     //I'm curious what mathmatical functions simulate parbolas. How do you achieve x^2?
 
-                    //The square root function looks like an rotated > 
-                    //_velocity.y += (Mathf.Pow(Mathf.Sqrt(WallRunMaxHeight * -2f * gravity), 3));
-                    _velocity.y += Mathf.Sqrt(WallRunMaxHeight * -2f * gravity);
+                    _velocity.y = 0;
 
-                    //Enable for constant y axis movement
-                    //moveDir = Quaternion.Euler(0f, targetAngle, 0f) * new Vector3(0, 1, 1);
-                }
-                _controller.Move(moveDir.normalized * speed * Time.deltaTime);            
+                    _controller.Move(wallVector * speed * Time.deltaTime); 
+                }          
             }
 
             //Controller Input
             if(Input.GetAxis("Aim") == 1 && !aimCamera.activeInHierarchy)
             {
+                moveCharacter = false;
                 print("AIM");
                 mainCamera.SetActive(false);
                 aimCamera.SetActive(true);
-                //aimReticle.SetActive(true);
+                this.GetComponent<ThirdPersonCamera>().enabled = true;
                 StartCoroutine(ShowReticle());
 
             }
             else if(Input.GetAxis("Aim") != 1 && !mainCamera.activeInHierarchy)
             {
+                moveCharacter = true;
                 mainCamera.SetActive(true);
                 aimCamera.SetActive(false);
                 aimReticle.SetActive(false);
+                this.GetComponent<ThirdPersonCamera>().enabled = false;
                 SetSlowTime(false);
             }
 
@@ -201,6 +203,42 @@ public class ThirdPersonMovement : MonoBehaviour
             }
     }
 
+    void CheckForWall()
+    {
+        RaycastHit hit;
+        isWallRight = Physics.Raycast(_wallRunChecker.transform.position, _wallRunChecker.right, out hit, wallDistance, Wall);
+        if(isWallRight){
+            Debug.DrawRay(_wallRunChecker.transform.position, _wallRunChecker.right.normalized * hit.distance, Color.magenta );
+            wallVector = -Vector3.Cross(hit.normal, Vector3.up).normalized;
+            print("Wall is to the Right");
+        }
+       
+        isWallLeft = Physics.Raycast(_wallRunChecker.transform.position, -_wallRunChecker.right, out hit, wallDistance, Wall);
+        if(isWallLeft){
+            Debug.DrawRay(_wallRunChecker.transform.position, -_wallRunChecker.right.normalized * hit.distance, Color.green );
+            wallVector = Vector3.Cross(hit.normal, Vector3.up).normalized;
+        }
+       
+        print(wallVector);
+        Debug.DrawRay(_wallRunChecker.transform.position, wallVector, Color.yellow);
+    }
+
+    void StartWallRun(string direction)
+    {
+        animator.SetBool("WallRunning", true);
+        if(direction == "right")
+        {
+            //TODO: Implement 
+        }
+        print("wallrunning");
+        _isWallRunning = true;
+    }
+
+    void ExitWallRun()
+    {
+         animator.SetBool("WallRunning", false);
+        _isWallRunning = false;
+    }
     void toggleMovement(bool toggle)
     {
         canMove = toggle;

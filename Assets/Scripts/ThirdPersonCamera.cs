@@ -27,10 +27,9 @@ public class ThirdPersonCamera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float veritical = Input.GetAxisRaw("Vertical");
+
         //Vector3 direction = new Vector3(horizontal, 0, veritical).normalized;
-        Vector3 direction = new Vector3(horizontal, 0, veritical).normalized;
+        //Vector3 direction = new Vector3(horizontal, 0, veritical).normalized;
         _look.x = Input.GetAxis("Thumbstick X");
         _look.y = Input.GetAxis("Thumbstick Y");
 
@@ -57,18 +56,8 @@ public class ThirdPersonCamera : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, followTransform.transform.rotation.eulerAngles.y, 0);
         followTransform.transform.localEulerAngles = new Vector3(angles.x, 0, 0);
 
-        //x and y axis movement
-         if(direction.magnitude >= .1f)
-        {
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
-            Vector3 moveDir;
-            moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-            //moveDir = Quaternion.Euler(0, followTransform.transform.rotation.eulerAngles.y, 0) * Vector3.forward;
-            _controller.Move(moveDir.normalized * speed * Time.deltaTime);
-        }
-
         //Controller Input
-        if(Input.GetAxis("Aim") == 1 && !aimCamera.activeInHierarchy)
+        /*if(Input.GetAxis("Aim") == 1 && !aimCamera.activeInHierarchy)
         {
             print("AIM");
             mainCamera.SetActive(false);
@@ -83,7 +72,7 @@ public class ThirdPersonCamera : MonoBehaviour
             aimCamera.SetActive(false);
             aimReticle.SetActive(false);
             SetSlowTime(false);
-        }
+        }*/
 
 
     }
