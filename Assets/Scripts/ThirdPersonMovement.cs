@@ -27,6 +27,7 @@ public class ThirdPersonMovement : MonoBehaviour
     bool isWallRight;
     bool isWallLeft;
     private Vector3 wallVector;
+    private Vector3 wallJumpDirection;
     
     //Camera Management
     public GameObject mainCamera;
@@ -175,10 +176,25 @@ public class ThirdPersonMovement : MonoBehaviour
                 SetSlowTime(false);
             }
 
-            if (Input.GetButton("PlayerJump") && _isGrounded && !_isWallRunning){
-                print("JUMP");
+            if (Input.GetButton("PlayerJump")){
+                if(_isGrounded && !_isWallRunning){
+                    print("JUMP");
+                     _velocity.y += Mathf.Sqrt(JumpHeight * -2f * gravity);
+                }
+                if(_isWallRunning && !_isGrounded){
+                    //DetachFromWall
+                    print("WALLJUMP");
+                    isWallLeft = false;
+                    isWallRight = false;
+                    ExitWallRun();
+                    _velocity.y += Mathf.Sqrt(JumpHeight * -2f * gravity);
+                    //Jump off wall at 45 degree angle
+                    Vector3 jumpDirection;
+                    jumpDirection = transform.TransformDirection(wallJumpDirection);
+                    _controller.Move(jumpDirection * speed * Time.deltaTime); 
+                }
                 //TODO: Better Jumping Arc //Getting a better jumping arc will probably be factored here
-                _velocity.y += Mathf.Sqrt(JumpHeight * -2f * gravity);
+                //_velocity.y += Mathf.Sqrt(JumpHeight * -2f * gravity);
             }
 
             if(horizontal != 0 || veritical != 0)
@@ -210,17 +226,23 @@ public class ThirdPersonMovement : MonoBehaviour
         if(isWallRight){
             Debug.DrawRay(_wallRunChecker.transform.position, _wallRunChecker.right.normalized * hit.distance, Color.magenta );
             wallVector = -Vector3.Cross(hit.normal, Vector3.up).normalized;
-            print("Wall is to the Right");
+            wallJumpDirection = new Vector3(-1,0,1).normalized;
+            //wallJumpDirection = -wallJumpDirection;
+            //print("Wall is to the Right");
         }
        
         isWallLeft = Physics.Raycast(_wallRunChecker.transform.position, -_wallRunChecker.right, out hit, wallDistance, Wall);
         if(isWallLeft){
             Debug.DrawRay(_wallRunChecker.transform.position, -_wallRunChecker.right.normalized * hit.distance, Color.green );
             wallVector = Vector3.Cross(hit.normal, Vector3.up).normalized;
+            wallJumpDirection = new Vector3(1,0,1).normalized;
         }
        
         print(wallVector);
         Debug.DrawRay(_wallRunChecker.transform.position, wallVector, Color.yellow);
+
+        //Debug ray describing Vector at 45 degree from wall
+        Debug.DrawRay(_wallRunChecker.transform.position, transform.TransformDirection(wallJumpDirection), Color.cyan);
     }
 
     void StartWallRun(string direction)
