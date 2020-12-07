@@ -434,8 +434,7 @@ MonoBehaviour:
   _controller: {fileID: 108379098}
   cam: {fileID: 963194228}
   Orogene: {fileID: 108379095}
-  animCounterInitialValue: 0
-  animation: {fileID: 0}
+  jumpingAnimationClip: []
   animator: {fileID: 0}
 --- !u!1 &131512896
 GameObject:
@@ -7558,9 +7557,10 @@ MonoBehaviour:
   _controller: {fileID: 499505464}
   cam: {fileID: 963194228}
   Orogene: {fileID: 499505460}
-  animCounterInitialValue: 0
-  animation: {fileID: 0}
-  animator: {fileID: 0}
+  jumpingAnimationClip:
+  - {fileID: 1742145234810461679, guid: 958778ec87c354760b47db7a2d4bc352, type: 3}
+  - {fileID: 8766899527109677652, guid: 958778ec87c354760b47db7a2d4bc352, type: 3}
+  animator: {fileID: 499505465}
 --- !u!114 &499505463
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7598,6 +7598,12 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 2.07, z: 0}
+--- !u!95 &499505465 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: -6057140222963153312, guid: 958778ec87c354760b47db7a2d4bc352,
+    type: 3}
+  m_PrefabInstance: {fileID: 499505459}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &504208935
 GameObject:
   m_ObjectHideFlags: 0
@@ -9831,7 +9837,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 909376937}
-  m_LocalRotation: {x: 0.040101536, y: 0.000000017326332, z: -6.9537187e-10, w: 0.99919564}
+  m_LocalRotation: {x: 0.040101536, y: -0.000000017326336, z: 6.95372e-10, w: 0.99919564}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

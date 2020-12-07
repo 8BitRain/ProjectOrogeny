@@ -57,25 +57,26 @@ public class ThirdPersonMovement : MonoBehaviour
 
     private bool playingAnim;
     private bool running;
-    public float animCounterInitialValue;
     private float animCounter;
-    private bool m_running;
 
-    public Animation animation;
+    public AnimationClip[] jumpingAnimationClip;
 
     public Animator animator;
-    public AnimatorClipInfo an;
+    //https://docs.unity3d.com/ScriptReference/AnimatorOverrideController.html
+    protected AnimatorOverrideController animatorOverrideController;
 
     // Start is called before the first frame update
     void Start()
     {
         animator = Orogene.GetComponent<Animator>();
+        animatorOverrideController = new AnimatorOverrideController(animator.runtimeAnimatorController);
+        animator.runtimeAnimatorController = animatorOverrideController;
+
+
         playingAnim = false;
-        animCounter = animCounterInitialValue;
         moveCharacter = true;
         //animator
         running = false;
-        m_running = false;
 
         aimReticle.SetActive(false);
         slowTime = false;
@@ -196,6 +197,7 @@ public class ThirdPersonMovement : MonoBehaviour
                     _velocity.y += Mathf.Sqrt(JumpHeight * -2f * gravity);
                     //Jump off wall at 45 degree angle
                     Vector3 jumpDirection;
+                    //jump direction uses transform.TransformDirection to move player in a vector 45degrees away from wall
                     jumpDirection = transform.TransformDirection(wallJumpDirection);
                     _controller.Move(jumpDirection * speed * Time.deltaTime); 
                 }
@@ -258,7 +260,15 @@ public class ThirdPersonMovement : MonoBehaviour
         if(direction == "right")
         {
             //TODO: Implement 
+            animatorOverrideController["rig|wallRunLeft"] = jumpingAnimationClip[0];
+            print("override right");
         }
+        if(direction == "left")
+        {
+            animatorOverrideController["rig|wallRunLeft"] = jumpingAnimationClip[1];
+            print("override left");
+        }
+
         print("wallrunning");
         _isWallRunning = true;
     }
