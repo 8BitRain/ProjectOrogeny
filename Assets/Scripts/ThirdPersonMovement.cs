@@ -95,6 +95,7 @@ public class ThirdPersonMovement : MonoBehaviour
             if (_isGrounded && _velocity.y < 0)
             {
                 _velocity.y = 0f;
+                animator.SetBool("Jumping", false);
             }
 
             //WALLRUNNING 2.0 using Raycasts
@@ -180,10 +181,15 @@ public class ThirdPersonMovement : MonoBehaviour
                 if(_isGrounded && !_isWallRunning){
                     print("JUMP");
                      _velocity.y += Mathf.Sqrt(JumpHeight * -2f * gravity);
+                     animator.SetBool("Running", false);
+                     animator.SetBool("Jumping", true);
                 }
                 if(_isWallRunning && !_isGrounded){
                     //DetachFromWall
                     print("WALLJUMP");
+                    animator.SetBool("Running", false);
+                    animator.SetBool("WallRunning", false);
+                    animator.SetBool("Jumping", true);
                     isWallLeft = false;
                     isWallRight = false;
                     ExitWallRun();
@@ -199,7 +205,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
             if(horizontal != 0 || veritical != 0)
             {
-                if(!_isWallRunning)
+                if(!_isWallRunning && !animator.GetBool("Jumping"))
                 {
                     animator.SetBool("Running", true);
                 }
@@ -248,6 +254,7 @@ public class ThirdPersonMovement : MonoBehaviour
     void StartWallRun(string direction)
     {
         animator.SetBool("WallRunning", true);
+        animator.SetBool("Jumping", false);
         if(direction == "right")
         {
             //TODO: Implement 
