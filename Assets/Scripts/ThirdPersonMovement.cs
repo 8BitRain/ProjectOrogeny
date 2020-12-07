@@ -246,7 +246,6 @@ public class ThirdPersonMovement : MonoBehaviour
             wallJumpDirection = new Vector3(1,0,1).normalized;
         }
        
-        print(wallVector);
         Debug.DrawRay(_wallRunChecker.transform.position, wallVector, Color.yellow);
 
         //Debug ray describing Vector at 45 degree from wall
@@ -261,12 +260,10 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             //TODO: Implement 
             animatorOverrideController["rig|wallRunLeft"] = jumpingAnimationClip[0];
-            print("override right");
         }
         if(direction == "left")
         {
             animatorOverrideController["rig|wallRunLeft"] = jumpingAnimationClip[1];
-            print("override left");
         }
 
         print("wallrunning");

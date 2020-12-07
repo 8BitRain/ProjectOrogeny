@@ -7728,6 +7728,26 @@ Animator:
     type: 3}
   m_PrefabInstance: {fileID: 499505459}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &499505466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 499505461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e20e479f18e44355a4ed3ee495d5c02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  followTransform: {fileID: 1862404337}
+  mainCamera: {fileID: 1527336684}
+  aimCamera: {fileID: 1740712149}
+  aimReticle: {fileID: 539473078}
+  cam: {fileID: 963194228}
+  speed: 6
+  rotationPower: 5
+  _controller: {fileID: 499505464}
 --- !u!1 &504208935
 GameObject:
   m_ObjectHideFlags: 0
