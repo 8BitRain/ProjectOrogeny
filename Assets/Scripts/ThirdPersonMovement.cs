@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class ThirdPersonMovement : MonoBehaviour
 {
-    public float speed = 6.0f;
+    //Movement 
+    public float speed = 0;
+    public float acceleration = .1f;
+    public float friction = .025f;
+    public float maxSpeed = 10.0f;
     public float gravity = -9.81f;
 
     //Jump Related Code
@@ -72,7 +76,6 @@ public class ThirdPersonMovement : MonoBehaviour
         animatorOverrideController = new AnimatorOverrideController(animator.runtimeAnimatorController);
         animator.runtimeAnimatorController = animatorOverrideController;
 
-
         playingAnim = false;
         moveCharacter = true;
         //animator
@@ -90,6 +93,8 @@ public class ThirdPersonMovement : MonoBehaviour
             float horizontal = Input.GetAxisRaw("Horizontal");
             float veritical = Input.GetAxisRaw("Vertical");
             Vector3 direction = new Vector3(horizontal, 0, veritical).normalized;
+
+            //Set Speed and acceleration
 
             _isGrounded = Physics.CheckSphere(_groundChecker.position, GroundDistance, Ground, QueryTriggerInteraction.Ignore);
 
@@ -115,8 +120,12 @@ public class ThirdPersonMovement : MonoBehaviour
             }
 
             //MOVEMENT
+            Vector3 moveDir = transform.forward;
             if(direction.magnitude >= .1f && moveCharacter)
             {
+                if(speed < maxSpeed){
+                    speed = speed + acceleration * Time.deltaTime;
+                }
                 //Atan2 returns angle between x axis and the angle between 0
                 //Gives us an angle in radians
                 //Add the rotation of the camera on the y axis on to the camera
@@ -124,13 +133,13 @@ public class ThirdPersonMovement : MonoBehaviour
                 
                 float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
                 float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-                Vector3 moveDir;
+                //Vector3 moveDir;
                 if(!_isWallRunning)
                 {
                     transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
                     //Move Forward as normal
                     moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-                    _controller.Move(moveDir.normalized * speed * Time.deltaTime); 
+                    //_controller.Move(moveDir.normalized * speed * Time.deltaTime); 
                 }
                 else
                 {
@@ -153,9 +162,21 @@ public class ThirdPersonMovement : MonoBehaviour
 
                     _velocity.y = 0;
 
-                    _controller.Move(wallVector * speed * Time.deltaTime); 
+                    _controller.Move(moveDir * speed * Time.deltaTime); 
                 }          
             }
+            _controller.Move(moveDir.normalized * speed * Time.deltaTime); 
+            //Constant subtration of friction
+            if(speed > 0)
+            {
+                speed = speed - friction * Time.deltaTime;
+            }
+            if(speed < 0)
+            {
+                speed = 0;
+            }
+
+            
 
             //Controller Input
             if(Input.GetAxis("Aim") == 1 && !aimCamera.activeInHierarchy)
@@ -224,9 +245,10 @@ public class ThirdPersonMovement : MonoBehaviour
             _velocity.y += gravity * Time.deltaTime;
             //Getting a better jumping arc will probably be factored here
             _controller.Move(_velocity * Time.deltaTime);
-            }
+        }
     }
 
+    /*Inspired by the algorithm provided here http://www.footnotesforthefuture.com/words/wall-running-1/*/
     void CheckForWall()
     {
         RaycastHit hit;

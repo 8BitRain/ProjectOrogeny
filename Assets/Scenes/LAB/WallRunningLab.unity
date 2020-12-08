@@ -506,6 +506,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
+  acceleration: 0.1
+  friction: 0.025
+  maxSpeed: 10
   gravity: -9.81
   _groundChecker: {fileID: 369614352}
   GroundDistance: 0.2
@@ -7660,7 +7663,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48dca54125bc8412680576e894fd65ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 0
+  acceleration: 0.1
+  friction: 0.025
+  maxSpeed: 10
   gravity: -9.81
   _groundChecker: {fileID: 62950368}
   GroundDistance: 0.2
@@ -7669,7 +7675,7 @@ MonoBehaviour:
     m_Bits: 256
   JumpHeight: 8
   _wallRunChecker: {fileID: 445250645}
-  wallDistance: 2
+  wallDistance: 1
   Wall:
     serializedVersion: 2
     m_Bits: 1024
@@ -12453,7 +12459,7 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: 097bd3fd4e3014aea89be98e585f3dab,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 097bd3fd4e3014aea89be98e585f3dab, type: 3}
