@@ -510,6 +510,7 @@ MonoBehaviour:
   friction: 0.025
   maxSpeed: 10
   gravity: -9.81
+  glideOnGround: 0
   _groundChecker: {fileID: 369614352}
   GroundDistance: 0.2
   Ground:
@@ -7663,11 +7664,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48dca54125bc8412680576e894fd65ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
+  speed: 6
   acceleration: 0.1
   friction: 0.025
   maxSpeed: 10
   gravity: -9.81
+  glideOnGround: 0
   _groundChecker: {fileID: 62950368}
   GroundDistance: 0.2
   Ground:

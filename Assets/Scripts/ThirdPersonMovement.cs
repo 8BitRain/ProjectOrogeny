@@ -5,11 +5,14 @@ using UnityEngine;
 public class ThirdPersonMovement : MonoBehaviour
 {
     //Movement 
-    public float speed = 0;
+    public float speed = 6.0f;
+    private float defaultSpeed;
     public float acceleration = .1f;
     public float friction = .025f;
     public float maxSpeed = 10.0f;
     public float gravity = -9.81f;
+
+    public bool glideOnGround = false;
 
     //Jump Related Code
     private Vector3 _velocity;
@@ -76,6 +79,7 @@ public class ThirdPersonMovement : MonoBehaviour
         animatorOverrideController = new AnimatorOverrideController(animator.runtimeAnimatorController);
         animator.runtimeAnimatorController = animatorOverrideController;
 
+        defaultSpeed = speed;
         playingAnim = false;
         moveCharacter = true;
         //animator
@@ -94,8 +98,7 @@ public class ThirdPersonMovement : MonoBehaviour
             float veritical = Input.GetAxisRaw("Vertical");
             Vector3 direction = new Vector3(horizontal, 0, veritical).normalized;
 
-            //Set Speed and acceleration
-
+            //Grounded status
             _isGrounded = Physics.CheckSphere(_groundChecker.position, GroundDistance, Ground, QueryTriggerInteraction.Ignore);
 
             if (_isGrounded && _velocity.y < 0)
@@ -120,12 +123,19 @@ public class ThirdPersonMovement : MonoBehaviour
             }
 
             //MOVEMENT
+            /* For acceleration and deceleration moveDir is defined by default as the local transform forward vector.*/
+            /* For tighter movement, move moveDir inside the scope of the moveCharacter and direction.magnitude check*/
             Vector3 moveDir = transform.forward;
             if(direction.magnitude >= .1f && moveCharacter)
             {
-                if(speed < maxSpeed){
-                    speed = speed + acceleration * Time.deltaTime;
+                //Increase speed when we want to accelerate or glide. For now we call this gliding due to the flight like effect. Think Dissidia.
+                if(glideOnGround)
+                {
+                    if(speed < maxSpeed){
+                        speed = speed + acceleration * Time.deltaTime;
+                    }
                 }
+
                 //Atan2 returns angle between x axis and the angle between 0
                 //Gives us an angle in radians
                 //Add the rotation of the camera on the y axis on to the camera
@@ -139,7 +149,10 @@ public class ThirdPersonMovement : MonoBehaviour
                     transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
                     //Move Forward as normal
                     moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-                    //_controller.Move(moveDir.normalized * speed * Time.deltaTime); 
+                    if(!glideOnGround)
+                    {
+                        _controller.Move(moveDir.normalized * speed * Time.deltaTime);
+                    } 
                 }
                 else
                 {
@@ -165,16 +178,24 @@ public class ThirdPersonMovement : MonoBehaviour
                     _controller.Move(moveDir * speed * Time.deltaTime); 
                 }          
             }
-            _controller.Move(moveDir.normalized * speed * Time.deltaTime); 
-            //Constant subtration of friction
-            if(speed > 0)
+
+            //Constant subtration of friction for glide/decceleration
+            //https://www.gamasutra.com/blogs/MarkVenturelli/20140821/223866/Game_Feel_Tips_II_Speed_Gravity_Friction.php
+            if(glideOnGround)
             {
-                speed = speed - friction * Time.deltaTime;
+                _controller.Move(moveDir.normalized * speed * Time.deltaTime); 
+                if(speed > 0)
+                {
+                    speed = speed - (friction * Time.deltaTime);
+                }
+                if(speed < 0)
+                {
+                    //resetting speed to default. If you want a more natural acceleration, allow speed to = 0. 
+                    this.glideOnGround = false;
+                    speed = defaultSpeed;
+                }   
             }
-            if(speed < 0)
-            {
-                speed = 0;
-            }
+         
 
             
 
