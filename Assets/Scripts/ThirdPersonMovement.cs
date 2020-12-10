@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ThirdPersonMovement : MonoBehaviour
 {
-    //Movement 
+    //Movement
     public float speed = 6.0f;
     private float defaultSpeed;
     public float acceleration = .1f;
@@ -51,6 +51,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
     public CharacterController _controller;
     public Transform cam;
+    //This is the reference to the player so we can pull components that are children
     public Transform Orogene;
 
     private bool canMove = true;
@@ -125,7 +126,8 @@ public class ThirdPersonMovement : MonoBehaviour
             //MOVEMENT
             /* For acceleration and deceleration moveDir is defined by default as the local transform forward vector.*/
             /* For tighter movement, move moveDir inside the scope of the moveCharacter and direction.magnitude check*/
-            Vector3 moveDir = transform.forward;
+            //This introduces a bug similar to the super bounce! moveDir being set to transform.forward affects wall jump movement.
+            //Vector3 moveDir = transform.forward;
             if(direction.magnitude >= .1f && moveCharacter)
             {
                 //Increase speed when we want to accelerate or glide. For now we call this gliding due to the flight like effect. Think Dissidia.
@@ -143,7 +145,7 @@ public class ThirdPersonMovement : MonoBehaviour
                 
                 float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
                 float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-                //Vector3 moveDir;
+                Vector3 moveDir;
                 if(!_isWallRunning)
                 {
                     transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
@@ -175,7 +177,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
                     _velocity.y = 0;
 
-                    _controller.Move(moveDir * speed * Time.deltaTime); 
+                    _controller.Move(wallVector * speed * Time.deltaTime); 
                 }          
             }
 
@@ -183,6 +185,7 @@ public class ThirdPersonMovement : MonoBehaviour
             //https://www.gamasutra.com/blogs/MarkVenturelli/20140821/223866/Game_Feel_Tips_II_Speed_Gravity_Friction.php
             if(glideOnGround)
             {
+                Vector3 moveDir = transform.forward;
                 _controller.Move(moveDir.normalized * speed * Time.deltaTime); 
                 if(speed > 0)
                 {
@@ -223,9 +226,11 @@ public class ThirdPersonMovement : MonoBehaviour
             if (Input.GetButton("PlayerJump")){
                 if(_isGrounded && !_isWallRunning){
                     print("JUMP");
-                     _velocity.y += Mathf.Sqrt(JumpHeight * -2f * gravity);
-                     animator.SetBool("Running", false);
-                     animator.SetBool("Jumping", true);
+                    //reset y_velocity to prevent super bouncing
+                    _velocity.y = 0; 
+                    _velocity.y += Mathf.Sqrt(JumpHeight * -2f * gravity);
+                    animator.SetBool("Running", false);
+                    animator.SetBool("Jumping", true);
                 }
                 if(_isWallRunning && !_isGrounded){
                     //DetachFromWall
@@ -236,7 +241,11 @@ public class ThirdPersonMovement : MonoBehaviour
                     isWallLeft = false;
                     isWallRight = false;
                     ExitWallRun();
+                    //reset y_velocity on wall
+                    _velocity.y = 0;
+                    print("yVelocity before jump: " + _velocity.y);
                     _velocity.y += Mathf.Sqrt(JumpHeight * -2f * gravity);
+                    print("yVelocity after jump: " + _velocity.y);
                     //Jump off wall at 45 degree angle
                     Vector3 jumpDirection;
                     //jump direction uses transform.TransformDirection to move player in a vector 45degrees away from wall
