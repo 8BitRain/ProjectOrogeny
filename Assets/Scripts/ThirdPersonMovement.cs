@@ -5,6 +5,7 @@ using UnityEngine;
 public class ThirdPersonMovement : MonoBehaviour
 {
     //Movement
+    [Header("Movement Settings")]
     public float speed = 6.0f;
     private float defaultSpeed;
     public float acceleration = .1f;
@@ -12,21 +13,26 @@ public class ThirdPersonMovement : MonoBehaviour
     public float maxSpeed = 10.0f;
     public float gravity = -9.81f;
 
+    public float turnSmoothTime = 0.1f;
+    float turnSmoothVelocity;
+    
     public bool glideOnGround = false;
 
     //Jump Related Code
-    private Vector3 _velocity;
-    private bool _isGrounded = true;
+    [Header("Jump Settings")]
     public Transform _groundChecker;
     public float GroundDistance = 0.2f;
     public LayerMask Ground;
     public float JumpHeight = 2f;
+    private Vector3 _velocity;
+    private bool _isGrounded = true;
+
 
     //Movement Related
     private bool moveCharacter;
 
     //Wall Running
-    private bool _isWallRunning = false;
+    [Header("WallRunning Settings")]
     public Transform _wallRunChecker;
     public float wallDistance = 0.2f;
     public LayerMask Wall;
@@ -35,20 +41,21 @@ public class ThirdPersonMovement : MonoBehaviour
     bool isWallLeft;
     private Vector3 wallVector;
     private Vector3 wallJumpDirection;
+    private bool _isWallRunning = false;
+
     
     //Camera Management
+    [Header("Camera Management")]
     public GameObject mainCamera;
     public GameObject aimCamera;
     public GameObject aimReticle;
 
     //Time Management
     //TODO: Create a time manager
+    [Header("Time Settings")]
      private bool slowTime;
 
-
-    public float turnSmoothTime = 0.1f;
-    float turnSmoothVelocity;
-
+    [Header("Character Settings")]
     public CharacterController _controller;
     public Transform cam;
     //This is the reference to the player so we can pull components that are children
@@ -67,6 +74,7 @@ public class ThirdPersonMovement : MonoBehaviour
     private bool running;
     private float animCounter;
 
+    [Header("Animation Settings")]
     public AnimationClip[] jumpingAnimationClip;
 
     public Animator animator;
