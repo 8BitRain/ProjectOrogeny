@@ -114,6 +114,11 @@ public class ThirdPersonMovement : MonoBehaviour
             {
                 _velocity.y = 0f;
                 animator.SetBool("Jumping", false);
+
+                if(animator.GetBool("Falling")){
+                    animator.SetBool("Landing", true);
+                    animator.SetBool("Falling", false);
+                }
             }
 
             //WALLRUNNING 2.0 using Raycasts
@@ -280,9 +285,18 @@ public class ThirdPersonMovement : MonoBehaviour
             }
             
             //Gravity
+            print(_velocity.y);
             _velocity.y += gravity * Time.deltaTime;
             //Getting a better jumping arc will probably be factored here
             _controller.Move(_velocity * Time.deltaTime);
+
+            //falling animation
+            if(_velocity.y < 0){
+                animator.SetBool("Falling", true);
+            }
+            if(_velocity.y >= 0){
+                animator.SetBool("Falling", false);
+            }
         }
     }
 
