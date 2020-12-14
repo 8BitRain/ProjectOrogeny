@@ -43,6 +43,17 @@ public class ThirdPersonMovement : MonoBehaviour
     private Vector3 wallJumpDirection;
     private bool _isWallRunning = false;
 
+    //Enviromental EFX
+    [Header("Enviromental EFX")]
+    public float cosmicWindDistance = .1f;
+    private bool isCosmicWindFloating = false;
+    public float windRiseSpeed = 1f;
+    //Dictates y velocity so player does not sink in uprising wind. 
+    //0 represents no sinking, while the min value represents sinking to a degree.
+    [Range(0.0f, -10.0f)] public float windResetVelocityY = 0;
+
+    
+
     
     //Camera Management
     [Header("Camera Management")]
@@ -290,13 +301,8 @@ public class ThirdPersonMovement : MonoBehaviour
             //Getting a better jumping arc will probably be factored here
             _controller.Move(_velocity * Time.deltaTime);
 
-            //falling animation
-            if(_velocity.y < 0){
-                animator.SetBool("Falling", true);
-            }
-            if(_velocity.y >= 0){
-                animator.SetBool("Falling", false);
-            }
+            
+
         }
     }
 
@@ -352,6 +358,38 @@ public class ThirdPersonMovement : MonoBehaviour
     void toggleMovement(bool toggle)
     {
         canMove = toggle;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        //Enviromental EFX Cosmic Wind Riding/Rising
+        if(other.tag == "CosmicWind Enter Function")
+        { 
+            print("CosmicWind Rise");
+            if(_velocity.y < windResetVelocityY)
+            {
+                _velocity.y = windResetVelocityY;
+            }
+            _velocity.y += windRiseSpeed * Time.deltaTime;
+            _controller.Move(_velocity * Time.deltaTime);
+        }
+    }
+
+     private void OnTriggerStay(Collider other)
+    {
+        //Enviromental EFX Cosmic Wind Riding/Rising
+        if(other.tag == "CosmicWind")
+        { 
+            if(_velocity.y < windResetVelocityY)
+            {
+                _velocity.y = windResetVelocityY;
+            }
+            animator.SetBool("Running", false);
+            animator.SetBool("Jumping", true);
+            print("CosmicWind Rise Stay function");
+            _velocity.y += windRiseSpeed * Time.deltaTime;
+            _controller.Move(_velocity * Time.deltaTime);
+        }
     }
 
     IEnumerator ShowReticle()
