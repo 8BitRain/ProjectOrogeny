@@ -49,7 +49,7 @@ public class ThirdPersonMovement : MonoBehaviour
     private bool isCosmicWindFloating = false;
     public float windRiseSpeed = 1f;
     //Dictates y velocity so player does not sink in uprising wind. 
-    //0 represents no sinking, while the min value represents sinking to a degree.
+    //0 represents no sinking, while the min value represents sinking to a degree. -10 would represent bobbing.
     [Range(0.0f, -10.0f)] public float windResetVelocityY = 0;
 
     
