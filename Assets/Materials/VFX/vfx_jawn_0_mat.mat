@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: groundShockwave1_mat
+  m_Name: vfx_jawn_0_mat
   m_Shader: {fileID: -6465566751694194690, guid: 4e587b14be1fb48a0870bde778c57d97,
     type: 3}
   m_ShaderKeywords: 
@@ -21,11 +21,11 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - Texture2D_4BFBDBD8:
-        m_Texture: {fileID: 2800000, guid: 075a3fa7712a542998030a99af4dacc1, type: 3}
+        m_Texture: {fileID: 2800000, guid: b84c6a740d389439ea29dc65bae668e6, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats: []
     m_Colors:
-    - Color_3C67F8C2: {r: 1, g: 1, b: 1, a: 0}
-    - Vector2_2F33F46E: {r: 4, g: 1, b: 0, a: 0}
-    - Vector2_3C4AB87D: {r: 0, g: -0.93, b: 0, a: 0}
+    - Color_3C67F8C2: {r: 0.7058824, g: 2.054902, b: 2.682353, a: 0}
+    - Vector2_2F33F46E: {r: 1, g: 1, b: 0, a: 0}
+    - Vector2_3C4AB87D: {r: 0, g: -0.5, b: 0, a: 0}
