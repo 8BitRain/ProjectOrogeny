@@ -66,6 +66,11 @@ public class ThirdPersonMovement : MonoBehaviour
     [Header("Time Settings")]
      private bool slowTime;
 
+    //Combat Management
+      [Header("Combat Timer Management")]
+    public float cosmicPalmTimer = 0;
+    private bool startTimer = false;
+
     [Header("Character Settings")]
     public CharacterController _controller;
     public Transform cam;
@@ -87,6 +92,8 @@ public class ThirdPersonMovement : MonoBehaviour
 
     [Header("Animation Settings")]
     public AnimationClip[] jumpingAnimationClip;
+    public AnimationClip[] combatAnimationClip;
+
 
     public Animator animator;
     //https://docs.unity3d.com/ScriptReference/AnimatorOverrideController.html
@@ -107,6 +114,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
         aimReticle.SetActive(false);
         slowTime = false;
+
     }
 
     // Update is called once per frame
@@ -280,6 +288,23 @@ public class ThirdPersonMovement : MonoBehaviour
                 //_velocity.y += Mathf.Sqrt(JumpHeight * -2f * gravity);
             }
 
+            //Combat Player Input
+
+            if(cosmicPalmTimer <= 0 && startTimer)
+            {
+                animator.SetBool("CosmicPalmAttack", false);
+                startTimer = false;
+                cosmicPalmTimer = 0;
+            }
+
+            if(Input.GetAxis("Right Trigger") == 1.0f && cosmicPalmTimer == 0){
+                //Gravity,Sensitivty, and deadzone controller values were pulled from https://wiki.unity3d.com/index.php/Xbox360Controller
+                print("COSMIC PAWLLLMMM");
+                animator.SetBool("CosmicPalmAttack", true);
+                cosmicPalmTimer = combatAnimationClip[0].length;
+                startTimer = true;
+            }
+
             if(horizontal != 0 || veritical != 0)
             {
                 if(!_isWallRunning && !animator.GetBool("Jumping"))
@@ -300,6 +325,12 @@ public class ThirdPersonMovement : MonoBehaviour
             _velocity.y += gravity * Time.deltaTime;
             //Getting a better jumping arc will probably be factored here
             _controller.Move(_velocity * Time.deltaTime);
+
+            //Attack Timers
+            if(cosmicPalmTimer > 0 && startTimer)
+            {
+                cosmicPalmTimer -= Time.deltaTime;
+            }
 
             
 
