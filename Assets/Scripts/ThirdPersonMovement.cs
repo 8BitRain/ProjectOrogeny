@@ -91,6 +91,7 @@ public class ThirdPersonMovement : MonoBehaviour
     private float animCounter;
 
     [Header("Animation Settings")]
+    public AnimationClip[] wallRunningAnimationClip;
     public AnimationClip[] jumpingAnimationClip;
     public AnimationClip[] combatAnimationClip;
 
@@ -134,7 +135,9 @@ public class ThirdPersonMovement : MonoBehaviour
                 _velocity.y = 0f;
                 animator.SetBool("Jumping", false);
 
+                //No longer falling
                 if(animator.GetBool("Falling")){
+                    print("Not falling");
                     animator.SetBool("Landing", true);
                     animator.SetBool("Falling", false);
                 }
@@ -289,7 +292,6 @@ public class ThirdPersonMovement : MonoBehaviour
             }
 
             //Combat Player Input
-
             if(cosmicPalmTimer <= 0 && startTimer)
             {
                 animator.SetBool("CosmicPalmAttack", false);
@@ -322,6 +324,11 @@ public class ThirdPersonMovement : MonoBehaviour
             
             //Gravity
             print(_velocity.y);
+            //Falling Animation Control
+            if(_velocity.y < 0)
+            {
+                animator.SetBool("Falling", true);
+            }
             _velocity.y += gravity * Time.deltaTime;
             //Getting a better jumping arc will probably be factored here
             _controller.Move(_velocity * Time.deltaTime);
@@ -331,6 +338,8 @@ public class ThirdPersonMovement : MonoBehaviour
             {
                 cosmicPalmTimer -= Time.deltaTime;
             }
+
+
 
             
 
@@ -370,11 +379,11 @@ public class ThirdPersonMovement : MonoBehaviour
         if(direction == "right")
         {
             //TODO: Implement 
-            animatorOverrideController["rig|wallRunLeft"] = jumpingAnimationClip[0];
+            animatorOverrideController["rig|wallRunLeft"] = wallRunningAnimationClip[0];
         }
         if(direction == "left")
         {
-            animatorOverrideController["rig|wallRunLeft"] = jumpingAnimationClip[1];
+            animatorOverrideController["rig|wallRunLeft"] = wallRunningAnimationClip[1];
         }
 
         print("wallrunning");
