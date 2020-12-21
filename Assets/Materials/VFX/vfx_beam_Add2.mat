@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: groundShockwaveShaderWithNoiseFunction_mat
-  m_Shader: {fileID: -6465566751694194690, guid: 718d0c895b6b241ce9cf42d913d0d38d,
+  m_Name: vfx_beam_Add2
+  m_Shader: {fileID: -6465566751694194690, guid: 3fe6c0cfc387c4094b1941b873b9c08a,
     type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -20,13 +20,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - Texture2D_4BFBDBD8:
-        m_Texture: {fileID: 2800000, guid: 075a3fa7712a542998030a99af4dacc1, type: 3}
+    - Texture2D_CADCF71B:
+        m_Texture: {fileID: 2800000, guid: 4aedac7edc71d431bb020531bc3a7602, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - Vector1_7D811EF5: 0
+    m_Floats: []
     m_Colors:
-    - Color_3C67F8C2: {r: 0.28235295, g: 0.9411765, b: 1.1764706, a: 0}
-    - Vector2_2F33F46E: {r: 3, g: 1, b: 0, a: 0}
-    - Vector2_3C4AB87D: {r: 0, g: -0.5, b: 0, a: 0}
+    - Color_5D392A5: {r: 0.9221513, g: 0.9221513, b: 0.9221513, a: 1}
