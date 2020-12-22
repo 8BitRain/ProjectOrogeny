@@ -27,6 +27,9 @@ public class ThirdPersonMovement : MonoBehaviour
     private Vector3 _velocity;
     private bool _isGrounded = true;
 
+    public GameObject _jumpVFX;
+
+
 
     //Movement Related
     private bool moveCharacter;
@@ -52,8 +55,13 @@ public class ThirdPersonMovement : MonoBehaviour
     //0 represents no sinking, while the min value represents sinking to a degree. -10 would represent bobbing.
     [Range(0.0f, -10.0f)] public float windResetVelocityY = 0;
 
-    
-
+    //Combat
+    [Header("Combat Ability Management")]
+    public GameObject cosmicPalmBeam;
+    public Transform _cosmicPalmBeamSpawnLocation;
+    private GameObject spawnedCosmicPalmBeam;
+    public float cosmicPalmBeamDuration = 5;
+    public float cosmicPalmBeamSpeed = 5;
     
     //Camera Management
     [Header("Camera Management")]
@@ -67,7 +75,7 @@ public class ThirdPersonMovement : MonoBehaviour
      private bool slowTime;
 
     //Combat Management
-      [Header("Combat Timer Management")]
+    [Header("Combat Timer Management")]
     public float cosmicPalmTimer = 0;
     private bool startTimer = false;
 
@@ -266,6 +274,15 @@ public class ThirdPersonMovement : MonoBehaviour
                     _velocity.y += Mathf.Sqrt(JumpHeight * -2f * gravity);
                     animator.SetBool("Running", false);
                     animator.SetBool("Jumping", true);
+
+                    //play jump vfx
+                    GameObject jumpVFXClone;
+                    jumpVFXClone = Instantiate(_jumpVFX, transform.position, transform.rotation);
+                    //jumpVFXClone.GetChild(0).GetComponent<ParticleSystem>().Play();
+                    //float duration = jumpVFXClone.GetChild(0).GetComponent<ParticleSystem>().main.duration;
+                    //ParticleSystem particleSystem = jumpVFXClone.GetChild(0).GetComponent<ParticleSystem>();
+                    //var main = particleSystem.main;
+                    Destroy(jumpVFXClone, 2);
                 }
                 if(_isWallRunning && !_isGrounded){
                     //DetachFromWall
@@ -297,6 +314,9 @@ public class ThirdPersonMovement : MonoBehaviour
                 animator.SetBool("CosmicPalmAttack", false);
                 startTimer = false;
                 cosmicPalmTimer = 0;
+
+                //Send out cosmicPalm, animation is finished
+                startCosmicPalmBeam();
             }
 
             if(Input.GetAxis("Right Trigger") == 1.0f && cosmicPalmTimer == 0){
@@ -339,6 +359,9 @@ public class ThirdPersonMovement : MonoBehaviour
                 cosmicPalmTimer -= Time.deltaTime;
             }
 
+            //Update combat abilities
+            updateCosmicPalmBeam();
+
 
 
             
@@ -346,6 +369,35 @@ public class ThirdPersonMovement : MonoBehaviour
         }
     }
 
+    //Combat function 
+    void startCosmicPalmBeam()
+    {
+        //Spawn Cosmic Palm Beam and destroy it after 2 seconds 
+        spawnedCosmicPalmBeam = Instantiate(cosmicPalmBeam, _cosmicPalmBeamSpawnLocation.position, _cosmicPalmBeamSpawnLocation.rotation) as GameObject;
+        LineRenderer lineRenderer = spawnedCosmicPalmBeam.GetComponentInChildren<LineRenderer>();
+        //https://docs.unity3d.com/ScriptReference/LineRenderer.SetPosition.html
+        //initialize length of beam to 0
+        Vector3 beamLength = new Vector3(0,0,0);
+        lineRenderer.SetPosition(1,beamLength);
+        Destroy(spawnedCosmicPalmBeam, cosmicPalmBeamDuration);
+    }
+
+    void updateCosmicPalmBeam()
+    {
+        if(spawnedCosmicPalmBeam != null)
+        {
+            //Update the position to the transform remove to allow beam to fire without locking to spawn position and rotation
+            spawnedCosmicPalmBeam.transform.position = _cosmicPalmBeamSpawnLocation.position;
+            spawnedCosmicPalmBeam.transform.rotation = _cosmicPalmBeamSpawnLocation.rotation;
+            LineRenderer lineRenderer = spawnedCosmicPalmBeam.GetComponentInChildren<LineRenderer>();
+            //https://docs.unity3d.com/ScriptReference/LineRenderer.SetPosition.html
+            //initialize length of beam to 0
+            float previousBeamLength = lineRenderer.GetPosition(1).z;
+            float updatedBeamLength = previousBeamLength + (cosmicPalmBeamSpeed * Time.deltaTime);
+            Vector3 beamLength = new Vector3(0,0,updatedBeamLength);
+            lineRenderer.SetPosition(1,beamLength);
+        }
+    }
     /*Inspired by the algorithm provided here http://www.footnotesforthefuture.com/words/wall-running-1/*/
     void CheckForWall()
     {

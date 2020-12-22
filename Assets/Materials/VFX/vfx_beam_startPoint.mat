@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: vfx_beam1_shader
+  m_Name: vfx_beam_startPoint
   m_Shader: {fileID: -6465566751694194690, guid: 1cefc1ca838bf4752b4cf0a22dcb6998,
     type: 3}
   m_ShaderKeywords: 
@@ -21,19 +21,19 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - Texture2D_AC2615AA:
-        m_Texture: {fileID: 2800000, guid: 80e95608de4964a479de7ac4f3c23133, type: 3}
+        m_Texture: {fileID: 2800000, guid: cd7e56344277f4549aecaa14baefb202, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_F6F32477:
-        m_Texture: {fileID: 2800000, guid: cbd5504ff8c77466fbd4cc863fb80c4b, type: 3}
+        m_Texture: {fileID: 10300, guid: 0000000000000000f000000000000000, type: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - Vector1_60E8428E: 0.5
-    - Vector1_73E1C7F6: 0.607
+    - Vector1_73E1C7F6: 0.262
     - Vector1_86B16860: 1
-    - Vector1_8C7285F7: 15
+    - Vector1_8C7285F7: 1
     m_Colors:
-    - Color_2719D1EE: {r: 2.9960785, g: 2.9960785, b: 2.9960785, a: 1}
-    - Vector2_32032A96: {r: -0.5, g: 0, b: 0, a: 0}
+    - Color_2719D1EE: {r: 12.844469, g: 12.844469, b: 12.844469, a: 1}
+    - Vector2_32032A96: {r: -0.1, g: -0.5, b: 0, a: 0}
     - Vector2_D6893D55: {r: -0.5, g: 0, b: 0, a: 0}
