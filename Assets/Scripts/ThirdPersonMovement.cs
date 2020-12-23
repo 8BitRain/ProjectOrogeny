@@ -131,6 +131,7 @@ public class ThirdPersonMovement : MonoBehaviour
     {
         if(canMove)
         {
+            //Player x and y movement
             float horizontal = Input.GetAxisRaw("Horizontal");
             float veritical = Input.GetAxisRaw("Vertical");
             Vector3 direction = new Vector3(horizontal, 0, veritical).normalized;
@@ -309,6 +310,7 @@ public class ThirdPersonMovement : MonoBehaviour
             }
 
             //Combat Player Input
+            /*2 considerations. 1 QuickFire 2. Holding Palm Attack*/
             if(cosmicPalmTimer <= 0 && startTimer)
             {
                 animator.SetBool("CosmicPalmAttack", false);
@@ -359,6 +361,13 @@ public class ThirdPersonMovement : MonoBehaviour
                 cosmicPalmTimer -= Time.deltaTime;
             }
 
+            //Update cosmic palm Spawn to look at center of screen
+            //_cosmicPalmBeamSpawnLocation.transform.LookAt(Camera.main.ViewportToWorldPoint(new Vector3(.5f,.5f,0)));
+            //Debug.DrawRay(_cosmicPalmBeamSpawnLocation.transform.position, Camera.main.ViewportToWorldPoint(new Vector3(.5f,.5f,0)), Color.red);
+
+            Ray ray = Camera.main.ScreenPointToRay(new Vector3(Camera.main.pixelWidth/2, Camera.main.pixelHeight/2, 0));
+            Debug.DrawRay(_cosmicPalmBeamSpawnLocation.transform.position, ray.direction * 10, Color.yellow);
+            _cosmicPalmBeamSpawnLocation.transform.LookAt(_cosmicPalmBeamSpawnLocation.transform.position + ray.direction);
             //Update combat abilities
             updateCosmicPalmBeam();
 
@@ -374,19 +383,22 @@ public class ThirdPersonMovement : MonoBehaviour
     {
         //Spawn Cosmic Palm Beam and destroy it after 2 seconds 
         spawnedCosmicPalmBeam = Instantiate(cosmicPalmBeam, _cosmicPalmBeamSpawnLocation.position, _cosmicPalmBeamSpawnLocation.rotation) as GameObject;
+        //Draw DebugRay
         LineRenderer lineRenderer = spawnedCosmicPalmBeam.GetComponentInChildren<LineRenderer>();
         //https://docs.unity3d.com/ScriptReference/LineRenderer.SetPosition.html
         //initialize length of beam to 0
         Vector3 beamLength = new Vector3(0,0,0);
         lineRenderer.SetPosition(1,beamLength);
         Destroy(spawnedCosmicPalmBeam, cosmicPalmBeamDuration);
+
+        //let's have the character look at where the beam is firing
+        transform.rotation = Quaternion.Euler(0, _cosmicPalmBeamSpawnLocation.transform.rotation.eulerAngles.y, 0);
     }
 
     void updateCosmicPalmBeam()
     {
         if(spawnedCosmicPalmBeam != null)
         {
-            //Update the position to the transform remove to allow beam to fire without locking to spawn position and rotation
             spawnedCosmicPalmBeam.transform.position = _cosmicPalmBeamSpawnLocation.position;
             spawnedCosmicPalmBeam.transform.rotation = _cosmicPalmBeamSpawnLocation.rotation;
             LineRenderer lineRenderer = spawnedCosmicPalmBeam.GetComponentInChildren<LineRenderer>();
@@ -396,6 +408,9 @@ public class ThirdPersonMovement : MonoBehaviour
             float updatedBeamLength = previousBeamLength + (cosmicPalmBeamSpeed * Time.deltaTime);
             Vector3 beamLength = new Vector3(0,0,updatedBeamLength);
             lineRenderer.SetPosition(1,beamLength);
+
+            //let's have the character look at where the beam is firing
+            transform.rotation = Quaternion.Euler(0, _cosmicPalmBeamSpawnLocation.transform.rotation.eulerAngles.y, 0);
         }
     }
     /*Inspired by the algorithm provided here http://www.footnotesforthefuture.com/words/wall-running-1/*/
