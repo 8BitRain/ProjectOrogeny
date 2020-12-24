@@ -60,8 +60,10 @@ public class ThirdPersonMovement : MonoBehaviour
     public GameObject cosmicPalmBeam;
     public Transform _cosmicPalmBeamSpawnLocation;
     private GameObject spawnedCosmicPalmBeam;
+    private Transform _laser;
     public float cosmicPalmBeamDuration = 5;
     public float cosmicPalmBeamSpeed = 5;
+    public float cosmicPalmBeamThrust = 10000;
     
     //Camera Management
     [Header("Camera Management")]
@@ -76,7 +78,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
     //Combat Management
     [Header("Combat Timer Management")]
-    public float cosmicPalmTimer = 0;
+    private float cosmicPalmTimer = 0;
     private float _actionTimer = 0;
     private bool startTimer = false;
     private bool firePalmIntoDistance = false;
@@ -341,6 +343,9 @@ public class ThirdPersonMovement : MonoBehaviour
                     Debug.Log("Reset action timer after hold for 10 seconds");
                     animator.SetBool("CosmicPalmAttack", false);
                     startTimer = false;
+
+                    //The ability is finished, we should be able to move the character manually again
+                    moveCharacter = true;
                     
                 }
 
@@ -351,6 +356,8 @@ public class ThirdPersonMovement : MonoBehaviour
                     }
                     animator.SetBool("CosmicPalmAttack", true);
                     Debug.Log("Starting Cosmic Palm Attack");
+                    //Stop moving the character, the ability has started
+                    moveCharacter = false;
                     startTimer = true;
                 }
 
@@ -368,12 +375,13 @@ public class ThirdPersonMovement : MonoBehaviour
             if(Input.GetAxis("Right Trigger") <= 0)
             {
                 Debug.Log("Trigger released");
-                if(_actionTimer >= 3)
+                if(_actionTimer >= 4)
                 {
                     Debug.Log("action time reset after trigger released");
                     startTimer = false;
                     _actionTimer = 0;
                     animator.SetBool("CosmicPalmAttack", false);
+                    moveCharacter = true;
                 }
             }
 
@@ -435,7 +443,7 @@ public class ThirdPersonMovement : MonoBehaviour
             if(firePalmIntoDistance)
             {
                 Debug.Log("Fire Palm blast into distance");
-                spawnedCosmicPalmBeam.GetComponent<Rigidbody>().AddForce(spawnedCosmicPalmBeam.transform.forward * 1000);
+                spawnedCosmicPalmBeam.GetComponent<Rigidbody>().AddForce(spawnedCosmicPalmBeam.transform.forward * cosmicPalmBeamThrust);
                 firePalmIntoDistance = false;
                 spawnedCosmicPalmBeam = null;
             }
@@ -447,12 +455,15 @@ public class ThirdPersonMovement : MonoBehaviour
     {
         //Spawn Cosmic Palm Beam
         spawnedCosmicPalmBeam = Instantiate(cosmicPalmBeam, _cosmicPalmBeamSpawnLocation.position, _cosmicPalmBeamSpawnLocation.rotation) as GameObject;
-        LineRenderer lineRenderer = spawnedCosmicPalmBeam.GetComponentInChildren<LineRenderer>();
-        
-        //https://docs.unity3d.com/ScriptReference/LineRenderer.SetPosition.html
-        //initialize length of beam to 0
-        Vector3 beamLength = new Vector3(0,0,0);
-        lineRenderer.SetPosition(1,beamLength);
+
+        //The laser is the first object
+        //TODO: Add error handling here. _laser has the possibility of not being the first child if the game object is not setup that way. 
+        _laser = spawnedCosmicPalmBeam.transform.GetChild(0);
+        if(_laser.gameObject.activeSelf)
+        {
+            //Set the laser beam to inactive. It should only form once the palm animation has finished. That way we get the anticipation effect of ki building in the palm.
+            _laser.gameObject.SetActive(false);
+        }
 
         //let's have the character look at where the beam is firing
         transform.rotation = Quaternion.Euler(0, _cosmicPalmBeamSpawnLocation.transform.rotation.eulerAngles.y, 0);
@@ -462,20 +473,35 @@ public class ThirdPersonMovement : MonoBehaviour
     {
         if(spawnedCosmicPalmBeam != null)
         {
+            //The beam updating depends upon the animation state CosmicPalmAttack. For now this move is animation locked.
             if(animator.GetBool("CosmicPalmAttack"))
             {
+                //Check timer to make sure we can summon the beam. We want to summon the beam once the cosmic palm strike animation completes
+                if(_actionTimer >= combatAnimationClip[0].length)
+                {
+                    if(!_laser.gameObject.activeSelf && spawnedCosmicPalmBeam != null)
+                    {
+                        _laser.gameObject.SetActive(true);
+                    }
+                }
                 spawnedCosmicPalmBeam.transform.position = _cosmicPalmBeamSpawnLocation.position;
                 spawnedCosmicPalmBeam.transform.rotation = _cosmicPalmBeamSpawnLocation.rotation;
-                LineRenderer lineRenderer = spawnedCosmicPalmBeam.GetComponentInChildren<LineRenderer>();
-                //https://docs.unity3d.com/ScriptReference/LineRenderer.SetPosition.html
-                //initialize length of beam to 0
-                float previousBeamLength = lineRenderer.GetPosition(1).z;
-                float updatedBeamLength = previousBeamLength + (cosmicPalmBeamSpeed * Time.deltaTime);
 
-                //Ensure hitbox of spawned beam moves
-                spawnedCosmicPalmBeam.GetComponent<BoxCollider>().center = new Vector3(0,0,updatedBeamLength);
-                Vector3 beamLength = new Vector3(0,0,updatedBeamLength);
-                lineRenderer.SetPosition(1,beamLength);
+                //If the beam is active, have it grow larger and shoot further into the distance
+                if(_laser.gameObject.activeSelf)
+                {
+                    LineRenderer lineRenderer = _laser.GetComponent<LineRenderer>();
+                    //https://docs.unity3d.com/ScriptReference/LineRenderer.SetPosition.html
+                    //initialize length of beam to 0
+                    float previousBeamLength = lineRenderer.GetPosition(1).z;
+                    float updatedBeamLength = previousBeamLength + (cosmicPalmBeamSpeed * Time.deltaTime);
+    
+                    //Ensure hitbox of spawned beam moves
+                    spawnedCosmicPalmBeam.GetComponent<BoxCollider>().center = new Vector3(0,0,updatedBeamLength);
+                    Vector3 beamLength = new Vector3(0,0,updatedBeamLength);
+                    lineRenderer.SetPosition(1,beamLength);
+                }
+
     
                 //let's have the character look at where the beam is firing
                 transform.rotation = Quaternion.Euler(0, _cosmicPalmBeamSpawnLocation.transform.rotation.eulerAngles.y, 0);
