@@ -77,7 +77,9 @@ public class ThirdPersonMovement : MonoBehaviour
     //Combat Management
     [Header("Combat Timer Management")]
     public float cosmicPalmTimer = 0;
+    private float _actionTimer = 0;
     private bool startTimer = false;
+    private bool firePalmIntoDistance = false;
 
     [Header("Character Settings")]
     public CharacterController _controller;
@@ -311,7 +313,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
             //Combat Player Input
             /*2 considerations. 1 QuickFire 2. Holding Palm Attack*/
-            if(cosmicPalmTimer <= 0 && startTimer)
+            /*if(cosmicPalmTimer <= 0 && startTimer)
             {
                 animator.SetBool("CosmicPalmAttack", false);
                 startTimer = false;
@@ -319,14 +321,60 @@ public class ThirdPersonMovement : MonoBehaviour
 
                 //Send out cosmicPalm, animation is finished
                 startCosmicPalmBeam();
+            }*/
+
+            //Action Timer
+            if(startTimer)
+            {
+                _actionTimer += Time.deltaTime;
             }
 
-            if(Input.GetAxis("Right Trigger") == 1.0f && cosmicPalmTimer == 0){
+            //Trigger pressed or held
+            if(Input.GetAxis("Right Trigger") == 1.0f){
                 //Gravity,Sensitivty, and deadzone controller values were pulled from https://wiki.unity3d.com/index.php/Xbox360Controller
-                print("COSMIC PAWLLLMMM");
-                animator.SetBool("CosmicPalmAttack", true);
+                //print("COSMIC PAWLLLMMM action timer started");
+
+                //If 10 seconds have passed we can do this action
+                if(_actionTimer >= 10)
+                {
+                    //10 is an arbitrary value for now. Replace with a quickfire animation time
+                    Debug.Log("Reset action timer after hold for 10 seconds");
+                    animator.SetBool("CosmicPalmAttack", false);
+                    startTimer = false;
+                    
+                }
+
+                if(_actionTimer == 0){
+                    if(spawnedCosmicPalmBeam == null)
+                    {
+                        startCosmicPalmBeam();
+                    }
+                    animator.SetBool("CosmicPalmAttack", true);
+                    Debug.Log("Starting Cosmic Palm Attack");
+                    startTimer = true;
+                }
+
+                if(_actionTimer > .5){
+                    Debug.Log("Holding Trigger for longer than .5 seconds");
+                    print("CosmicPalm");
+                }
+
                 cosmicPalmTimer = combatAnimationClip[0].length;
-                startTimer = true;
+            }
+            
+
+
+            //Trigger released
+            if(Input.GetAxis("Right Trigger") <= 0)
+            {
+                Debug.Log("Trigger released");
+                if(_actionTimer >= 3)
+                {
+                    Debug.Log("action time reset after trigger released");
+                    startTimer = false;
+                    _actionTimer = 0;
+                    animator.SetBool("CosmicPalmAttack", false);
+                }
             }
 
             if(horizontal != 0 || veritical != 0)
@@ -345,7 +393,7 @@ public class ThirdPersonMovement : MonoBehaviour
             }
             
             //Gravity
-            print(_velocity.y);
+            /*DEBUG print(_velocity.y);*/
             //Falling Animation Control
             if(_velocity.y < 0)
             {
@@ -371,6 +419,8 @@ public class ThirdPersonMovement : MonoBehaviour
             //Update combat abilities
             updateCosmicPalmBeam();
 
+            print("Action Timer Value: " + _actionTimer);
+
 
 
             
@@ -378,18 +428,31 @@ public class ThirdPersonMovement : MonoBehaviour
         }
     }
 
+    void FixedUpdate()
+    {
+        if(spawnedCosmicPalmBeam != null)
+        {
+            if(firePalmIntoDistance)
+            {
+                Debug.Log("Fire Palm blast into distance");
+                spawnedCosmicPalmBeam.GetComponent<Rigidbody>().AddForce(spawnedCosmicPalmBeam.transform.forward * 1000);
+                firePalmIntoDistance = false;
+                spawnedCosmicPalmBeam = null;
+            }
+        }
+    }
+
     //Combat function 
     void startCosmicPalmBeam()
     {
-        //Spawn Cosmic Palm Beam and destroy it after 2 seconds 
+        //Spawn Cosmic Palm Beam
         spawnedCosmicPalmBeam = Instantiate(cosmicPalmBeam, _cosmicPalmBeamSpawnLocation.position, _cosmicPalmBeamSpawnLocation.rotation) as GameObject;
-        //Draw DebugRay
         LineRenderer lineRenderer = spawnedCosmicPalmBeam.GetComponentInChildren<LineRenderer>();
+        
         //https://docs.unity3d.com/ScriptReference/LineRenderer.SetPosition.html
         //initialize length of beam to 0
         Vector3 beamLength = new Vector3(0,0,0);
         lineRenderer.SetPosition(1,beamLength);
-        Destroy(spawnedCosmicPalmBeam, cosmicPalmBeamDuration);
 
         //let's have the character look at where the beam is firing
         transform.rotation = Quaternion.Euler(0, _cosmicPalmBeamSpawnLocation.transform.rotation.eulerAngles.y, 0);
@@ -399,18 +462,40 @@ public class ThirdPersonMovement : MonoBehaviour
     {
         if(spawnedCosmicPalmBeam != null)
         {
-            spawnedCosmicPalmBeam.transform.position = _cosmicPalmBeamSpawnLocation.position;
-            spawnedCosmicPalmBeam.transform.rotation = _cosmicPalmBeamSpawnLocation.rotation;
-            LineRenderer lineRenderer = spawnedCosmicPalmBeam.GetComponentInChildren<LineRenderer>();
-            //https://docs.unity3d.com/ScriptReference/LineRenderer.SetPosition.html
-            //initialize length of beam to 0
-            float previousBeamLength = lineRenderer.GetPosition(1).z;
-            float updatedBeamLength = previousBeamLength + (cosmicPalmBeamSpeed * Time.deltaTime);
-            Vector3 beamLength = new Vector3(0,0,updatedBeamLength);
-            lineRenderer.SetPosition(1,beamLength);
+            if(animator.GetBool("CosmicPalmAttack"))
+            {
+                spawnedCosmicPalmBeam.transform.position = _cosmicPalmBeamSpawnLocation.position;
+                spawnedCosmicPalmBeam.transform.rotation = _cosmicPalmBeamSpawnLocation.rotation;
+                LineRenderer lineRenderer = spawnedCosmicPalmBeam.GetComponentInChildren<LineRenderer>();
+                //https://docs.unity3d.com/ScriptReference/LineRenderer.SetPosition.html
+                //initialize length of beam to 0
+                float previousBeamLength = lineRenderer.GetPosition(1).z;
+                float updatedBeamLength = previousBeamLength + (cosmicPalmBeamSpeed * Time.deltaTime);
 
-            //let's have the character look at where the beam is firing
-            transform.rotation = Quaternion.Euler(0, _cosmicPalmBeamSpawnLocation.transform.rotation.eulerAngles.y, 0);
+                //Ensure hitbox of spawned beam moves
+                spawnedCosmicPalmBeam.GetComponent<BoxCollider>().center = new Vector3(0,0,updatedBeamLength);
+                Vector3 beamLength = new Vector3(0,0,updatedBeamLength);
+                lineRenderer.SetPosition(1,beamLength);
+    
+                //let's have the character look at where the beam is firing
+                transform.rotation = Quaternion.Euler(0, _cosmicPalmBeamSpawnLocation.transform.rotation.eulerAngles.y, 0);
+            }
+            if(!animator.GetBool("CosmicPalmAttack"))
+            {
+                stopCosmicPalmBeam();
+            }
+        }
+    }
+
+    void stopCosmicPalmBeam()
+    {
+        if(spawnedCosmicPalmBeam != null)
+        {
+            /*spawnedCosmicPalmBeam.gameObject.transform*/
+            //Destroy the beam after 3 seconds
+
+            Destroy(spawnedCosmicPalmBeam, 3);
+            firePalmIntoDistance = true;
         }
     }
     /*Inspired by the algorithm provided here http://www.footnotesforthefuture.com/words/wall-running-1/*/
