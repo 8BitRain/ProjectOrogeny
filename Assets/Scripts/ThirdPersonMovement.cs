@@ -466,7 +466,8 @@ public class ThirdPersonMovement : MonoBehaviour
         }
 
         //let's have the character look at where the beam is firing
-        transform.rotation = Quaternion.Euler(0, _cosmicPalmBeamSpawnLocation.transform.rotation.eulerAngles.y, 0);
+        //transform.rotation = Quaternion.Euler(0, _cosmicPalmBeamSpawnLocation.transform.rotation.eulerAngles.y, 0);
+        transform.rotation = Quaternion.Euler(_cosmicPalmBeamSpawnLocation.transform.rotation.eulerAngles.x, _cosmicPalmBeamSpawnLocation.transform.rotation.eulerAngles.y, 0);
     }
 
     void updateCosmicPalmBeam()
@@ -504,10 +505,13 @@ public class ThirdPersonMovement : MonoBehaviour
 
     
                 //let's have the character look at where the beam is firing
-                transform.rotation = Quaternion.Euler(0, _cosmicPalmBeamSpawnLocation.transform.rotation.eulerAngles.y, 0);
+                //transform.rotation = Quaternion.Euler(0, _cosmicPalmBeamSpawnLocation.transform.rotation.eulerAngles.y, 0);
+                transform.rotation = Quaternion.Euler(_cosmicPalmBeamSpawnLocation.transform.rotation.eulerAngles.x, _cosmicPalmBeamSpawnLocation.transform.rotation.eulerAngles.y, 0);
             }
             if(!animator.GetBool("CosmicPalmAttack"))
             {
+                //reset player's rotation to an upright neutral position. Experiment :D You can even create a flip animation to flip back into a neutral rotation for flair.
+                transform.rotation = Quaternion.Euler(0,0,0);
                 stopCosmicPalmBeam();
             }
         }
