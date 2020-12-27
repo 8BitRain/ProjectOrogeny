@@ -199,7 +199,17 @@ public class ThirdPersonMovement : MonoBehaviour
                     transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
                     //Move Forward as normal
                     moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-                    if(!glideOnGround)
+                    RaycastHit slopeHit;
+                    Vector3 slopeNormal;
+                    if(Physics.Raycast(_groundChecker.position, Vector3.down, out slopeHit, GroundDistance, Ground))
+                    {
+                        slopeNormal = slopeHit.normal;
+                        Quaternion slopeOffset = Quaternion.FromToRotation(Vector3.up, slopeNormal);
+                        //Multiply slope offset by move Direction. You can multiply a quaternion x a vector. Not a vector x a quaternion
+                        _controller.Move(slopeOffset * moveDir.normalized * speed * Time.deltaTime);
+                    } 
+                    
+                    if(!glideOnGround && !_isGrounded)
                     {
                         _controller.Move(moveDir.normalized * speed * Time.deltaTime);
                     } 
