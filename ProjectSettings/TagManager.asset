@@ -7,6 +7,8 @@ TagManager:
   - EarthernElement
   - WallRun
   - CosmicWind
+  - P1
+  - P2
   layers:
   - Default
   - TransparentFX
@@ -23,8 +25,8 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - P1Cam
+  - P2Cam
   - 
   - 
   - 
