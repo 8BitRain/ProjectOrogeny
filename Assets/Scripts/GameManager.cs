@@ -30,12 +30,7 @@ public class GameManager : MonoBehaviour
             virtualCamera.tag = "P1VirtualCamera";
             virtualCamera.layer = LayerMask.NameToLayer("P1Cam");
 
-
-            //https://docs.unity3d.com/Manual/Layers.html
-            /*int layerMask = 1 << 16;
-            layerMask = ~layerMask;
-
-            spawnedPlayers[0].GetComponent<ThirdPersonMovement>().cam.GetComponent<Camera>().cullingMask = layerMask;*/
+            spawnedPlayers[0].gameObject.SetActive(true);
         }
         if(InputUser.all.Count == 2 && spawnedPlayers[1] == null)
         {
@@ -48,21 +43,16 @@ public class GameManager : MonoBehaviour
             virtualCamera.tag = "P2VirtualCamera";
             virtualCamera.layer = LayerMask.NameToLayer("P2Cam");
 
-            //int layerMask = 1 << 15;
-            //layerMask = ~layerMask;
-
             Camera cam = spawnedPlayers[1].GetComponentInChildren<Camera>();
-            //Show
-            //cam.cullingMask |= 1 << LayerMask.NameToLayer("P2Cam");
-            //Hide
             Debug.Log("Camera referenced" + cam.name);
+
             cam.cullingMask = -1;
             cam.cullingMask &=  ~(1 << LayerMask.NameToLayer("P1Cam"));
+            spawnedPlayers[1].gameObject.SetActive(true);
 
-
-            
         }
-        InputSystem.onDeviceChange +=
+        //Input System Device Logging
+        /*InputSystem.onDeviceChange +=
         (device, change) =>
         {
             switch (change)
@@ -83,6 +73,6 @@ public class GameManager : MonoBehaviour
                     // See InputDeviceChange reference for other event types.
                     break;
             }
-        };
+        };*/
     }
 }

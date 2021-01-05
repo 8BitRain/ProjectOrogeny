@@ -13006,7 +13006,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2398749671249235683
 Transform:
   m_ObjectHideFlags: 0
@@ -13561,7 +13561,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerIndex: 0
-  XYAxis: {fileID: -3060967258231099734, guid: 7c93f9afbedf646778be325d13dd1bd9, type: 3}
+  XYAxis: {fileID: -523390147992757674, guid: 0af20018adea947299606934573dfb0b, type: 3}
   ZAxis: {fileID: 0}
 --- !u!1 &3781751648104427370
 GameObject:
@@ -20611,6 +20611,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 0660f4f5-754c-45ae-98bc-f58d1beac060
     m_ActionName: Gameplay/CosmicPalm[/XboxGamepadMacOS/rightTrigger]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 73de7740-4961-4384-9349-19aff762e678
+    m_ActionName: Gameplay/Look[/XboxGamepadMacOS/rightStick,/DualShock4GamepadHID/rightStick]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Gameplay
@@ -22047,7 +22051,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8226402252794440901}
-  m_LocalRotation: {x: 0.040101495, y: 0.000000017326336, z: -6.953713e-10, w: 0.99919564}
+  m_LocalRotation: {x: 0.040101495, y: -0.000000017326336, z: 6.953713e-10, w: 0.99919564}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
