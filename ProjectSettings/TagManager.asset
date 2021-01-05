@@ -9,6 +9,9 @@ TagManager:
   - CosmicWind
   - P1
   - P2
+  - VirtualCamera
+  - P1VirtualCamera
+  - P2VirtualCamera
   layers:
   - Default
   - TransparentFX

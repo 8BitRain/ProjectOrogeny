@@ -1,0 +1,33 @@
+{
+    "name": "GamepadLookControls",
+    "maps": [
+        {
+            "name": "LookControls",
+            "id": "e1fea2cc-480e-4761-ada3-8f91f657828f",
+            "actions": [
+                {
+                    "name": "Look",
+                    "type": "PassThrough",
+                    "id": "fdf326ce-e9b1-40fc-883a-7d66b4000e6a",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "3079b7d7-3602-4be3-9ba1-5c48acc78b59",
+                    "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

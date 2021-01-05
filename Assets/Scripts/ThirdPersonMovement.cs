@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ThirdPersonMovement : MonoBehaviour
 {
@@ -26,6 +27,7 @@ public class ThirdPersonMovement : MonoBehaviour
     public float JumpHeight = 2f;
     private Vector3 _velocity;
     private bool _isGrounded = true;
+    private bool jumpPressed = false;
 
     public GameObject _jumpVFX;
 
@@ -33,6 +35,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
     //Movement Related
     private bool moveCharacter;
+    private Vector2 movementInput;
 
     //Wall Running
     [Header("WallRunning Settings")]
@@ -82,6 +85,7 @@ public class ThirdPersonMovement : MonoBehaviour
     private float _actionTimer = 0;
     private bool startTimer = false;
     private bool firePalmIntoDistance = false;
+    private bool cosmicPalmInput = false;
 
     [Header("Character Settings")]
     public CharacterController _controller;
@@ -128,17 +132,26 @@ public class ThirdPersonMovement : MonoBehaviour
         aimReticle.SetActive(false);
         slowTime = false;
 
+        //If the cam is null, instantiate a new cam. 
+        /*if(this.cam == null)
+        {
+            this.cam =  GameObject.FindGameObjectWithTag("MainCamera").transform;
+        }*/
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        //Detect gamepad
+        //var gamepad = Gamepad.current;
+        //Debug.Log("Gamepad" + gamepad);
         if(canMove)
         {
-            //Player x and y movement
-            float horizontal = Input.GetAxisRaw("Horizontal");
-            float veritical = Input.GetAxisRaw("Vertical");
-            Vector3 direction = new Vector3(horizontal, 0, veritical).normalized;
+            //Player x and y movement OLD Unity Input Manager
+            /*float horizontal = Input.GetAxisRaw("Horizontal");
+            float veritical = Input.GetAxisRaw("Vertical");*/
+            Vector3 direction = new Vector3(movementInput.x, 0, movementInput.y).normalized;
 
             //Grounded status
             _isGrounded = Physics.CheckSphere(_groundChecker.position, GroundDistance, Ground, QueryTriggerInteraction.Ignore);
@@ -261,6 +274,7 @@ public class ThirdPersonMovement : MonoBehaviour
             
 
             //Controller Input
+            /*
             if(Input.GetAxis("Aim") == 1 && !aimCamera.activeInHierarchy)
             {
                 moveCharacter = false;
@@ -280,8 +294,11 @@ public class ThirdPersonMovement : MonoBehaviour
                 this.GetComponent<ThirdPersonCamera>().enabled = false;
                 SetSlowTime(false);
             }
+            */
 
-            if (Input.GetButton("PlayerJump")){
+            
+            //if (Input.GetButton("PlayerJump")){
+            if (jumpPressed){
                 if(_isGrounded && !_isWallRunning){
                     print("JUMP");
                     //reset y_velocity to prevent super bouncing
@@ -322,6 +339,7 @@ public class ThirdPersonMovement : MonoBehaviour
                 //TODO: Better Jumping Arc //Getting a better jumping arc will probably be factored here
                 //_velocity.y += Mathf.Sqrt(JumpHeight * -2f * gravity);
             }
+            
 
             //Combat Player Input
             /*2 considerations. 1 QuickFire 2. Holding Palm Attack*/
@@ -342,7 +360,9 @@ public class ThirdPersonMovement : MonoBehaviour
             }
 
             //Trigger pressed or held
-            if(Input.GetAxis("Right Trigger") == 1.0f){
+            //Old Trigger
+            //if(Input.GetAxis("Right Trigger") == 1.0f){
+            if(cosmicPalmInput){
                 //Gravity,Sensitivty, and deadzone controller values were pulled from https://wiki.unity3d.com/index.php/Xbox360Controller
                 //print("COSMIC PAWLLLMMM action timer started");
 
@@ -379,10 +399,13 @@ public class ThirdPersonMovement : MonoBehaviour
                 cosmicPalmTimer = combatAnimationClip[0].length;
             }
             
+            
 
 
             //Trigger released
-            if(Input.GetAxis("Right Trigger") <= 0)
+            //OLD TRIGGER
+            //if(Input.GetAxis("Right Trigger") <= 0)
+            if(!cosmicPalmInput)
             {
                 Debug.Log("Trigger released");
                 if(_actionTimer >= 4)
@@ -395,7 +418,7 @@ public class ThirdPersonMovement : MonoBehaviour
                 }
             }
 
-            if(horizontal != 0 || veritical != 0)
+            if(movementInput.x != 0 || movementInput.y != 0)
             {
                 if(!_isWallRunning && !animator.GetBool("Jumping"))
                 {
@@ -591,6 +614,11 @@ public class ThirdPersonMovement : MonoBehaviour
     {
         canMove = toggle;
     }
+
+    //New Unity Input Management.
+    public void OnMove(InputAction.CallbackContext ctx) => movementInput = ctx.ReadValue<Vector2>();
+    public void OnJump(InputAction.CallbackContext ctx) => jumpPressed = ctx.ReadValueAsButton();
+    public void OnCosmicPalm(InputAction.CallbackContext ctx) => cosmicPalmInput = ctx.ReadValueAsButton();
 
     private void OnTriggerEnter(Collider other)
     {
