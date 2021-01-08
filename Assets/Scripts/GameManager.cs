@@ -18,10 +18,10 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         //https://github.com/Unity-Technologies/upm-package-cinemachine/blob/d15a253e9e729594fc94ee672e7e8a5532cb9f79/Runtime/Helpers/CinemachineInputProvider.cs
-        Debug.Log("Connected Players: " + InputUser.all.Count);
+        //Debug.Log("Connected Players: " + InputUser.all.Count);
         if(InputUser.all.Count == 1 && spawnedPlayers[0] == null)
         {
-            Debug.Log("Player 1 Value " + InputUser.all[0].index);
+            //Debug.Log("Player 1 Value " + InputUser.all[0].index);
             spawnedPlayers[0] = GameObject.FindGameObjectWithTag("Player").transform;
             spawnedPlayers[0].tag = "P1";
             spawnedPlayers[0].GetComponentInChildren<CinemachineInputProvider>().PlayerIndex = InputUser.all[0].index;
@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
         }
         if(InputUser.all.Count == 2 && spawnedPlayers[1] == null)
         {
-            Debug.Log("Player 2 Value " + InputUser.all[1].index);
+            //Debug.Log("Player 2 Value " + InputUser.all[1].index);
             spawnedPlayers[1] = GameObject.FindGameObjectWithTag("Player").transform;
             spawnedPlayers[1].tag = "P2";
             spawnedPlayers[1].GetComponentInChildren<CinemachineInputProvider>().PlayerIndex = InputUser.all[1].index;

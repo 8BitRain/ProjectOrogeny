@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -45,8 +45,10 @@ public class ThirdPersonMovement : MonoBehaviour
     public float WallRunMaxHeight = 1f;
     bool isWallRight;
     bool isWallLeft;
+    bool isWallInFront;
     private Vector3 wallVector;
     private Vector3 wallJumpDirection;
+    private bool _canWallRun = false;
     private bool _isWallRunning = false;
 
     //Enviromental EFX
@@ -158,8 +160,11 @@ public class ThirdPersonMovement : MonoBehaviour
 
             if (_isGrounded && _velocity.y < 0)
             {
+                print("grounded");
                 _velocity.y = 0f;
                 animator.SetBool("Jumping", false);
+
+                _canWallRun = false;
 
                 //No longer falling
                 if(animator.GetBool("Falling")){
@@ -169,8 +174,15 @@ public class ThirdPersonMovement : MonoBehaviour
                 }
             }
 
+            if(!_isGrounded)
+            {
+                _canWallRun = true;
+            }
+
             //WALLRUNNING 2.0 using Raycasts
-            CheckForWall();
+            if(_canWallRun){
+                CheckForWall();
+            }
             if(isWallRight)
             {
                 StartWallRun("right");
@@ -179,7 +191,11 @@ public class ThirdPersonMovement : MonoBehaviour
             {
                 StartWallRun("left");
             }
-            if(!isWallLeft && !isWallRight)
+            if(isWallInFront)
+            {
+                StartWallRun("front");
+            }
+            if(!isWallLeft && !isWallRight && !isWallInFront)
             {
                 ExitWallRun();
             }
@@ -324,6 +340,7 @@ public class ThirdPersonMovement : MonoBehaviour
                     animator.SetBool("Jumping", true);
                     isWallLeft = false;
                     isWallRight = false;
+                    isWallInFront = false;
                     ExitWallRun();
                     //reset y_velocity on wall
                     _velocity.y = 0;
@@ -455,7 +472,8 @@ public class ThirdPersonMovement : MonoBehaviour
             //Debug.DrawRay(_cosmicPalmBeamSpawnLocation.transform.position, Camera.main.ViewportToWorldPoint(new Vector3(.5f,.5f,0)), Color.red);
 
             Ray ray = Camera.main.ScreenPointToRay(new Vector3(Camera.main.pixelWidth/2, Camera.main.pixelHeight/2, 0));
-            Debug.DrawRay(_cosmicPalmBeamSpawnLocation.transform.position, ray.direction * 10, Color.yellow);
+            //information for drawing gizmo ray that indicates the direction of the cosmicPalmBeam 
+            //Debug.DrawRay(_cosmicPalmBeamSpawnLocation.transform.position, ray.direction * 10, Color.yellow);
             _cosmicPalmBeamSpawnLocation.transform.LookAt(_cosmicPalmBeamSpawnLocation.transform.position + ray.direction);
             //Update combat abilities
             updateCosmicPalmBeam();
@@ -565,7 +583,7 @@ public class ThirdPersonMovement : MonoBehaviour
     void CheckForWall()
     {
         RaycastHit hit;
-        isWallRight = Physics.Raycast(_wallRunChecker.transform.position, _wallRunChecker.right, out hit, wallDistance, Wall);
+        isWallRight = Physics.Raycast(_wallRunChecker.transform.position, _wallRunChecker.right, out hit, 1.0f, Wall);
         if(isWallRight){
             Debug.DrawRay(_wallRunChecker.transform.position, _wallRunChecker.right.normalized * hit.distance, Color.magenta );
             wallVector = -Vector3.Cross(hit.normal, Vector3.up).normalized;
@@ -573,13 +591,23 @@ public class ThirdPersonMovement : MonoBehaviour
             //wallJumpDirection = -wallJumpDirection;
             //print("Wall is to the Right");
         }
+
        
-        isWallLeft = Physics.Raycast(_wallRunChecker.transform.position, -_wallRunChecker.right, out hit, wallDistance, Wall);
+        isWallLeft = Physics.Raycast(_wallRunChecker.transform.position, -_wallRunChecker.right, out hit, 1.0f, Wall);
         if(isWallLeft){
             Debug.DrawRay(_wallRunChecker.transform.position, -_wallRunChecker.right.normalized * hit.distance, Color.green );
             wallVector = Vector3.Cross(hit.normal, Vector3.up).normalized;
             wallJumpDirection = new Vector3(1,0,1).normalized;
         }
+
+        /*isWallInFront = Physics.Raycast(_wallRunChecker.transform.position, _wallRunChecker.forward, out hit, wallDistance, Wall);
+        if(isWallInFront){
+            Debug.DrawRay(_wallRunChecker.transform.position, _wallRunChecker.forward.normalized * hit.distance, Color.red);
+            wallVector = Vector3.up;    
+            //we are facing forward so let's jump backwards, the opposite of forward
+            wallJumpDirection = -Vector3.forward.normalized;
+            //transform.rotation = Quaternion.Euler(-90,0,0);
+        }*/
        
         Debug.DrawRay(_wallRunChecker.transform.position, wallVector, Color.yellow);
 
@@ -596,9 +624,15 @@ public class ThirdPersonMovement : MonoBehaviour
             //TODO: Implement 
             animatorOverrideController["rig|wallRunLeft"] = wallRunningAnimationClip[0];
         }
+
         if(direction == "left")
         {
             animatorOverrideController["rig|wallRunLeft"] = wallRunningAnimationClip[1];
+        }
+
+        if(direction == "front")
+        {
+            animatorOverrideController["rig|wallRunLeft"] = wallRunningAnimationClip[2];
         }
 
         print("wallrunning");

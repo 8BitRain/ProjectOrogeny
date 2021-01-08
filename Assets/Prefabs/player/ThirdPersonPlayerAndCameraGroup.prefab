@@ -20511,6 +20511,7 @@ MonoBehaviour:
   wallRunningAnimationClip:
   - {fileID: 1742145234810461679, guid: 958778ec87c354760b47db7a2d4bc352, type: 3}
   - {fileID: 8766899527109677652, guid: 958778ec87c354760b47db7a2d4bc352, type: 3}
+  - {fileID: -1186175002919557899, guid: 958778ec87c354760b47db7a2d4bc352, type: 3}
   jumpingAnimationClip:
   - {fileID: 1742145234810461679, guid: 958778ec87c354760b47db7a2d4bc352, type: 3}
   combatAnimationClip:
@@ -22051,7 +22052,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8226402252794440901}
-  m_LocalRotation: {x: 0.040101495, y: -0.000000017326336, z: 6.953713e-10, w: 0.99919564}
+  m_LocalRotation: {x: 0.040101495, y: 0.000000017326336, z: -6.953713e-10, w: 0.99919564}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
