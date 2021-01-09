@@ -31,6 +31,8 @@ public class ThirdPersonMovement : MonoBehaviour
 
     public GameObject _jumpVFX;
 
+    private bool _isMantling = false;
+
 
 
     //Movement Related
@@ -478,7 +480,7 @@ public class ThirdPersonMovement : MonoBehaviour
             //Update combat abilities
             updateCosmicPalmBeam();
 
-            print("Action Timer Value: " + _actionTimer);
+            //print("Action Timer Value: " + _actionTimer);
 
 
 
@@ -498,6 +500,12 @@ public class ThirdPersonMovement : MonoBehaviour
                 firePalmIntoDistance = false;
                 spawnedCosmicPalmBeam = null;
             }
+        }
+
+        if(_isMantling)
+        {
+            transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y + 1, transform.localPosition.z + 1);
+            _isMantling = false;
         }
     }
 
@@ -666,6 +674,15 @@ public class ThirdPersonMovement : MonoBehaviour
             }
             _velocity.y += windRiseSpeed * Time.deltaTime;
             _controller.Move(_velocity * Time.deltaTime);
+        }
+
+        if(other.tag == "Mantle")
+        {
+            if(!_isGrounded)
+            {
+                print("Mantling");
+                _isMantling = true;
+            }
         }
     }
 
