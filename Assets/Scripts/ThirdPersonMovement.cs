@@ -31,7 +31,9 @@ public class ThirdPersonMovement : MonoBehaviour
 
     public GameObject _jumpVFX;
 
+    //Mantling 
     private bool _isMantling = false;
+    private float _mantleTimer = 0;
 
 
 
@@ -147,9 +149,12 @@ public class ThirdPersonMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Detect gamepad
-        //var gamepad = Gamepad.current;
-        //Debug.Log("Gamepad" + gamepad);
+        //Grounded status
+        _isGrounded = Physics.CheckSphere(_groundChecker.position, GroundDistance, Ground, QueryTriggerInteraction.Ignore);
+        if(_isGrounded)
+        {
+            print("grounded");
+        }
         if(canMove)
         {
             //Player x and y movement OLD Unity Input Manager
@@ -158,7 +163,7 @@ public class ThirdPersonMovement : MonoBehaviour
             Vector3 direction = new Vector3(movementInput.x, 0, movementInput.y).normalized;
 
             //Grounded status
-            _isGrounded = Physics.CheckSphere(_groundChecker.position, GroundDistance, Ground, QueryTriggerInteraction.Ignore);
+            //_isGrounded = Physics.CheckSphere(_groundChecker.position, GroundDistance, Ground, QueryTriggerInteraction.Ignore);
 
             if (_isGrounded && _velocity.y < 0)
             {
@@ -487,6 +492,22 @@ public class ThirdPersonMovement : MonoBehaviour
             
 
         }
+        if(_isMantling)
+        {
+            if(_mantleTimer < 1)
+            {
+                Mantle();
+            }
+
+            if(_mantleTimer >= 1)
+            {
+                _isMantling = false;
+                canMove = true;
+                _mantleTimer = 0;
+            }
+        }
+
+
     }
 
     void FixedUpdate()
@@ -502,11 +523,11 @@ public class ThirdPersonMovement : MonoBehaviour
             }
         }
 
-        if(_isMantling)
+        /*if(_isMantling)
         {
             transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y + 1, transform.localPosition.z + 1);
             _isMantling = false;
-        }
+        }*/
     }
 
     //Combat function 
@@ -684,6 +705,16 @@ public class ThirdPersonMovement : MonoBehaviour
                 _isMantling = true;
             }
         }
+    }
+
+
+    void Mantle()
+    {
+        canMove = false;
+        Vector3 mantleDiagnolVector = new Vector3(0,1,1);
+        _controller.Move(mantleDiagnolVector * 5 * Time.deltaTime);
+        _mantleTimer += Time.deltaTime;
+        print("Mantling");
     }
 
      private void OnTriggerStay(Collider other)
