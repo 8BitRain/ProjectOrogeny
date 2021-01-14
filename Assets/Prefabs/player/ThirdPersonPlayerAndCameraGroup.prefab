@@ -20487,6 +20487,10 @@ MonoBehaviour:
   JumpHeight: 8
   _jumpVFX: {fileID: 1365735699005214758, guid: 7c665c8fa7fa04628a9ef452ee059f13,
     type: 3}
+  Ledge:
+    serializedVersion: 2
+    m_Bits: 262144
+  ledgeDistance: 0.2
   _wallRunChecker: {fileID: 1752734369385510831}
   wallDistance: 2
   Wall:

@@ -32,9 +32,11 @@ public class ThirdPersonMovement : MonoBehaviour
     public GameObject _jumpVFX;
 
     //Mantling 
+    [Header("Ledge Grab (Mantling) Settings")]
+    public LayerMask Ledge;
+    public float ledgeDistance = 2f;
     private bool _isMantling = false;
     private float _mantleTimer = 0;
-
 
 
     //Movement Related
@@ -150,11 +152,46 @@ public class ThirdPersonMovement : MonoBehaviour
     void Update()
     {
         //Grounded status
-        _isGrounded = Physics.CheckSphere(_groundChecker.position, GroundDistance, Ground, QueryTriggerInteraction.Ignore);
+        //_isGrounded = Physics.CheckSphere(_groundChecker.position, GroundDistance, Ground, QueryTriggerInteraction.Ignore);
+        RaycastHit groundedRaycast;
+        _isGrounded = Physics.Raycast(_groundChecker.position, Vector3.down, out groundedRaycast, .2f, Ground);
         if(_isGrounded)
         {
-            print("grounded");
+            //print("grounded");
+            //canMove = true;
         }
+
+        //We are in the air!
+        if(!_isGrounded)
+        {
+            //Raycast and see if we are facing a ledge
+            //print("Airborne");
+            RaycastHit ledgeSeekerHit;
+            Vector3 _ledgeSeekerPosition = new Vector3(_groundChecker.position.x, _groundChecker.position.y + this._controller.height, _groundChecker.position.z);
+            if(Physics.Raycast(_ledgeSeekerPosition, _groundChecker.forward, out ledgeSeekerHit, 5f, Ledge))
+            {
+                print("Mantling");
+                _isMantling = true;
+            }
+            Debug.DrawRay(_ledgeSeekerPosition, _groundChecker.forward, Color.green);
+            
+        }
+
+        if(_isMantling)
+        {
+            if(_mantleTimer < .75f)
+            {
+                Mantle();
+            }
+
+            if(_mantleTimer >= .75f)
+            {
+                _isMantling = false;
+                canMove = true;
+                _mantleTimer = 0;
+            }
+        }
+        
         if(canMove)
         {
             //Player x and y movement OLD Unity Input Manager
@@ -167,7 +204,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
             if (_isGrounded && _velocity.y < 0)
             {
-                print("grounded");
+                //print("grounded");
                 _velocity.y = 0f;
                 animator.SetBool("Jumping", false);
 
@@ -431,7 +468,7 @@ public class ThirdPersonMovement : MonoBehaviour
             //if(Input.GetAxis("Right Trigger") <= 0)
             if(!cosmicPalmInput)
             {
-                Debug.Log("Trigger released");
+                //Debug.Log("Trigger released");
                 if(_actionTimer >= 4)
                 {
                     Debug.Log("action time reset after trigger released");
@@ -492,22 +529,6 @@ public class ThirdPersonMovement : MonoBehaviour
             
 
         }
-        if(_isMantling)
-        {
-            if(_mantleTimer < 1)
-            {
-                Mantle();
-            }
-
-            if(_mantleTimer >= 1)
-            {
-                _isMantling = false;
-                canMove = true;
-                _mantleTimer = 0;
-            }
-        }
-
-
     }
 
     void FixedUpdate()
@@ -697,27 +718,17 @@ public class ThirdPersonMovement : MonoBehaviour
             _controller.Move(_velocity * Time.deltaTime);
         }
 
-        if(other.tag == "Mantle")
+        /*if(other.tag == "Mantle")
         {
             if(!_isGrounded)
             {
                 print("Mantling");
                 _isMantling = true;
             }
-        }
+        }*/
     }
 
-
-    void Mantle()
-    {
-        canMove = false;
-        Vector3 mantleDiagnolVector = new Vector3(0,1,1);
-        _controller.Move(mantleDiagnolVector * 5 * Time.deltaTime);
-        _mantleTimer += Time.deltaTime;
-        print("Mantling");
-    }
-
-     private void OnTriggerStay(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         //Enviromental EFX Cosmic Wind Riding/Rising
         if(other.tag == "CosmicWind")
@@ -732,6 +743,23 @@ public class ThirdPersonMovement : MonoBehaviour
             _velocity.y += windRiseSpeed * Time.deltaTime;
             _controller.Move(_velocity * Time.deltaTime);
         }
+    }
+
+
+    void Mantle()
+    {
+        canMove = false;
+        if(_mantleTimer <= .5f)
+        {
+            Vector3 mantleDiagnolVector = new Vector3(0,1,1);
+            _controller.Move(mantleDiagnolVector * 5f * Time.deltaTime);
+        } else
+        {
+            Vector3 mantleDiagnolVector = new Vector3(0,0,1);
+            _controller.Move(mantleDiagnolVector * 3.5f * Time.deltaTime);  
+        }
+        _mantleTimer += Time.deltaTime;
+        print("Mantling");
     }
 
     IEnumerator ShowReticle()
