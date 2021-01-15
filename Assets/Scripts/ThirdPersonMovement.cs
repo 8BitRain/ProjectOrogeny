@@ -168,7 +168,7 @@ public class ThirdPersonMovement : MonoBehaviour
             //print("Airborne");
             RaycastHit ledgeSeekerHit;
             Vector3 _ledgeSeekerPosition = new Vector3(_groundChecker.position.x, _groundChecker.position.y + this._controller.height, _groundChecker.position.z);
-            if(Physics.Raycast(_ledgeSeekerPosition, _groundChecker.forward, out ledgeSeekerHit, 5f, Ledge))
+            if(Physics.Raycast(_ledgeSeekerPosition, _groundChecker.forward, out ledgeSeekerHit, 2f, Ledge))
             {
                 print("Mantling");
                 _isMantling = true;
@@ -188,6 +188,7 @@ public class ThirdPersonMovement : MonoBehaviour
             {
                 _isMantling = false;
                 canMove = true;
+                print("Mantling Ended");
                 _mantleTimer = 0;
             }
         }
@@ -751,14 +752,17 @@ public class ThirdPersonMovement : MonoBehaviour
         canMove = false;
         if(_mantleTimer <= .5f)
         {
-            Vector3 mantleDiagnolVector = new Vector3(0,1,1);
-            _controller.Move(mantleDiagnolVector * 5f * Time.deltaTime);
+            // mantleUpVector = new Vector3(0,1,0);
+            _controller.Move(Vector3.up * 7.5f * Time.deltaTime);
         } else
         {
-            Vector3 mantleDiagnolVector = new Vector3(0,0,1);
-            _controller.Move(mantleDiagnolVector * 3.5f * Time.deltaTime);  
+            //Vector3 mantleDiagnolVector = new Vector3(0,0,1);
+            _controller.Move(transform.forward * 5.5f * Time.deltaTime);  
         }
         _mantleTimer += Time.deltaTime;
+
+        animator.SetBool("Landing", true);
+        animator.SetBool("Falling", false);
         print("Mantling");
     }
 
