@@ -13,11 +13,13 @@ public class ThirdPersonMovement : MonoBehaviour
     public float friction = .025f;
     public float maxSpeed = 10.0f;
     public float gravity = -9.81f;
+    private bool dashInput = false;
+    public float dashSpeed = 2.0f;
 
     public float turnSmoothTime = 0.1f;
     float turnSmoothVelocity;
     
-    public bool glideOnGround = false;
+    public bool glide = false;
 
     //Jump Related Code
     [Header("Jump Settings")]
@@ -137,7 +139,8 @@ public class ThirdPersonMovement : MonoBehaviour
         //animator
         running = false;
 
-        aimReticle.SetActive(false);
+        //Used to set up aiming. Reenable
+        //aimReticle.SetActive(false);
         slowTime = false;
 
         //If the cam is null, instantiate a new cam. 
@@ -253,7 +256,7 @@ public class ThirdPersonMovement : MonoBehaviour
             if(direction.magnitude >= .1f && moveCharacter)
             {
                 //Increase speed when we want to accelerate or glide. For now we call this gliding due to the flight like effect. Think Dissidia.
-                if(glideOnGround)
+                if(glide)
                 {
                     if(speed < maxSpeed){
                         speed = speed + acceleration * Time.deltaTime;
@@ -283,7 +286,7 @@ public class ThirdPersonMovement : MonoBehaviour
                         _controller.Move(slopeOffset * moveDir.normalized * speed * Time.deltaTime);
                     } 
                     
-                    if(!glideOnGround && !_isGrounded)
+                    if(!glide && !_isGrounded)
                     {
                         _controller.Move(moveDir.normalized * speed * Time.deltaTime);
                     } 
@@ -315,7 +318,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
             //Constant subtration of friction for glide/decceleration
             //https://www.gamasutra.com/blogs/MarkVenturelli/20140821/223866/Game_Feel_Tips_II_Speed_Gravity_Friction.php
-            if(glideOnGround)
+            if(glide)
             {
                 Vector3 moveDir = transform.forward;
                 _controller.Move(moveDir.normalized * speed * Time.deltaTime); 
@@ -326,7 +329,7 @@ public class ThirdPersonMovement : MonoBehaviour
                 if(speed < 0)
                 {
                     //resetting speed to default. If you want a more natural acceleration, allow speed to = 0. 
-                    this.glideOnGround = false;
+                    this.glide = false;
                     speed = defaultSpeed;
                 }   
             }
@@ -357,7 +360,9 @@ public class ThirdPersonMovement : MonoBehaviour
             }
             */
 
-            
+            if(dashInput){
+                Dash();
+            }
             //if (Input.GetButton("PlayerJump")){
             if (jumpPressed){
                 if(_isGrounded && !_isWallRunning){
@@ -461,9 +466,6 @@ public class ThirdPersonMovement : MonoBehaviour
                 cosmicPalmTimer = combatAnimationClip[0].length;
             }
             
-            
-
-
             //Trigger released
             //OLD TRIGGER
             //if(Input.GetAxis("Right Trigger") <= 0)
@@ -516,7 +518,7 @@ public class ThirdPersonMovement : MonoBehaviour
             //_cosmicPalmBeamSpawnLocation.transform.LookAt(Camera.main.ViewportToWorldPoint(new Vector3(.5f,.5f,0)));
             //Debug.DrawRay(_cosmicPalmBeamSpawnLocation.transform.position, Camera.main.ViewportToWorldPoint(new Vector3(.5f,.5f,0)), Color.red);
 
-            Ray ray = Camera.main.ScreenPointToRay(new Vector3(Camera.main.pixelWidth/2, Camera.main.pixelHeight/2, 0));
+            Ray ray = cam.gameObject.GetComponent<Camera>().ScreenPointToRay(new Vector3(cam.gameObject.GetComponent<Camera>().pixelWidth/2, cam.gameObject.GetComponent<Camera>().pixelHeight/2, 0));
             //information for drawing gizmo ray that indicates the direction of the cosmicPalmBeam 
             //Debug.DrawRay(_cosmicPalmBeamSpawnLocation.transform.position, ray.direction * 10, Color.yellow);
             _cosmicPalmBeamSpawnLocation.transform.LookAt(_cosmicPalmBeamSpawnLocation.transform.position + ray.direction);
@@ -524,11 +526,6 @@ public class ThirdPersonMovement : MonoBehaviour
             updateCosmicPalmBeam();
 
             //print("Action Timer Value: " + _actionTimer);
-
-
-
-            
-
         }
     }
 
@@ -630,6 +627,41 @@ public class ThirdPersonMovement : MonoBehaviour
             firePalmIntoDistance = true;
         }
     }
+
+    void Dash()
+    {
+        print("Dashing");
+        _controller.Move(transform.forward * dashSpeed * Time.deltaTime);
+        float animationStartSpeed = animator.speed;
+        if(!_isGrounded)
+        {
+            animator.SetBool("Jumping", false);
+            animator.SetBool("Falling", true);
+        }
+        animator.Play("Grounded.freeRun", 0, 0.5f);
+        animator.speed = 0;
+        dashInput = false;
+        animator.speed = animationStartSpeed;
+
+        //Constant subtration of friction for glide/decceleration
+        //https://www.gamasutra.com/blogs/MarkVenturelli/20140821/223866/Game_Feel_Tips_II_Speed_Gravity_Friction.php
+        //Update dash here like glide
+        if(glide)
+        {
+            Vector3 moveDir = transform.forward;
+            _controller.Move(moveDir.normalized * speed * Time.deltaTime); 
+            if(speed > 0)
+            {
+                speed = speed - (friction * Time.deltaTime);
+            }
+            if(speed < 0)
+            {
+                //resetting speed to default. If you want a more natural acceleration, allow speed to = 0. 
+                this.glide = false;
+                speed = defaultSpeed;
+            }   
+        }
+    }
     /*Inspired by the algorithm provided here http://www.footnotesforthefuture.com/words/wall-running-1/*/
     void CheckForWall()
     {
@@ -704,6 +736,7 @@ public class ThirdPersonMovement : MonoBehaviour
     public void OnMove(InputAction.CallbackContext ctx) => movementInput = ctx.ReadValue<Vector2>();
     public void OnJump(InputAction.CallbackContext ctx) => jumpPressed = ctx.ReadValueAsButton();
     public void OnCosmicPalm(InputAction.CallbackContext ctx) => cosmicPalmInput = ctx.ReadValueAsButton();
+    public void OnDash(InputAction.CallbackContext ctx) => dashInput = ctx.ReadValueAsButton();
 
     private void OnTriggerEnter(Collider other)
     {

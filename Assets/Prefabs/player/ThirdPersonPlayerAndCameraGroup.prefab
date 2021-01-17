@@ -20477,6 +20477,7 @@ MonoBehaviour:
   friction: 0.025
   maxSpeed: 12
   gravity: -9.81
+  dashSpeed: 20
   turnSmoothTime: 0.1
   glideOnGround: 0
   _groundChecker: {fileID: 1752734369801175066}
@@ -20620,6 +20621,21 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 73de7740-4961-4384-9349-19aff762e678
     m_ActionName: Gameplay/Look[/XboxGamepadMacOS/rightStick,/DualShock4GamepadHID/rightStick]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1752734369499009740}
+        m_MethodName: OnDash
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: e3e2c790-84d4-48f6-be9a-e3e09449d91e
+    m_ActionName: Gameplay/Dash[/XboxGamepadMacOS/rightShoulder]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Gameplay
