@@ -30,6 +30,8 @@ public class GameManager : MonoBehaviour
             virtualCamera.tag = "P1VirtualCamera";
             virtualCamera.layer = LayerMask.NameToLayer("P1Cam");
 
+
+
             spawnedPlayers[0].gameObject.SetActive(true);
         }
 
@@ -37,6 +39,7 @@ public class GameManager : MonoBehaviour
         //Debug.Log("Connected Players: " + InputUser.all.Count);
         if(!enableNetworkedLoadedPlayer)
         {
+            //Loading Player 1
             if(InputUser.all.Count == 1 && spawnedPlayers[0] == null)
             {
                 //Debug.Log("Player 1 Value " + InputUser.all[0].index);
@@ -49,7 +52,11 @@ public class GameManager : MonoBehaviour
                 virtualCamera.layer = LayerMask.NameToLayer("P1Cam");
 
                 spawnedPlayers[0].gameObject.SetActive(true);
+
+                //Setup Player 1 UI
+                setupUI(1);
             }
+            //Loading Player 2
             if(InputUser.all.Count == 2 && spawnedPlayers[1] == null)
             {
                 //Debug.Log("Player 2 Value " + InputUser.all[1].index);
@@ -67,6 +74,9 @@ public class GameManager : MonoBehaviour
                 cam.cullingMask = -1;
                 cam.cullingMask &=  ~(1 << LayerMask.NameToLayer("P1Cam"));
                 spawnedPlayers[1].gameObject.SetActive(true);
+
+                //Setting Player 2 UI
+                setupUI(2);
 
             }
             //Input System Device Logging
@@ -94,5 +104,29 @@ public class GameManager : MonoBehaviour
             };*/        
         }
 
+    }
+
+    public void setupUI(int playerNum)
+    {
+        if(playerNum == 1)
+        {
+            print("Setting up Player 1 UI");
+            HealthBar p1HealthBar = spawnedPlayers[playerNum - 1].GetComponentInChildren<HealthBar>();
+            RectTransform p1HealthBarRT= p1HealthBar.gameObject.GetComponent<RectTransform>();
+            //Center of screen + plus half the width of the healthbar + an offset of 10
+            //https://stackoverflow.com/questions/44471568/how-to-calculate-sizedelta-in-recttransform
+            p1HealthBarRT.anchoredPosition = new Vector2(-Screen.width/2 + p1HealthBarRT.sizeDelta.x/2 + 10.0f , Screen.height/2 - p1HealthBarRT.sizeDelta.y/2 - 10.0f);
+            //p2HealthBarRT.position.Set(Screen.width/2 + p2HealthBarRT.width/2 + 10.0f, p2HealthBarRT.position.y); 
+        }
+        if(playerNum == 2)
+        {
+            print("Setting up Player 2 UI");
+            HealthBar p2HealthBar = spawnedPlayers[playerNum - 1].GetComponentInChildren<HealthBar>();
+            RectTransform p2HealthBarRT= p2HealthBar.gameObject.GetComponent<RectTransform>();
+            //Center of screen + plus half the width of the healthbar + an offset of 10
+            //https://stackoverflow.com/questions/44471568/how-to-calculate-sizedelta-in-recttransform
+            p2HealthBarRT.anchoredPosition = new Vector2(p2HealthBarRT.sizeDelta.x/2 + 10.0f, Screen.height/2 - p2HealthBarRT.sizeDelta.y/2 - 10.0f);
+            //p2HealthBarRT.position.Set(Screen.width/2 + p2HealthBarRT.width/2 + 10.0f, p2HealthBarRT.position.y);
+        }
     }
 }
