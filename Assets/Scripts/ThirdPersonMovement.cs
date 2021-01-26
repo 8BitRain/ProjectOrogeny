@@ -11,15 +11,24 @@ public class ThirdPersonMovement : MonoBehaviour
     private float defaultSpeed;
     public float acceleration = .1f;
     public float friction = .025f;
-    public float maxSpeed = 10.0f;
     public float gravity = -9.81f;
     private bool dashInput = false;
-    public float dashSpeed = 2.0f;
+
 
     public float turnSmoothTime = 0.1f;
     float turnSmoothVelocity;
+
+    [Header("Dash Settings")]
+    public float dashSpeed = 6.0f;
+    private float defaultDashSpeed;
+    public float maxSpeed = 10.0f;
+    public float dashFriction = .025f;
+    private float _dashTimer = 0;
+    private bool glide = false;
+
+
     
-    public bool glide = false;
+    
 
     //Jump Related Code
     [Header("Jump Settings")]
@@ -120,9 +129,10 @@ public class ThirdPersonMovement : MonoBehaviour
     public AnimationClip[] wallRunningAnimationClip;
     public AnimationClip[] jumpingAnimationClip;
     public AnimationClip[] combatAnimationClip;
-
-
     public Animator animator;
+
+    [Header("Health Bar Settings")]
+    public HealthBar healthBar; 
     //https://docs.unity3d.com/ScriptReference/AnimatorOverrideController.html
     protected AnimatorOverrideController animatorOverrideController;
 
@@ -134,6 +144,7 @@ public class ThirdPersonMovement : MonoBehaviour
         animator.runtimeAnimatorController = animatorOverrideController;
 
         defaultSpeed = speed;
+        defaultDashSpeed = dashSpeed;
         playingAnim = false;
         moveCharacter = true;
         //animator
@@ -142,6 +153,8 @@ public class ThirdPersonMovement : MonoBehaviour
         //Used to set up aiming. Reenable
         //aimReticle.SetActive(false);
         slowTime = false;
+
+        healthBar.SetMaxHealth(100);
 
         //If the cam is null, instantiate a new cam. 
         /*if(this.cam == null)
@@ -195,6 +208,7 @@ public class ThirdPersonMovement : MonoBehaviour
                 _mantleTimer = 0;
             }
         }
+
         
         if(canMove)
         {
@@ -255,13 +269,6 @@ public class ThirdPersonMovement : MonoBehaviour
             //Vector3 moveDir = transform.forward;
             if(direction.magnitude >= .1f && moveCharacter)
             {
-                //Increase speed when we want to accelerate or glide. For now we call this gliding due to the flight like effect. Think Dissidia.
-                if(glide)
-                {
-                    if(speed < maxSpeed){
-                        speed = speed + acceleration * Time.deltaTime;
-                    }
-                }
 
                 //Atan2 returns angle between x axis and the angle between 0
                 //Gives us an angle in radians
@@ -316,9 +323,14 @@ public class ThirdPersonMovement : MonoBehaviour
                 }          
             }
 
+            if(dashInput || glide)
+            {
+                Dash();
+            }
+
             //Constant subtration of friction for glide/decceleration
             //https://www.gamasutra.com/blogs/MarkVenturelli/20140821/223866/Game_Feel_Tips_II_Speed_Gravity_Friction.php
-            if(glide)
+            /*if(glide)
             {
                 Vector3 moveDir = transform.forward;
                 _controller.Move(moveDir.normalized * speed * Time.deltaTime); 
@@ -332,7 +344,7 @@ public class ThirdPersonMovement : MonoBehaviour
                     this.glide = false;
                     speed = defaultSpeed;
                 }   
-            }
+            }*/
          
 
             
@@ -360,9 +372,6 @@ public class ThirdPersonMovement : MonoBehaviour
             }
             */
 
-            if(dashInput){
-                Dash();
-            }
             //if (Input.GetButton("PlayerJump")){
             if (jumpPressed){
                 if(_isGrounded && !_isWallRunning){
@@ -541,12 +550,6 @@ public class ThirdPersonMovement : MonoBehaviour
                 spawnedCosmicPalmBeam = null;
             }
         }
-
-        /*if(_isMantling)
-        {
-            transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y + 1, transform.localPosition.z + 1);
-            _isMantling = false;
-        }*/
     }
 
     //Combat function 
@@ -631,22 +634,59 @@ public class ThirdPersonMovement : MonoBehaviour
     void Dash()
     {
         print("Dashing");
+        moveCharacter = false;
         _controller.Move(transform.forward * dashSpeed * Time.deltaTime);
-        float animationStartSpeed = animator.speed;
-        if(!_isGrounded)
+
+        if(dashSpeed > 0)
         {
-            animator.SetBool("Jumping", false);
-            animator.SetBool("Falling", true);
+            if(!_isGrounded)
+            {
+                animator.SetBool("Jumping", false);
+                animator.SetBool("Falling", true);
+            }
+            animator.Play("Grounded.freeRun", 0, 0.5f);
+            animator.speed = 0;
+            dashInput = false;
+            dashSpeed = dashSpeed - (dashFriction * Time.deltaTime);
+            this.glide = true;
         }
-        animator.Play("Grounded.freeRun", 0, 0.5f);
-        animator.speed = 0;
-        dashInput = false;
-        animator.speed = animationStartSpeed;
+
+        if(dashSpeed < 0) 
+        {
+            //resetting speed to default. If you want a more natural acceleration, allow speed to = 0. 
+            this.glide = false;
+            dashSpeed = defaultDashSpeed;
+            animator.speed = 1;
+            _dashTimer = 0;
+            moveCharacter = true;
+        }
+
+        if(_dashTimer >= 2)
+        {
+            this.glide = false;
+            dashSpeed = defaultDashSpeed;
+            animator.speed = 1;
+            _dashTimer = 0;
+            moveCharacter = true;
+        }
+
+        //Increase dashTimer.
+        _dashTimer += Time.deltaTime;
+
+        /*
+         //Increase speed when we want to accelerate or glide. For now we call this gliding due to the flight like effect. Think Dissidia.
+                if(glide)
+                {
+                    if(speed < maxSpeed){
+                        speed = speed + acceleration * Time.deltaTime;
+                    }
+                }
+        */
 
         //Constant subtration of friction for glide/decceleration
         //https://www.gamasutra.com/blogs/MarkVenturelli/20140821/223866/Game_Feel_Tips_II_Speed_Gravity_Friction.php
         //Update dash here like glide
-        if(glide)
+        /*if(glide)
         {
             Vector3 moveDir = transform.forward;
             _controller.Move(moveDir.normalized * speed * Time.deltaTime); 
@@ -660,7 +700,8 @@ public class ThirdPersonMovement : MonoBehaviour
                 this.glide = false;
                 speed = defaultSpeed;
             }   
-        }
+        }*/
+        TakeDamage(.01f);
     }
     /*Inspired by the algorithm provided here http://www.footnotesforthefuture.com/words/wall-running-1/*/
     void CheckForWall()
@@ -804,6 +845,11 @@ public class ThirdPersonMovement : MonoBehaviour
         yield return new WaitForSeconds(0.25f);
         aimReticle.SetActive(enabled);
         SetSlowTime(true);
+    }
+
+    public void TakeDamage(float damage)
+    {
+        healthBar.SetHealth(healthBar.GetHealth() - damage);
     }
 
     public void SetSlowTime(bool on)
