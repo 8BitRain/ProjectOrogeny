@@ -13103,7 +13103,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2398749671249235683}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: ThirdPersonPlayerAndCameraGroup
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -20600,7 +20600,7 @@ GameObject:
   - component: {fileID: 1752734369499009740}
   - component: {fileID: 1752734369499009728}
   - component: {fileID: 7742562459765181377}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: animation_lab_nyx
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20753,6 +20753,7 @@ MonoBehaviour:
   cosmicWindDistance: 0.1
   windRiseSpeed: 20.19
   windResetVelocityY: -10
+  mass: 3
   cosmicPalmBeam: {fileID: 7450021438257590541, guid: bb84d86c4398f4ac6aa21c8bd197b45d,
     type: 3}
   _cosmicPalmBeamSpawnLocation: {fileID: 1752734367818053343}

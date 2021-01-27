@@ -26,10 +26,6 @@ public class ThirdPersonMovement : MonoBehaviour
     private float _dashTimer = 0;
     private bool glide = false;
 
-
-    
-    
-
     //Jump Related Code
     [Header("Jump Settings")]
     public Transform _groundChecker;
@@ -76,6 +72,12 @@ public class ThirdPersonMovement : MonoBehaviour
     //Dictates y velocity so player does not sink in uprising wind. 
     //0 represents no sinking, while the min value represents sinking to a degree. -10 would represent bobbing.
     [Range(0.0f, -10.0f)] public float windResetVelocityY = 0;
+
+    //Impact
+    [Header("Enviromental EFX")]
+    public float mass = 3.0f;
+    Vector3 impact = Vector3.zero;
+
 
     //Combat
     [Header("Combat Ability Management")]
@@ -446,7 +448,7 @@ public class ThirdPersonMovement : MonoBehaviour
                 if(_actionTimer >= 10)
                 {
                     //10 is an arbitrary value for now. Replace with a quickfire animation time
-                    Debug.Log("Reset action timer after hold for 10 seconds");
+                    //Debug.Log("Reset action timer after hold for 10 seconds");
                     animator.SetBool("CosmicPalmAttack", false);
                     startTimer = false;
 
@@ -468,8 +470,8 @@ public class ThirdPersonMovement : MonoBehaviour
                 }
 
                 if(_actionTimer > .5){
-                    Debug.Log("Holding Trigger for longer than .5 seconds");
-                    print("CosmicPalm");
+                    //Debug.Log("Holding Trigger for longer than .5 seconds");
+                    //print("CosmicPalm");
                 }
 
                 cosmicPalmTimer = combatAnimationClip[0].length;
@@ -483,7 +485,7 @@ public class ThirdPersonMovement : MonoBehaviour
                 //Debug.Log("Trigger released");
                 if(_actionTimer >= 4)
                 {
-                    Debug.Log("action time reset after trigger released");
+                    //Debug.Log("action time reset after trigger released");
                     startTimer = false;
                     _actionTimer = 0;
                     animator.SetBool("CosmicPalmAttack", false);
@@ -535,6 +537,13 @@ public class ThirdPersonMovement : MonoBehaviour
             updateCosmicPalmBeam();
 
             //print("Action Timer Value: " + _actionTimer);
+        }
+
+        //Knockback logic (Impact)
+        if(impact.magnitude > .2)
+        {
+            _controller.Move(impact * Time.deltaTime);
+            impact = Vector3.Lerp(impact, Vector3.zero, 5 * Time.deltaTime);
         }
     }
 
@@ -701,7 +710,6 @@ public class ThirdPersonMovement : MonoBehaviour
                 speed = defaultSpeed;
             }   
         }*/
-        TakeDamage(.01f);
     }
     /*Inspired by the algorithm provided here http://www.footnotesforthefuture.com/words/wall-running-1/*/
     void CheckForWall()
@@ -778,6 +786,19 @@ public class ThirdPersonMovement : MonoBehaviour
     public void OnJump(InputAction.CallbackContext ctx) => jumpPressed = ctx.ReadValueAsButton();
     public void OnCosmicPalm(InputAction.CallbackContext ctx) => cosmicPalmInput = ctx.ReadValueAsButton();
     public void OnDash(InputAction.CallbackContext ctx) => dashInput = ctx.ReadValueAsButton();
+
+    //https://answers.unity.com/questions/242648/force-on-character-controller-knockback.html?_ga=2.213933971.521934289.1611610771-608714207.1587856867
+    public void AddImpact(Vector3 direction, float force)
+    {
+       direction.Normalize();
+       if(direction.y < 0)
+       {
+           //reflects downard force
+           direction.y = -direction.y;
+       }
+       impact += direction.normalized * force / mass;
+       print("Adding impact: " + impact);
+    }
 
     private void OnTriggerEnter(Collider other)
     {
