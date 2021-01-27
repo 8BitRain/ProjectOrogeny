@@ -543,7 +543,8 @@ public class ThirdPersonMovement : MonoBehaviour
         if(impact.magnitude > .2)
         {
             _controller.Move(impact * Time.deltaTime);
-            impact = Vector3.Lerp(impact, Vector3.zero, 5 * Time.deltaTime);
+            impact = Vector3.Lerp(impact, Vector3.zero, 1f * Time.deltaTime);
+            //canMove = false;
         }
     }
 
