@@ -78,6 +78,13 @@ public class ThirdPersonMovement : MonoBehaviour
     public float mass = 3.0f;
     Vector3 impact = Vector3.zero;
 
+    //Respawn
+    [Header("Respawn")]
+    public LayerMask Bounds;
+    public Vector3 respawnPosition;
+    private bool _isTouchingBounds = false;
+
+
 
     //Combat
     [Header("Combat Ability Management")]
@@ -546,6 +553,15 @@ public class ThirdPersonMovement : MonoBehaviour
             impact = Vector3.Lerp(impact, Vector3.zero, 1f * Time.deltaTime);
             //canMove = false;
         }
+
+        //If touching bounds, lower health and reset player
+        RaycastHit touchingBoundsRaycast;
+        _isTouchingBounds = Physics.Raycast(_groundChecker.position, Vector3.down, out touchingBoundsRaycast, .2f, Bounds);
+        if(_isTouchingBounds)
+        {
+            Respawn();
+        }
+        
     }
 
     void FixedUpdate()
@@ -860,6 +876,13 @@ public class ThirdPersonMovement : MonoBehaviour
         animator.SetBool("Landing", true);
         animator.SetBool("Falling", false);
         print("Mantling");
+    }
+
+    void Respawn()
+    {
+        print("Resetting player position");
+        transform.position = respawnPosition;
+        TakeDamage(100);
     }
 
     IEnumerator ShowReticle()

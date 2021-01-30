@@ -20754,6 +20754,10 @@ MonoBehaviour:
   windRiseSpeed: 20.19
   windResetVelocityY: -10
   mass: 3
+  Bounds:
+    serializedVersion: 2
+    m_Bits: 524288
+  respawnPosition: {x: 0, y: 20, z: 0}
   cosmicPalmBeam: {fileID: 7450021438257590541, guid: bb84d86c4398f4ac6aa21c8bd197b45d,
     type: 3}
   _cosmicPalmBeamSpawnLocation: {fileID: 1752734367818053343}

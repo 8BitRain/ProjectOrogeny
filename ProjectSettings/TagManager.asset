@@ -13,6 +13,7 @@ TagManager:
   - P1VirtualCamera
   - P2VirtualCamera
   - Mantle
+  - Bounds
   layers:
   - Default
   - TransparentFX
