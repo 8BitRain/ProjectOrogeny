@@ -23,6 +23,8 @@ public class ThirdPersonMovement : MonoBehaviour
     private float defaultDashSpeed;
     public float maxSpeed = 10.0f;
     public float dashFriction = .025f;
+    public Transform glideAfterImage;
+    private float _afterImageTimer = 0;
     private float _dashTimer = 0;
     private bool glide = false;
 
@@ -695,6 +697,21 @@ public class ThirdPersonMovement : MonoBehaviour
             _dashTimer = 0;
             moveCharacter = true;
         }
+
+        if(_afterImageTimer == 0)
+        {
+            Instantiate(glideAfterImage, this.transform.position, this.transform.rotation);
+        }
+
+        if(_afterImageTimer >= .2)
+        {
+            _afterImageTimer = 0;
+        } 
+        else 
+        {
+            _afterImageTimer += Time.deltaTime;
+        }
+
 
         //Increase dashTimer.
         _dashTimer += Time.deltaTime;

@@ -20732,6 +20732,8 @@ MonoBehaviour:
   dashSpeed: 20
   maxSpeed: 12
   dashFriction: 0.025
+  glideAfterImage: {fileID: 2264488335221938838, guid: cef06634d039d440b9ffc5954c79c4f6,
+    type: 3}
   _groundChecker: {fileID: 1752734369801175066}
   GroundDistance: 0.2
   Ground:

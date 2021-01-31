@@ -634,7 +634,7 @@ GameObject:
   - component: {fileID: 131278026}
   m_Layer: 19
   m_Name: SkyBoundary
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4093,7 +4093,7 @@ GameObject:
   - component: {fileID: 671323578}
   m_Layer: 19
   m_Name: BoundaryFront
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7477,7 +7477,7 @@ GameObject:
   - component: {fileID: 1266242662}
   m_Layer: 19
   m_Name: BoundaryRight
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8074,7 +8074,7 @@ GameObject:
   - component: {fileID: 1462459669}
   m_Layer: 19
   m_Name: Floor
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14204,7 +14204,7 @@ GameObject:
   - component: {fileID: 1804443087}
   m_Layer: 19
   m_Name: BoundaryLeft
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15062,7 +15062,7 @@ GameObject:
   - component: {fileID: 1953633934}
   m_Layer: 19
   m_Name: BoundaryBack
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
