@@ -5261,7 +5261,7 @@ GameObject:
   - component: {fileID: 891697129}
   m_Layer: 8
   m_Name: MantleableWall
-  m_TagString: Untagged
+  m_TagString: TargetLock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

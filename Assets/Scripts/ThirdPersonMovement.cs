@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Cinemachine;
 
 public class ThirdPersonMovement : MonoBehaviour
 {
@@ -103,6 +104,12 @@ public class ThirdPersonMovement : MonoBehaviour
     public GameObject mainCamera;
     public GameObject aimCamera;
     public GameObject aimReticle;
+    public GameObject freeLookCamera;
+    public GameObject lockOnCamera;
+    private bool lockOnInput = false;
+    private bool lockedOn = false;
+    public Transform targetToLock; 
+
 
     //Time Management
     //TODO: Create a time manager
@@ -563,6 +570,26 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             Respawn();
         }
+
+        //LockOn
+        if(lockOnInput && lockedOn)
+        {
+            lockedOn = false;
+            lockOnCamera.SetActive(false);
+            freeLookCamera.SetActive(true);
+            lockOnInput = false;
+        }
+
+        if(lockOnInput && !lockedOn)
+        {
+            print("locking on");
+            freeLookCamera.SetActive(false);
+            lockOnCamera.SetActive(true);
+            targetToLock = GameObject.FindGameObjectWithTag("TargetLock").transform;
+            lockOnCamera.GetComponent<CinemachineVirtualCamera>().m_LookAt = targetToLock;
+            lockedOn = true;
+            lockOnInput = false;
+        }
         
     }
 
@@ -663,7 +690,18 @@ public class ThirdPersonMovement : MonoBehaviour
     {
         print("Dashing");
         moveCharacter = false;
+        if(_dashTimer == 0)
+        {
+            print("_dashTimer is 0 teleport");
+            //https://answers.unity.com/questions/1614287/teleporting-character-issue-with-transformposition.html
+            _controller.enabled = false;
+            transform.position = transform.position + new Vector3(0,0,2);
+            _controller.enabled = true;
+        }
         _controller.Move(transform.forward * dashSpeed * Time.deltaTime);
+
+        //Increase dashTimer.
+        _dashTimer += Time.deltaTime;
 
         if(dashSpeed > 0)
         {
@@ -712,9 +750,6 @@ public class ThirdPersonMovement : MonoBehaviour
             _afterImageTimer += Time.deltaTime;
         }
 
-
-        //Increase dashTimer.
-        _dashTimer += Time.deltaTime;
 
         /*
          //Increase speed when we want to accelerate or glide. For now we call this gliding due to the flight like effect. Think Dissidia.
@@ -820,6 +855,7 @@ public class ThirdPersonMovement : MonoBehaviour
     public void OnJump(InputAction.CallbackContext ctx) => jumpPressed = ctx.ReadValueAsButton();
     public void OnCosmicPalm(InputAction.CallbackContext ctx) => cosmicPalmInput = ctx.ReadValueAsButton();
     public void OnDash(InputAction.CallbackContext ctx) => dashInput = ctx.ReadValueAsButton();
+    public void OnLockOn(InputAction.CallbackContext ctx) => lockOnInput = ctx.ReadValueAsButton();
 
     //https://answers.unity.com/questions/242648/force-on-character-controller-knockback.html?_ga=2.213933971.521934289.1611610771-608714207.1587856867
     public void AddImpact(Vector3 direction, float force)
