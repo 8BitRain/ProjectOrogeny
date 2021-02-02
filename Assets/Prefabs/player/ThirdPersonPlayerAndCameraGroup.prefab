@@ -3718,7 +3718,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 36663
+    m_Bits: 1085239
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -20940,6 +20940,10 @@ MonoBehaviour:
   freeLookCamera: {fileID: 3772168097063778932}
   lockOnCamera: {fileID: 1627366028}
   targetToLock: {fileID: 0}
+  Foe:
+    serializedVersion: 2
+    m_Bits: 1048576
+  foes: []
   _controller: {fileID: 1752734369499009730}
   cam: {fileID: 3530821983064046920}
   Orogene: {fileID: 6712688164114463187}

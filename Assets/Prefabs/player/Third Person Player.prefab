@@ -4872,138 +4872,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!143 &4161617537723858923
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5395563109301593833}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Height: 3.53
-  m_Radius: 0.52
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 2.07, z: 0}
---- !u!95 &4161617537723858922
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5395563109301593833}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 958778ec87c354760b47db7a2d4bc352, type: 3}
-  m_Controller: {fileID: 9100000, guid: b19809d98f587405d87ddf5a7b29771f, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &4161617537723858917
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5395563109301593833}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48dca54125bc8412680576e894fd65ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 9
-  acceleration: 0.1
-  friction: 0.025
-  maxSpeed: 12
-  gravity: -9.81
-  turnSmoothTime: 0.1
-  glideOnGround: 0
-  _groundChecker: {fileID: 4161617537623502131}
-  GroundDistance: 0.2
-  Ground:
-    serializedVersion: 2
-    m_Bits: 256
-  JumpHeight: 8
-  _jumpVFX: {fileID: 1365735699005214758, guid: 7c665c8fa7fa04628a9ef452ee059f13,
-    type: 3}
-  _wallRunChecker: {fileID: 4161617537745607302}
-  wallDistance: 2
-  Wall:
-    serializedVersion: 2
-    m_Bits: 1024
-  WallRunMaxHeight: 2.5
-  cosmicWindDistance: 0.1
-  windRiseSpeed: 20.19
-  windResetVelocityY: -10
-  cosmicPalmBeam: {fileID: 7450021438257590541, guid: bb84d86c4398f4ac6aa21c8bd197b45d,
-    type: 3}
-  _cosmicPalmBeamSpawnLocation: {fileID: 4161617536194075638}
-  cosmicPalmBeamDuration: 5
-  cosmicPalmBeamSpeed: 15
-  cosmicPalmBeamThrust: 10000
-  mainCamera: {fileID: 0}
-  aimCamera: {fileID: 0}
-  aimReticle: {fileID: 0}
-  _controller: {fileID: 4161617537723858923}
-  cam: {fileID: 0}
-  Orogene: {fileID: 8987986214385177850}
-  wallRunningAnimationClip:
-  - {fileID: 1742145234810461679, guid: 958778ec87c354760b47db7a2d4bc352, type: 3}
-  - {fileID: 8766899527109677652, guid: 958778ec87c354760b47db7a2d4bc352, type: 3}
-  jumpingAnimationClip:
-  - {fileID: 1742145234810461679, guid: 958778ec87c354760b47db7a2d4bc352, type: 3}
-  combatAnimationClip:
-  - {fileID: -6647425298583328627, guid: 958778ec87c354760b47db7a2d4bc352, type: 3}
-  animator: {fileID: 0}
---- !u!114 &4161617537723858916
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5395563109301593833}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e06f8fdc3e0146958afef95f5d92638, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  thrust: 50
-  torusDescentSpd: 20
-  torusExpanseSpd: 20
-  torusSpinSpd: 20
-  camReference: {fileID: 0}
-  movementReference: {fileID: 4161617537735172266}
-  torus: {fileID: 0}
---- !u!114 &4161617537723858921
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5395563109301593833}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e20e479f18e44355a4ed3ee495d5c02, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  followTransform: {fileID: 4161617535824244258}
-  mainCamera: {fileID: 0}
-  aimCamera: {fileID: 0}
-  aimReticle: {fileID: 0}
-  cam: {fileID: 0}
-  speed: 6
-  rotationPower: 5
-  _controller: {fileID: 4161617537723858923}
 --- !u!1 &4161617537735172267
 GameObject:
   m_ObjectHideFlags: 0
@@ -5079,6 +4947,157 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.47
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!143 &4161617537723858923
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5395563109301593833}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 3.53
+  m_Radius: 0.52
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 2.07, z: 0}
+--- !u!95 &4161617537723858922
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5395563109301593833}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 958778ec87c354760b47db7a2d4bc352, type: 3}
+  m_Controller: {fileID: 9100000, guid: b19809d98f587405d87ddf5a7b29771f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &4161617537723858916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5395563109301593833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e06f8fdc3e0146958afef95f5d92638, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thrust: 50
+  torusDescentSpd: 20
+  torusExpanseSpd: 20
+  torusSpinSpd: 20
+  camReference: {fileID: 0}
+  movementReference: {fileID: 4161617537735172266}
+  torus: {fileID: 0}
+--- !u!114 &4161617537723858917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5395563109301593833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48dca54125bc8412680576e894fd65ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 9
+  acceleration: 0.1
+  friction: 0.025
+  gravity: -9.81
+  turnSmoothTime: 0.1
+  dashSpeed: 6
+  maxSpeed: 12
+  dashFriction: 0.025
+  glideAfterImage: {fileID: 0}
+  _groundChecker: {fileID: 4161617537623502131}
+  GroundDistance: 0.2
+  Ground:
+    serializedVersion: 2
+    m_Bits: 256
+  JumpHeight: 8
+  _jumpVFX: {fileID: 1365735699005214758, guid: 7c665c8fa7fa04628a9ef452ee059f13,
+    type: 3}
+  Ledge:
+    serializedVersion: 2
+    m_Bits: 0
+  ledgeDistance: 2
+  _wallRunChecker: {fileID: 4161617537745607302}
+  wallDistance: 2
+  Wall:
+    serializedVersion: 2
+    m_Bits: 1024
+  WallRunMaxHeight: 2.5
+  cosmicWindDistance: 0.1
+  windRiseSpeed: 20.19
+  windResetVelocityY: -10
+  mass: 3
+  Bounds:
+    serializedVersion: 2
+    m_Bits: 0
+  respawnPosition: {x: 0, y: 0, z: 0}
+  cosmicPalmBeam: {fileID: 7450021438257590541, guid: bb84d86c4398f4ac6aa21c8bd197b45d,
+    type: 3}
+  _cosmicPalmBeamSpawnLocation: {fileID: 4161617536194075638}
+  cosmicPalmBeamDuration: 5
+  cosmicPalmBeamSpeed: 15
+  cosmicPalmBeamThrust: 10000
+  mainCamera: {fileID: 0}
+  aimCamera: {fileID: 0}
+  aimReticle: {fileID: 0}
+  freeLookCamera: {fileID: 0}
+  lockOnCamera: {fileID: 0}
+  targetToLock: {fileID: 0}
+  Foe:
+    serializedVersion: 2
+    m_Bits: 0
+  foes: []
+  _controller: {fileID: 4161617537723858923}
+  cam: {fileID: 0}
+  Orogene: {fileID: 8987986214385177850}
+  wallRunningAnimationClip:
+  - {fileID: 1742145234810461679, guid: 958778ec87c354760b47db7a2d4bc352, type: 3}
+  - {fileID: 8766899527109677652, guid: 958778ec87c354760b47db7a2d4bc352, type: 3}
+  jumpingAnimationClip:
+  - {fileID: 1742145234810461679, guid: 958778ec87c354760b47db7a2d4bc352, type: 3}
+  combatAnimationClip:
+  - {fileID: -6647425298583328627, guid: 958778ec87c354760b47db7a2d4bc352, type: 3}
+  animator: {fileID: 0}
+  healthBar: {fileID: 0}
+--- !u!114 &4161617537723858921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5395563109301593833}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e20e479f18e44355a4ed3ee495d5c02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  followTransform: {fileID: 4161617535824244258}
+  mainCamera: {fileID: 0}
+  aimCamera: {fileID: 0}
+  aimReticle: {fileID: 0}
+  cam: {fileID: 0}
+  speed: 6
+  rotationPower: 5
+  _controller: {fileID: 4161617537723858923}
 --- !u!1001 &4161617537402377894
 PrefabInstance:
   m_ObjectHideFlags: 0

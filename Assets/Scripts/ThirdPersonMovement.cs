@@ -108,7 +108,10 @@ public class ThirdPersonMovement : MonoBehaviour
     public GameObject lockOnCamera;
     private bool lockOnInput = false;
     private bool lockedOn = false;
-    public Transform targetToLock; 
+    public Transform targetToLock;
+    public LayerMask Foe; 
+
+    public Transform[] foes;
 
 
     //Time Management
@@ -578,17 +581,25 @@ public class ThirdPersonMovement : MonoBehaviour
             lockOnCamera.SetActive(false);
             freeLookCamera.SetActive(true);
             lockOnInput = false;
+
         }
 
         if(lockOnInput && !lockedOn)
         {
-            print("locking on");
-            freeLookCamera.SetActive(false);
-            lockOnCamera.SetActive(true);
-            targetToLock = GameObject.FindGameObjectWithTag("TargetLock").transform;
-            lockOnCamera.GetComponent<CinemachineVirtualCamera>().m_LookAt = targetToLock;
-            lockedOn = true;
-            lockOnInput = false;
+            //Look for surrounding enemies
+            bool targetsFound = FindNearbyTargets();
+            if(targetsFound)
+            {
+                print("found targets, locking on");
+                freeLookCamera.SetActive(false);
+                lockOnCamera.SetActive(true);
+                //targetToLock = GameObject.FindGameObjectWithTag("TargetLock").transform;
+                targetToLock = foes[0];
+                lockOnCamera.GetComponent<CinemachineVirtualCamera>().m_LookAt = targetToLock;
+                lockedOn = true;
+                lockOnInput = false;
+            }
+
         }
         
     }
@@ -695,7 +706,7 @@ public class ThirdPersonMovement : MonoBehaviour
             print("_dashTimer is 0 teleport");
             //https://answers.unity.com/questions/1614287/teleporting-character-issue-with-transformposition.html
             _controller.enabled = false;
-            transform.position = transform.position + new Vector3(0,0,2);
+            transform.position = transform.position + new Vector3(0,0,15);
             _controller.enabled = true;
         }
         _controller.Move(transform.forward * dashSpeed * Time.deltaTime);
@@ -870,6 +881,31 @@ public class ThirdPersonMovement : MonoBehaviour
        print("Adding impact: " + impact);
     }
 
+
+    public bool FindNearbyTargets()
+    {
+        
+        Vector3 position = transform.position + _controller.center;
+        RaycastHit[] foeHit = Physics.SphereCastAll(position, 5f, transform.forward, 5f, Foe);
+        bool foundTargets = false;
+
+        //Create an array based on the number of targets around us;
+        foes = new Transform[foeHit.Length];
+        if(foeHit.Length > 0)
+        {
+            int iter = 0;
+            foundTargets = true;
+
+            foreach(RaycastHit foe in foeHit)
+            {
+                foes[iter] = foe.transform;
+                iter++;
+            }
+        } 
+
+        return foundTargets;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         //Enviromental EFX Cosmic Wind Riding/Rising
@@ -930,6 +966,7 @@ public class ThirdPersonMovement : MonoBehaviour
         animator.SetBool("Falling", false);
         print("Mantling");
     }
+
 
     void Respawn()
     {
