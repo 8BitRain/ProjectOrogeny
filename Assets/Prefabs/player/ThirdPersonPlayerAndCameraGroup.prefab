@@ -21086,6 +21086,36 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 3d9954d6-a686-4db4-89a0-7a8b142ead93
     m_ActionName: Gameplay/LockOn[/DualShock4GamepadHID/rightStickPress]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1752734369499009740}
+        m_MethodName: OnLockOnSwitchTargetRight
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 1f3595a9-a82c-49f2-b67e-2cd1e0e1aebc
+    m_ActionName: Gameplay/LockOnSwitchTargetRight[/DualShock4GamepadHID/rightStick/right,/DualShock4GamepadHID1/rightStick/right]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1752734369499009740}
+        m_MethodName: OnLockOnSwitchTargetLeft
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 989e8fdd-8099-4641-8007-960d8f51506d
+    m_ActionName: Gameplay/LockOnSwitchTargetLeft[/DualShock4GamepadHID/rightStick/left,/DualShock4GamepadHID1/rightStick/left]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Gameplay

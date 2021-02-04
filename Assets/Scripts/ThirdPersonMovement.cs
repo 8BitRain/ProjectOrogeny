@@ -107,7 +107,10 @@ public class ThirdPersonMovement : MonoBehaviour
     public GameObject freeLookCamera;
     public GameObject lockOnCamera;
     private bool lockOnInput = false;
+    private bool targetSwitchRightInput = false;
+    private bool targetSwitchLeftInput = false;
     private bool lockedOn = false;
+    private int currentTarget = 0;
     public Transform targetToLock;
     public LayerMask Foe; 
 
@@ -574,7 +577,7 @@ public class ThirdPersonMovement : MonoBehaviour
             Respawn();
         }
 
-        //LockOn
+        //Turn LockOn Off
         if(lockOnInput && lockedOn)
         {
             lockedOn = false;
@@ -584,6 +587,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
         }
 
+        //LockOn to Target
         if(lockOnInput && !lockedOn)
         {
             //Look for surrounding enemies
@@ -594,13 +598,57 @@ public class ThirdPersonMovement : MonoBehaviour
                 freeLookCamera.SetActive(false);
                 lockOnCamera.SetActive(true);
                 //targetToLock = GameObject.FindGameObjectWithTag("TargetLock").transform;
-                targetToLock = foes[0];
+                //reset currentTarget 
+                currentTarget = 0;
+                targetToLock = foes[currentTarget];
                 lockOnCamera.GetComponent<CinemachineVirtualCamera>().m_LookAt = targetToLock;
                 lockedOn = true;
                 lockOnInput = false;
             }
 
         }
+
+        //Swap to Right/Left Target
+        if(lockedOn)
+        {
+            if(targetSwitchRightInput)
+            {
+                if(currentTarget >= foes.Length - 1)
+                {
+                    currentTarget = 0;
+                }
+                
+                //An else statement here might be more beneficial since placing the >= after the < would cause an error in which if currentTarget.length = 3 and currentTarget = 2, currentTarget++ would increment currentTarget to 3, then trigger setting currentTarget to 0, creating an off by 1 error.
+                if(currentTarget < foes.Length - 1)
+                {
+                    currentTarget += 1;
+                }
+                print("locked on right");
+                targetSwitchRightInput = false;
+            }
+
+            if(targetSwitchLeftInput)
+            {
+                //An else statement here might be more beneficial since placing the >= after the < would cause an error in which if currentTarget.length = 3 and currentTarget = 2, currentTarget++ would increment currentTarget to 3, then trigger setting currentTarget to 0, creating an off by 1 error.
+                if(currentTarget > 0)
+                {
+                    currentTarget -= 1;
+                }
+
+                if(currentTarget == 0)
+                {
+                    currentTarget = foes.Length - 1;
+                }
+                targetSwitchLeftInput = false;
+                print("locked on left");
+            }
+
+            //print(currentTarget);
+
+            targetToLock = foes[currentTarget];
+            lockOnCamera.GetComponent<CinemachineVirtualCamera>().m_LookAt = targetToLock;
+        }
+
         
     }
 
@@ -867,6 +915,8 @@ public class ThirdPersonMovement : MonoBehaviour
     public void OnCosmicPalm(InputAction.CallbackContext ctx) => cosmicPalmInput = ctx.ReadValueAsButton();
     public void OnDash(InputAction.CallbackContext ctx) => dashInput = ctx.ReadValueAsButton();
     public void OnLockOn(InputAction.CallbackContext ctx) => lockOnInput = ctx.ReadValueAsButton();
+    public void OnLockOnSwitchTargetRight(InputAction.CallbackContext ctx) => targetSwitchRightInput = ctx.ReadValueAsButton();
+    public void OnLockOnSwitchTargetLeft(InputAction.CallbackContext ctx) => targetSwitchLeftInput = ctx.ReadValueAsButton();
 
     //https://answers.unity.com/questions/242648/force-on-character-controller-knockback.html?_ga=2.213933971.521934289.1611610771-608714207.1587856867
     public void AddImpact(Vector3 direction, float force)
@@ -886,7 +936,7 @@ public class ThirdPersonMovement : MonoBehaviour
     {
         
         Vector3 position = transform.position + _controller.center;
-        RaycastHit[] foeHit = Physics.SphereCastAll(position, 5f, transform.forward, 5f, Foe);
+        RaycastHit[] foeHit = Physics.SphereCastAll(position, 30f, transform.forward, 30f, Foe);
         bool foundTargets = false;
 
         //Create an array based on the number of targets around us;
@@ -945,6 +995,14 @@ public class ThirdPersonMovement : MonoBehaviour
             _velocity.y += windRiseSpeed * Time.deltaTime;
             _controller.Move(_velocity * Time.deltaTime);
         }
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Vector3 position = transform.position + _controller.center;
+        Gizmos.DrawWireSphere(position, 30f);
+
     }
 
 
