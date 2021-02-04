@@ -76,6 +76,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "EnviromentAction",
+                    "type": "Button",
+                    "id": "cc7b3584-22fd-4f5b-a537-d7b533f4d7ca",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -175,6 +183,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "LockOnSwitchTargetLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "28cebfbc-971b-4edf-85ab-4886349e8cc1",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "EnviromentAction",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
