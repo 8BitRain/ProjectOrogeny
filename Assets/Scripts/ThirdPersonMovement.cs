@@ -85,6 +85,9 @@ public class ThirdPersonMovement : MonoBehaviour
     [Header("Enviromental Action")]
     private bool enviromentActionInput = false;
 
+    [Header("VFX")]
+    public GameObject speedLines;
+
     //Respawn
     [Header("Respawn")]
     public LayerMask Bounds;
@@ -178,6 +181,8 @@ public class ThirdPersonMovement : MonoBehaviour
         //animator
         running = false;
 
+        speedLines.SetActive(false);
+
         //Used to set up aiming. Reenable
         //aimReticle.SetActive(false);
         slowTime = false;
@@ -261,6 +266,23 @@ public class ThirdPersonMovement : MonoBehaviour
                     print("Not falling");
                     animator.SetBool("Landing", true);
                     animator.SetBool("Falling", false);
+                }
+
+                if(!_isWallRunning)
+                {
+                    if(enviromentActionInput)
+                    {
+                        //speedLines.GetComponent<ParticleSys
+                        speed = 20;
+                        freeLookCamera.GetComponent<CinemachineFreeLook>().m_Lens.FieldOfView = 80;
+                        speedLines.SetActive(true);
+                    }
+                    else
+                    {
+                        speed = defaultSpeed;
+                        freeLookCamera.GetComponent<CinemachineFreeLook>().m_Lens.FieldOfView = 40;
+                        speedLines.SetActive(false);
+                    }
                 }
             }
 
@@ -751,15 +773,29 @@ public class ThirdPersonMovement : MonoBehaviour
 
     void Dash()
     {
-        print("Dashing");
+        //print("Dashing");
         moveCharacter = false;
         if(_dashTimer == 0)
         {
             print("_dashTimer is 0 teleport");
+            
+            //Game Thiccness - adding field of view adjustment to dash
+            freeLookCamera.GetComponent<CinemachineFreeLook>().m_Lens.FieldOfView = 80;
+           
             //https://answers.unity.com/questions/1614287/teleporting-character-issue-with-transformposition.html
             _controller.enabled = false;
-            transform.position = transform.position + new Vector3(0,0,15);
+            //If > 0 we want to teleport forward
+            //If < 0 we want to teleport backward
+            print(movementInput.y);
+            if(movementInput.y > 0 || movementInput.y == 0)
+            {
+                transform.position = transform.position + transform.forward * 2;
+            } else 
+            {
+                transform.position = transform.position + transform.forward * -2;
+            }
             _controller.enabled = true;
+            
         }
         _controller.Move(transform.forward * dashSpeed * Time.deltaTime);
 
@@ -797,6 +833,7 @@ public class ThirdPersonMovement : MonoBehaviour
             animator.speed = 1;
             _dashTimer = 0;
             moveCharacter = true;
+            freeLookCamera.GetComponent<CinemachineFreeLook>().m_Lens.FieldOfView = 40;
         }
 
         if(_afterImageTimer == 0)
