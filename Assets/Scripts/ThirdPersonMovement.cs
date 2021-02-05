@@ -81,6 +81,10 @@ public class ThirdPersonMovement : MonoBehaviour
     public float mass = 3.0f;
     Vector3 impact = Vector3.zero;
 
+    //Button to trigger enviromental action
+    [Header("Enviromental Action")]
+    private bool enviromentActionInput = false;
+
     //Respawn
     [Header("Respawn")]
     public LayerMask Bounds;
@@ -269,19 +273,19 @@ public class ThirdPersonMovement : MonoBehaviour
             if(_canWallRun){
                 CheckForWall();
             }
-            if(isWallRight)
+            if(isWallRight && enviromentActionInput)
             {
                 StartWallRun("right");
             }
-            if(isWallLeft)
+            if(isWallLeft && enviromentActionInput)
             {
                 StartWallRun("left");
             }
-            if(isWallInFront)
+            if(isWallInFront && enviromentActionInput)
             {
                 StartWallRun("front");
             }
-            if(!isWallLeft && !isWallRight && !isWallInFront)
+            if(!isWallLeft && !isWallRight && !isWallInFront || !enviromentActionInput)
             {
                 ExitWallRun();
             }
@@ -786,7 +790,7 @@ public class ThirdPersonMovement : MonoBehaviour
             moveCharacter = true;
         }
 
-        if(_dashTimer >= 2)
+        if(_dashTimer >= .5)
         {
             this.glide = false;
             dashSpeed = defaultDashSpeed;
@@ -917,6 +921,7 @@ public class ThirdPersonMovement : MonoBehaviour
     public void OnLockOn(InputAction.CallbackContext ctx) => lockOnInput = ctx.ReadValueAsButton();
     public void OnLockOnSwitchTargetRight(InputAction.CallbackContext ctx) => targetSwitchRightInput = ctx.ReadValueAsButton();
     public void OnLockOnSwitchTargetLeft(InputAction.CallbackContext ctx) => targetSwitchLeftInput = ctx.ReadValueAsButton();
+    public void OnEnviromentInteraction(InputAction.CallbackContext ctx) => enviromentActionInput = ctx.ReadValueAsButton();
 
     //https://answers.unity.com/questions/242648/force-on-character-controller-knockback.html?_ga=2.213933971.521934289.1611610771-608714207.1587856867
     public void AddImpact(Vector3 direction, float force)
