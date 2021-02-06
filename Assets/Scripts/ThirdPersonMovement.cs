@@ -14,6 +14,9 @@ public class ThirdPersonMovement : MonoBehaviour
     public float friction = .025f;
     public float gravity = -9.81f;
     private bool dashInput = false;
+    private Vector3 axis;
+    private bool _isTilting = false;
+    private Vector2 tiltRotationSpeed;
 
 
     public float turnSmoothTime = 0.1f;
@@ -176,6 +179,8 @@ public class ThirdPersonMovement : MonoBehaviour
 
         defaultSpeed = speed;
         defaultDashSpeed = dashSpeed;
+
+        tiltRotationSpeed = new Vector2(0,0);
         playingAnim = false;
         moveCharacter = true;
         //animator
@@ -194,7 +199,6 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             this.cam =  GameObject.FindGameObjectWithTag("MainCamera").transform;
         }*/
-
     }
 
     // Update is called once per frame
@@ -317,6 +321,19 @@ public class ThirdPersonMovement : MonoBehaviour
             /* For tighter movement, move moveDir inside the scope of the moveCharacter and direction.magnitude check*/
             //This introduces a bug similar to the super bounce! moveDir being set to transform.forward affects wall jump movement.
             //Vector3 moveDir = transform.forward;
+            //Not Moving
+            if(direction.magnitude == 0)
+            {
+                if(tiltRotationSpeed.x > 0)
+                {
+                    tiltRotationSpeed.x -= .2f;
+                }
+                if(tiltRotationSpeed.y > 0)
+                {
+                    tiltRotationSpeed.y -= .2f;
+                }
+
+            }
             if(direction.magnitude >= .1f && moveCharacter)
             {
 
@@ -330,9 +347,61 @@ public class ThirdPersonMovement : MonoBehaviour
                 Vector3 moveDir;
                 if(!_isWallRunning)
                 {
+
                     transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
+
+                 
+
                     //Move Forward as normal
                     moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+
+                    //Tilt Player
+                    //Tilting Right
+                    if(movementInput.x > 0 && movementInput.y > 0)
+                    {
+                        float tiltAngleZ = -15f;
+                        float tiltAngleX = 5;
+
+                        //Tilt Angle X 
+                        if(tiltRotationSpeed.x * Time.deltaTime < 5)
+                        {
+                            tiltRotationSpeed.x += .5f;
+                            print("tiltRotationSpeed.x: " + tiltRotationSpeed.x);
+                        }
+
+                        //Tilt Angle Z
+                        if(tiltRotationSpeed.y * Time.deltaTime < 15)
+                        {
+                            tiltRotationSpeed.y += .05f;;
+                            print("tiltRotationSpeed.y: " + tiltRotationSpeed.y);
+                        }
+
+
+
+                        //axis = Vector3.Cross(moveDir.normalized, Vector3.up);
+
+
+                        //Tilts character over time
+                        /*transform.Rotate(new Vector3(0,0,1), tiltRotationSpeed.y * Time.deltaTime * -1);
+                        transform.Rotate(new Vector3(1,0,0), tiltRotationSpeed.x * Time.deltaTime);*/
+                        
+                        //Tilts character instantly
+                        transform.Rotate(new Vector3(0,0,1), tiltAngleZ);
+                        transform.Rotate(new Vector3(1,0,0), tiltAngleX);
+                        //_isTilting = true;    
+                    }
+                    //Tilting Left
+                    /*if(movementInput.x < 0 && movementInput.y > 0)
+                    {
+                        float tiltAngleZ = 15f;
+                        float tiltAngleX = -5;
+                        axis = Vector3.Cross(moveDir.normalized, Vector3.up);
+                        transform.Rotate(new Vector3(0,0,1), tiltAngleZ);
+                        transform.Rotate(new Vector3(1,0,0), tiltAngleX);
+                        //_isTilting = true;    
+                    }*/
+
+
                     RaycastHit slopeHit;
                     Vector3 slopeNormal;
                     if(Physics.Raycast(_groundChecker.position, Vector3.down, out slopeHit, GroundDistance, Ground))
@@ -372,6 +441,12 @@ public class ThirdPersonMovement : MonoBehaviour
                     _controller.Move(wallVector * speed * Time.deltaTime); 
                 }          
             }
+
+            /*if(_isTilting)
+            {
+                transform.Rotate(axis, -30);
+                _isTilting = false;
+            }*/
 
             if(dashInput || glide)
             {
