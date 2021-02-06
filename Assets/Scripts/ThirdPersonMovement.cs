@@ -324,6 +324,7 @@ public class ThirdPersonMovement : MonoBehaviour
             //Not Moving
             if(direction.magnitude == 0)
             {
+                print("not moving");
                 if(tiltRotationSpeed.x > 0)
                 {
                     tiltRotationSpeed.x -= .2f;
@@ -357,7 +358,9 @@ public class ThirdPersonMovement : MonoBehaviour
 
                     //Tilt Player
                     //Tilting Right
-                    if(movementInput.x > 0 && movementInput.y > 0)
+                    print("MovementInput.x: " + movementInput.x);
+                    print("MovementInput.y: " + movementInput.y);
+                    if(movementInput.x > 0.4 && movementInput.y > 0)
                     {
                         float tiltAngleZ = -15f;
                         float tiltAngleX = 5;
@@ -366,20 +369,17 @@ public class ThirdPersonMovement : MonoBehaviour
                         if(tiltRotationSpeed.x * Time.deltaTime < 5)
                         {
                             tiltRotationSpeed.x += .5f;
-                            print("tiltRotationSpeed.x: " + tiltRotationSpeed.x);
+                            //print("tiltRotationSpeed.x: " + tiltRotationSpeed.x);
                         }
 
                         //Tilt Angle Z
                         if(tiltRotationSpeed.y * Time.deltaTime < 15)
                         {
                             tiltRotationSpeed.y += .05f;;
-                            print("tiltRotationSpeed.y: " + tiltRotationSpeed.y);
+                            //print("tiltRotationSpeed.y: " + tiltRotationSpeed.y);
                         }
 
-
-
                         //axis = Vector3.Cross(moveDir.normalized, Vector3.up);
-
 
                         //Tilts character over time
                         /*transform.Rotate(new Vector3(0,0,1), tiltRotationSpeed.y * Time.deltaTime * -1);
@@ -390,16 +390,23 @@ public class ThirdPersonMovement : MonoBehaviour
                         transform.Rotate(new Vector3(1,0,0), tiltAngleX);
                         //_isTilting = true;    
                     }
+
+                    //Moving forward no tilt
+                    if(movementInput.x == 0 && movementInput.y > 0)
+                    {
+                        transform.Rotate(new Vector3(0,0,1), 0f);
+                        transform.Rotate(new Vector3(1,0,0), 0f);
+                    }
                     //Tilting Left
-                    /*if(movementInput.x < 0 && movementInput.y > 0)
+                    if(movementInput.x < -0.4 && movementInput.y > 0)
                     {
                         float tiltAngleZ = 15f;
-                        float tiltAngleX = -5;
+                        float tiltAngleX = 5;
                         axis = Vector3.Cross(moveDir.normalized, Vector3.up);
                         transform.Rotate(new Vector3(0,0,1), tiltAngleZ);
                         transform.Rotate(new Vector3(1,0,0), tiltAngleX);
                         //_isTilting = true;    
-                    }*/
+                    }
 
 
                     RaycastHit slopeHit;
