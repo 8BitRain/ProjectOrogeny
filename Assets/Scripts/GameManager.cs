@@ -56,10 +56,15 @@ public class GameManager : MonoBehaviour
                 spawnedPlayers[0].Find("Third Person Character").Find("animation_lab_nyx").tag = "P1";
                 spawnedPlayers[0].GetComponentInChildren<CinemachineInputProvider>().PlayerIndex = InputUser.all[0].index;
 
-                GameObject virtualCamera = GameObject.FindGameObjectWithTag("VirtualCamera");
-                virtualCamera.tag = "P1VirtualCamera";
-                virtualCamera.layer = LayerMask.NameToLayer("P1Cam");
+                GameObject[] virtualCameras = GameObject.FindGameObjectsWithTag("VirtualCamera");
 
+                foreach (GameObject virtualCamera in virtualCameras)
+                {
+                    virtualCamera.tag = "P1VirtualCamera";
+                    virtualCamera.layer = LayerMask.NameToLayer("P1Cam");
+                }
+
+                spawnedPlayers[0].name = "P1";
                 spawnedPlayers[0].gameObject.SetActive(true);
 
                 //Setup Player 1 UI
@@ -74,15 +79,20 @@ public class GameManager : MonoBehaviour
                 spawnedPlayers[1].Find("Third Person Character").Find("animation_lab_nyx").tag = "P2";
                 spawnedPlayers[1].GetComponentInChildren<CinemachineInputProvider>().PlayerIndex = InputUser.all[1].index;
 
-                GameObject virtualCamera = GameObject.FindGameObjectWithTag("VirtualCamera");
-                virtualCamera.tag = "P2VirtualCamera";
-                virtualCamera.layer = LayerMask.NameToLayer("P2Cam");
+                GameObject[] virtualCameras = GameObject.FindGameObjectsWithTag("VirtualCamera");
+                foreach (GameObject virtualCamera in virtualCameras)
+                {
+                    virtualCamera.tag = "P2VirtualCamera";
+                    virtualCamera.layer = LayerMask.NameToLayer("P2Cam");
+                }
 
                 Camera cam = spawnedPlayers[1].GetComponentInChildren<Camera>();
                 Debug.Log("Camera referenced" + cam.name);
 
                 cam.cullingMask = -1;
                 cam.cullingMask &=  ~(1 << LayerMask.NameToLayer("P1Cam"));
+
+                spawnedPlayers[1].name = "P2";
                 spawnedPlayers[1].gameObject.SetActive(true);
 
                 //Setting Player 2 UI
