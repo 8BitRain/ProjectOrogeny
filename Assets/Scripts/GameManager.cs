@@ -170,9 +170,7 @@ public class GameManager : MonoBehaviour
         if(playerNum == 1)
         {
             Camera p1Cam = spawnedPlayers[0].Find("Cam").GetComponent<Camera>();
-            print(p1Cam.name);
-            canvas.GetComponent<UI>().target.position = p1Cam.WorldToScreenPoint(playerTarget.transform.position + new Vector3(0,1,0));
-            //print("Body: " + playerTarget.name + " " + "Head: " + playerTarget.GetComponent<Foe>().Head.name);
+            canvas.GetComponent<UI>().target.position = p1Cam.WorldToScreenPoint(playerTarget.transform.position + new Vector3(0,2,0));
         }
     }
 

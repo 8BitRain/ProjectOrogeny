@@ -1093,6 +1093,11 @@ public class ThirdPersonMovement : MonoBehaviour
         
         Vector3 position = transform.position + _controller.center;
         RaycastHit[] foeHit = Physics.SphereCastAll(position, 30f, transform.forward, 30f, Foe);
+
+        //Experimental sort array
+        //This sort method compares the magnitude (distance) of enemies to the player. The closer the enemy, the sooner we want to target
+        System.Array.Sort(foeHit, (x,y) => ((int)(x.transform.position - transform.position).magnitude).CompareTo((int)(y.transform.position - transform.position).magnitude));
+
         bool foundTargets = false;
 
         //Create an array based on the number of targets around us;
@@ -1104,6 +1109,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
             foreach(RaycastHit foe in foeHit)
             {
+                print(foe.transform.name + " : " + foe.distance);
                 foes[iter] = foe.transform;
                 iter++;
             }
@@ -1120,7 +1126,6 @@ public class ThirdPersonMovement : MonoBehaviour
 
     public int GetPlayerID()
     {
-        print(gameObject.tag);
         if(gameObject.tag == "P1")
         {
             return 1;
