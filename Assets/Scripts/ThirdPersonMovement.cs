@@ -121,6 +121,7 @@ public class ThirdPersonMovement : MonoBehaviour
     private bool targetSwitchLeftInput = false;
     private bool lockedOn = false;
     private int currentTarget = 0;
+    private float _swapTimer = 0;
     public Transform targetToLock;
     public LayerMask Foe; 
 
@@ -748,37 +749,42 @@ public class ThirdPersonMovement : MonoBehaviour
         //Swap to Right/Left Target
         if(lockedOn)
         {
-            if(targetSwitchRightInput)
+            if(targetSwitchRightInput && _swapTimer >= .2f)
             {
                 if(currentTarget >= foes.Length - 1)
                 {
                     currentTarget = 0;
                 }
-                
-                //An else statement here might be more beneficial since placing the >= after the < would cause an error in which if currentTarget.length = 3 and currentTarget = 2, currentTarget++ would increment currentTarget to 3, then trigger setting currentTarget to 0, creating an off by 1 error.
-                if(currentTarget < foes.Length - 1)
+                else if(currentTarget < foes.Length - 1)
                 {
                     currentTarget += 1;
                 }
+                //currentTarget += 1;
                 print("locked on right");
                 targetSwitchRightInput = false;
+                targetSwitchLeftInput = false;
+                _swapTimer = 0;
             }
 
-            if(targetSwitchLeftInput)
+            if(targetSwitchLeftInput && _swapTimer >= .2f)
             {
                 //An else statement here might be more beneficial since placing the >= after the < would cause an error in which if currentTarget.length = 3 and currentTarget = 2, currentTarget++ would increment currentTarget to 3, then trigger setting currentTarget to 0, creating an off by 1 error.
+                //currentTarget -=1;
                 if(currentTarget > 0)
                 {
                     currentTarget -= 1;
                 }
-
-                if(currentTarget == 0)
+                else if(currentTarget == 0)
                 {
                     currentTarget = foes.Length - 1;
                 }
                 targetSwitchLeftInput = false;
+                targetSwitchRightInput = false;
                 print("locked on left");
+                _swapTimer = 0;
             }
+
+            _swapTimer += Time.deltaTime;
 
             //print(currentTarget);
 
@@ -1094,8 +1100,7 @@ public class ThirdPersonMovement : MonoBehaviour
         Vector3 position = transform.position + _controller.center;
         RaycastHit[] foeHit = Physics.SphereCastAll(position, 30f, transform.forward, 30f, Foe);
 
-        //Experimental sort array
-        //This sort method compares the magnitude (distance) of enemies to the player. The closer the enemy, the sooner we want to target
+        //This sort method compares the magnitude (distance) of target to the player. The closer the enemy, the sooner we want to target
         System.Array.Sort(foeHit, (x,y) => ((int)(x.transform.position - transform.position).magnitude).CompareTo((int)(y.transform.position - transform.position).magnitude));
 
         bool foundTargets = false;
