@@ -52,7 +52,8 @@ public class GameManager : MonoBehaviour
             {
                 //Debug.Log("Player 1 Value " + InputUser.all[0].index);
                 spawnedPlayers[0] = GameObject.FindGameObjectWithTag("Player").transform;
-                spawnedPlayers[0].tag = "P1";
+                spawnedPlayers[0].tag = "P1";   
+                spawnedPlayers[0].Find("Third Person Character").Find("animation_lab_nyx").tag = "P1";
                 spawnedPlayers[0].GetComponentInChildren<CinemachineInputProvider>().PlayerIndex = InputUser.all[0].index;
 
                 GameObject virtualCamera = GameObject.FindGameObjectWithTag("VirtualCamera");
@@ -70,6 +71,7 @@ public class GameManager : MonoBehaviour
                 //Debug.Log("Player 2 Value " + InputUser.all[1].index);
                 spawnedPlayers[1] = GameObject.FindGameObjectWithTag("Player").transform;
                 spawnedPlayers[1].tag = "P2";
+                spawnedPlayers[1].Find("Third Person Character").Find("animation_lab_nyx").tag = "P2";
                 spawnedPlayers[1].GetComponentInChildren<CinemachineInputProvider>().PlayerIndex = InputUser.all[1].index;
 
                 GameObject virtualCamera = GameObject.FindGameObjectWithTag("VirtualCamera");
@@ -161,6 +163,22 @@ public class GameManager : MonoBehaviour
             print(p1Cam.name);
             canvas.GetComponent<UI>().target.position = p1Cam.WorldToScreenPoint(playerTarget.transform.position + new Vector3(0,1,0));
             //print("Body: " + playerTarget.name + " " + "Head: " + playerTarget.GetComponent<Foe>().Head.name);
+        }
+    }
+
+    public void enableTargetArrow(int playerNum)
+    {
+        if(playerNum == 1)
+        {
+            canvas.GetComponent<UI>().target.gameObject.SetActive(true);
+        }
+    }
+
+    public void disableTargetArrow(int playerNum)
+    {
+        if(playerNum == 1)
+        {
+            canvas.GetComponent<UI>().target.gameObject.SetActive(false);
         }
     }
 }

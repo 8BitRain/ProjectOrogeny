@@ -693,8 +693,11 @@ public class ThirdPersonMovement : MonoBehaviour
             GameManager gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
             if(gameManager.canDisplayWidescreenUI)
             {
-                gameManager.disableWidescreenBars(1);
+                gameManager.disableWidescreenBars(this.GetPlayerID());
             }
+
+            //Disable Target Arrow
+            gameManager.disableTargetArrow(this.GetPlayerID());
 
             lockedOn = false;
             lockOnCamera.SetActive(false);
@@ -714,7 +717,7 @@ public class ThirdPersonMovement : MonoBehaviour
                 GameManager gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
                 if(gameManager.canDisplayWidescreenUI)
                 {
-                    gameManager.enableWidescreenBars(1);
+                    gameManager.enableWidescreenBars(this.GetPlayerID());
                 }                
                 print("found targets, locking on");
                 freeLookCamera.SetActive(false);
@@ -731,8 +734,9 @@ public class ThirdPersonMovement : MonoBehaviour
                 //Adjust camera offset to look up at monster
                 //lockOnCamera.GetComponent<CinemachineCameraOffset>().m_Offset.x
 
-                //Adjust position of targeter
-                gameManager.updateTargetPosition(1, targetToLockHead.gameObject);
+                //Activate & Adjust position of targeter
+                gameManager.enableTargetArrow(this.GetPlayerID());
+                gameManager.updateTargetPosition(this.GetPlayerID(), targetToLockHead.gameObject);
 
                 lockedOn = true;
                 lockOnInput = false;
@@ -782,7 +786,7 @@ public class ThirdPersonMovement : MonoBehaviour
             Transform targetToLockHead = targetToLock.GetComponent<Foe>().Head;
             lockOnCamera.GetComponent<CinemachineVirtualCamera>().m_LookAt = targetToLockHead;
             GameManager gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
-            gameManager.updateTargetPosition(1, targetToLockHead.gameObject);
+            gameManager.updateTargetPosition(this.GetPlayerID(), targetToLockHead.gameObject);
         }
 
         
@@ -1112,6 +1116,20 @@ public class ThirdPersonMovement : MonoBehaviour
     {
         print("Current Target" + foes[currentTarget].name);
         return foes[currentTarget].gameObject;
+    }
+
+    public int GetPlayerID()
+    {
+        print(gameObject.tag);
+        if(gameObject.tag == "P1")
+        {
+            return 1;
+        }
+        if(gameObject.tag == "P2")
+        {
+            return 2;
+        }
+        return -1;
     }
 
     private void OnTriggerEnter(Collider other)
