@@ -15,6 +15,7 @@ TagManager:
   - Mantle
   - Bounds
   - TargetLock
+  - GameManager
   layers:
   - Default
   - TransparentFX

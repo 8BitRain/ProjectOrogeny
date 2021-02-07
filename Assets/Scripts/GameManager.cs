@@ -4,10 +4,18 @@ using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Users;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    [Header("Players")]
     public Transform[] spawnedPlayers;
+
+    [Header("UI Settings")]
+    public GameObject canvas;
+    public bool canDisplayWidescreenUI;
+
+    [Header("Network Settings")]
     public bool enableNetworkedLoadedPlayer;
     // Start is called before the first frame update
     void Start()
@@ -127,6 +135,32 @@ public class GameManager : MonoBehaviour
             //https://stackoverflow.com/questions/44471568/how-to-calculate-sizedelta-in-recttransform
             p2HealthBarRT.anchoredPosition = new Vector2(p2HealthBarRT.sizeDelta.x/2 + 10.0f, Screen.height/2 - p2HealthBarRT.sizeDelta.y/2 - 10.0f);
             //p2HealthBarRT.position.Set(Screen.width/2 + p2HealthBarRT.width/2 + 10.0f, p2HealthBarRT.position.y);
+        }
+    }
+
+    public void enableWidescreenBars(int playerNum)
+    {
+        if(playerNum == 1)
+        {
+            canvas.GetComponent<UI>().widescreenUI.gameObject.SetActive(true);
+        }
+    }
+    public void disableWidescreenBars(int playerNum)
+    {
+        if(playerNum == 1)
+        {
+            canvas.GetComponent<UI>().widescreenUI.gameObject.SetActive(false);
+        }
+    }
+
+    public void updateTargetPosition(int playerNum, GameObject playerTarget)
+    {
+        if(playerNum == 1)
+        {
+            Camera p1Cam = spawnedPlayers[0].Find("Cam").GetComponent<Camera>();
+            print(p1Cam.name);
+            canvas.GetComponent<UI>().target.position = p1Cam.WorldToScreenPoint(playerTarget.transform.position + new Vector3(0,1,0));
+            //print("Body: " + playerTarget.name + " " + "Head: " + playerTarget.GetComponent<Foe>().Head.name);
         }
     }
 }

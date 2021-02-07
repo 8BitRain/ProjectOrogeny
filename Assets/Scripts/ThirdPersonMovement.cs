@@ -170,6 +170,8 @@ public class ThirdPersonMovement : MonoBehaviour
     //https://docs.unity3d.com/ScriptReference/AnimatorOverrideController.html
     protected AnimatorOverrideController animatorOverrideController;
 
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -324,7 +326,6 @@ public class ThirdPersonMovement : MonoBehaviour
             //Not Moving
             if(direction.magnitude == 0)
             {
-                print("not moving");
                 if(tiltRotationSpeed.x > 0)
                 {
                     tiltRotationSpeed.x -= .2f;
@@ -358,8 +359,8 @@ public class ThirdPersonMovement : MonoBehaviour
 
                     //Tilt Player
                     //Tilting Right
-                    print("MovementInput.x: " + movementInput.x);
-                    print("MovementInput.y: " + movementInput.y);
+                    //print("MovementInput.x: " + movementInput.x);
+                    //print("MovementInput.y: " + movementInput.y);
                     if(movementInput.x > 0.4 && movementInput.y > 0)
                     {
                         float tiltAngleZ = -15f;
@@ -688,6 +689,13 @@ public class ThirdPersonMovement : MonoBehaviour
         //Turn LockOn Off
         if(lockOnInput && lockedOn)
         {
+            //Experimental Add widescreen bars
+            GameManager gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+            if(gameManager.canDisplayWidescreenUI)
+            {
+                gameManager.disableWidescreenBars(1);
+            }
+
             lockedOn = false;
             lockOnCamera.SetActive(false);
             freeLookCamera.SetActive(true);
@@ -702,6 +710,12 @@ public class ThirdPersonMovement : MonoBehaviour
             bool targetsFound = FindNearbyTargets();
             if(targetsFound)
             {
+                //Experimental Add widescreen bars
+                GameManager gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+                if(gameManager.canDisplayWidescreenUI)
+                {
+                    gameManager.enableWidescreenBars(1);
+                }                
                 print("found targets, locking on");
                 freeLookCamera.SetActive(false);
                 lockOnCamera.SetActive(true);
@@ -709,10 +723,21 @@ public class ThirdPersonMovement : MonoBehaviour
                 //reset currentTarget 
                 currentTarget = 0;
                 targetToLock = foes[currentTarget];
-                lockOnCamera.GetComponent<CinemachineVirtualCamera>().m_LookAt = targetToLock;
+                Transform targetToLockHead = targetToLock.GetComponent<Foe>().Head;
+
+                //Third object should be the "Head Game Object"
+                lockOnCamera.GetComponent<CinemachineVirtualCamera>().m_LookAt = targetToLockHead;
+
+                //Adjust camera offset to look up at monster
+                //lockOnCamera.GetComponent<CinemachineCameraOffset>().m_Offset.x
+
+                //Adjust position of targeter
+                gameManager.updateTargetPosition(1, targetToLockHead.gameObject);
+
                 lockedOn = true;
                 lockOnInput = false;
             }
+            
 
         }
 
@@ -754,7 +779,10 @@ public class ThirdPersonMovement : MonoBehaviour
             //print(currentTarget);
 
             targetToLock = foes[currentTarget];
-            lockOnCamera.GetComponent<CinemachineVirtualCamera>().m_LookAt = targetToLock;
+            Transform targetToLockHead = targetToLock.GetComponent<Foe>().Head;
+            lockOnCamera.GetComponent<CinemachineVirtualCamera>().m_LookAt = targetToLockHead;
+            GameManager gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+            gameManager.updateTargetPosition(1, targetToLockHead.gameObject);
         }
 
         
@@ -1078,6 +1106,12 @@ public class ThirdPersonMovement : MonoBehaviour
         } 
 
         return foundTargets;
+    }
+
+    public GameObject GetCurrentTarget()
+    {
+        print("Current Target" + foes[currentTarget].name);
+        return foes[currentTarget].gameObject;
     }
 
     private void OnTriggerEnter(Collider other)
