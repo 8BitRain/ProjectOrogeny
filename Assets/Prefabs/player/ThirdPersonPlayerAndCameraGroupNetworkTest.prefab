@@ -20495,10 +20495,12 @@ MonoBehaviour:
   speed: 9
   acceleration: 0.1
   friction: 0.025
-  maxSpeed: 12
   gravity: -9.81
   turnSmoothTime: 0.1
-  glideOnGround: 0
+  dashSpeed: 6
+  maxSpeed: 12
+  dashFriction: 0.025
+  glideAfterImage: {fileID: 0}
   _groundChecker: {fileID: 1752734369801175066}
   GroundDistance: 0.2
   Ground:
@@ -20520,6 +20522,12 @@ MonoBehaviour:
   cosmicWindDistance: 0.1
   windRiseSpeed: 20.19
   windResetVelocityY: -10
+  mass: 3
+  speedLines: {fileID: 0}
+  Bounds:
+    serializedVersion: 2
+    m_Bits: 0
+  respawnPosition: {x: 0, y: 0, z: 0}
   cosmicPalmBeam: {fileID: 7450021438257590541, guid: bb84d86c4398f4ac6aa21c8bd197b45d,
     type: 3}
   _cosmicPalmBeamSpawnLocation: {fileID: 1752734367818053343}
@@ -20529,6 +20537,13 @@ MonoBehaviour:
   mainCamera: {fileID: 0}
   aimCamera: {fileID: 0}
   aimReticle: {fileID: 0}
+  freeLookCamera: {fileID: 0}
+  lockOnCamera: {fileID: 0}
+  targetToLock: {fileID: 0}
+  Foe:
+    serializedVersion: 2
+    m_Bits: 0
+  foes: []
   _controller: {fileID: 1752734369499009730}
   cam: {fileID: 3530821983064046920}
   Orogene: {fileID: 6712688164114463187}
@@ -20541,6 +20556,7 @@ MonoBehaviour:
   combatAnimationClip:
   - {fileID: -6647425298583328627, guid: 958778ec87c354760b47db7a2d4bc352, type: 3}
   animator: {fileID: 0}
+  healthBar: {fileID: 0}
 --- !u!114 &1752734369499009728
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20640,6 +20656,26 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 73de7740-4961-4384-9349-19aff762e678
     m_ActionName: Gameplay/Look[/XboxGamepadMacOS/rightStick,/DualShock4GamepadHID/rightStick]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e3e2c790-84d4-48f6-be9a-e3e09449d91e
+    m_ActionName: Gameplay/Dash
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3d9954d6-a686-4db4-89a0-7a8b142ead93
+    m_ActionName: Gameplay/LockOn
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 1f3595a9-a82c-49f2-b67e-2cd1e0e1aebc
+    m_ActionName: Gameplay/LockOnSwitchTargetRight
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 989e8fdd-8099-4641-8007-960d8f51506d
+    m_ActionName: Gameplay/LockOnSwitchTargetLeft
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: cc7b3584-22fd-4f5b-a537-d7b533f4d7ca
+    m_ActionName: Gameplay/EnviromentAction
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Gameplay
@@ -22173,7 +22209,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8226402252794440901}
-  m_LocalRotation: {x: 0.040101495, y: -0.000000017326336, z: 6.953713e-10, w: 0.99919564}
+  m_LocalRotation: {x: 0.040101495, y: 0.000000017326336, z: -6.953713e-10, w: 0.99919564}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

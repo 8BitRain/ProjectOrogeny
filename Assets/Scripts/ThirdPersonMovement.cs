@@ -895,6 +895,10 @@ public class ThirdPersonMovement : MonoBehaviour
     {
         //print("Dashing");
         moveCharacter = false;
+        if(lockedOn)
+        {
+            transform.LookAt(GetCurrentTarget().transform);
+        }
         if(_dashTimer == 0)
         {
             print("_dashTimer is 0 teleport");
@@ -1126,7 +1130,7 @@ public class ThirdPersonMovement : MonoBehaviour
     public GameObject GetCurrentTarget()
     {
         print("Current Target" + foes[currentTarget].name);
-        return foes[currentTarget].gameObject;
+        return targetToLock.GetComponent<Foe>().Head.gameObject;
     }
 
     public int GetPlayerID()
