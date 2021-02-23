@@ -52,7 +52,7 @@
             "typeInfo": {
                 "fullName": "UnityEditor.ShaderGraph.Internal.ColorShaderProperty"
             },
-            "JSONnodeData": "{\n    \"m_Guid\": {\n        \"m_GuidSerialized\": \"94f95e9b-dd8b-4057-8812-3aaaa1168388\"\n    },\n    \"m_Name\": \"Fresnel Color\",\n    \"m_DefaultReferenceName\": \"Color_8B661452\",\n    \"m_OverrideReferenceName\": \"FRESNEL_COLOR\",\n    \"m_GeneratePropertyBlock\": true,\n    \"m_Precision\": 0,\n    \"m_GPUInstanced\": false,\n    \"m_Hidden\": false,\n    \"m_Value\": {\n        \"r\": 1.0,\n        \"g\": 1.0,\n        \"b\": 1.0,\n        \"a\": 0.0\n    },\n    \"m_ColorMode\": 0\n}"
+            "JSONnodeData": "{\n    \"m_Guid\": {\n        \"m_GuidSerialized\": \"94f95e9b-dd8b-4057-8812-3aaaa1168388\"\n    },\n    \"m_Name\": \"Fresnel Color\",\n    \"m_DefaultReferenceName\": \"Color_8B661452\",\n    \"m_OverrideReferenceName\": \"FRESNEL_COLOR\",\n    \"m_GeneratePropertyBlock\": true,\n    \"m_Precision\": 0,\n    \"m_GPUInstanced\": false,\n    \"m_Hidden\": false,\n    \"m_Value\": {\n        \"r\": 0.9905660152435303,\n        \"g\": 0.9905660152435303,\n        \"b\": 0.9905660152435303,\n        \"a\": 0.0\n    },\n    \"m_ColorMode\": 0\n}"
         }
     ],
     "m_SerializedKeywords": [
@@ -60,7 +60,7 @@
             "typeInfo": {
                 "fullName": "UnityEditor.ShaderGraph.ShaderKeyword"
             },
-            "JSONnodeData": "{\n    \"m_Guid\": {\n        \"m_GuidSerialized\": \"9d0aae25-5f7f-4a6a-a3dc-a20ec0edf6e9\"\n    },\n    \"m_Name\": \"Use Fresnal\",\n    \"m_DefaultReferenceName\": \"BOOLEAN_B519C682_ON\",\n    \"m_OverrideReferenceName\": \"FRESNEL_ON\",\n    \"m_GeneratePropertyBlock\": false,\n    \"m_KeywordType\": 0,\n    \"m_KeywordDefinition\": 0,\n    \"m_KeywordScope\": 0,\n    \"m_Entries\": [],\n    \"m_Value\": 1,\n    \"m_IsEditable\": true,\n    \"m_IsExposable\": true\n}"
+            "JSONnodeData": "{\n    \"m_Guid\": {\n        \"m_GuidSerialized\": \"9d0aae25-5f7f-4a6a-a3dc-a20ec0edf6e9\"\n    },\n    \"m_Name\": \"Use Fresnal\",\n    \"m_DefaultReferenceName\": \"BOOLEAN_B519C682_ON\",\n    \"m_OverrideReferenceName\": \"FRESNEL_ON\",\n    \"m_GeneratePropertyBlock\": true,\n    \"m_KeywordType\": 0,\n    \"m_KeywordDefinition\": 0,\n    \"m_KeywordScope\": 0,\n    \"m_Entries\": [],\n    \"m_Value\": 1,\n    \"m_IsEditable\": true,\n    \"m_IsExposable\": true\n}"
         }
     ],
     "m_SerializableNodes": [
@@ -642,12 +642,6 @@
             "typeInfo": {
                 "fullName": "UnityEditor.Graphing.Edge"
             },
-            "JSONnodeData": "{\n    \"m_OutputSlot\": {\n        \"m_SlotId\": 2,\n        \"m_NodeGUIDSerialized\": \"c3f0f461-20e9-4155-b97e-1b7fcba5bad2\"\n    },\n    \"m_InputSlot\": {\n        \"m_SlotId\": 1,\n        \"m_NodeGUIDSerialized\": \"903b3728-5817-457a-9382-d8503f1626b9\"\n    }\n}"
-        },
-        {
-            "typeInfo": {
-                "fullName": "UnityEditor.Graphing.Edge"
-            },
             "JSONnodeData": "{\n    \"m_OutputSlot\": {\n        \"m_SlotId\": 2,\n        \"m_NodeGUIDSerialized\": \"b4070483-97f7-4315-89eb-4d9dddd217bf\"\n    },\n    \"m_InputSlot\": {\n        \"m_SlotId\": 1,\n        \"m_NodeGUIDSerialized\": \"914c119e-3f81-4628-99d8-fbcb1b9805fc\"\n    }\n}"
         },
         {
@@ -811,6 +805,12 @@
                 "fullName": "UnityEditor.Graphing.Edge"
             },
             "JSONnodeData": "{\n    \"m_OutputSlot\": {\n        \"m_SlotId\": 0,\n        \"m_NodeGUIDSerialized\": \"6715ea68-6965-41c7-aa1d-1bc92b0e63dc\"\n    },\n    \"m_InputSlot\": {\n        \"m_SlotId\": 1,\n        \"m_NodeGUIDSerialized\": \"6f070611-82fe-4f52-90cd-45867be1bf5e\"\n    }\n}"
+        },
+        {
+            "typeInfo": {
+                "fullName": "UnityEditor.Graphing.Edge"
+            },
+            "JSONnodeData": "{\n    \"m_OutputSlot\": {\n        \"m_SlotId\": 2,\n        \"m_NodeGUIDSerialized\": \"c3f0f461-20e9-4155-b97e-1b7fcba5bad2\"\n    },\n    \"m_InputSlot\": {\n        \"m_SlotId\": 1,\n        \"m_NodeGUIDSerialized\": \"903b3728-5817-457a-9382-d8503f1626b9\"\n    }\n}"
         }
     ],
     "m_PreviewData": {
