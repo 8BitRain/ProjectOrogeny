@@ -1,38 +1,32 @@
 fileFormatVersion: 2
-guid: b5964cf01bd9f4bd69afc5dd4bf516a5
+guid: 7021a47d0648646e58c471f61657180e
 ModelImporter:
   serializedVersion: 19300
   internalIDToNameTable:
   - first:
-      74: 3902579168193616072
-    second: nyx_v2_rig|backflip
+      74: 2729916137779268967
+    second: eston_rig|backflip
   - first:
-      74: 518247858978517391
-    second: nyx_v2_rig|combat_parry
+      74: -7888320342414552889
+    second: eston_rig|combat_parry
   - first:
-      74: 4552616651274024975
-    second: nyx_v2_rig|combat_shieldBash
+      74: 6726348013396578973
+    second: eston_rig|combat_shieldBash
   - first:
-      74: 2676858273164997005
-    second: nyx_v2_rig|combat_shieldGaurd
+      74: -586044569432148642
+    second: eston_rig|combat_shieldGaurd
   - first:
-      74: -4593956716621195050
-    second: nyx_v2_rig|combat_shieldThrow
+      74: -9200968973228944347
+    second: eston_rig|combat_shieldThrow
   - first:
-      74: -3878664781198319665
-    second: nyx_v2_rig|falling
+      74: -8829027688999028496
+    second: eston_rig|falling
   - first:
-      74: -6948046562660977784
-    second: nyx_v2_rig|idle
+      74: -5649991619822916180
+    second: eston_rig|idle
   - first:
-      74: 7900506555853724024
-    second: nyx_v2_rig|Run
-  - first:
-      74: 1153007001276593069
-    second: TowerShield_shieldBash|combat_shieldBash
-  - first:
-      74: -1516230443975806059
-    second: TowerShield_shieldGaurd|Run
+      74: -5786856996621874915
+    second: eston_rig|Run
   - first:
       74: 7889542676882017048
     second: TowerShield_shieldSheathed|Run
@@ -40,43 +34,68 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Bodyarmor
-    second: {fileID: 2100000, guid: 157aaf7dbe22145f793a9d7485496c15, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Bodyarmor.001
-    second: {fileID: 2100000, guid: 157aaf7dbe22145f793a9d7485496c15, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Bodyarmor.005
-    second: {fileID: 2100000, guid: 157aaf7dbe22145f793a9d7485496c15, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Bodyarmor.006
-    second: {fileID: 2100000, guid: 157aaf7dbe22145f793a9d7485496c15, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: DigitalMask_1
-    second: {fileID: 2100000, guid: 34129c64bc9ba40efa8e6915ccafb1cf, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: RedBottoms.011
+      name: Faceplate
     second: {fileID: 2100000, guid: dc4fe04b7e7d04e84bebf0769d49b0cb, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Trousers_Imperial
+      name: Gorget_Neck
+    second: {fileID: 2100000, guid: 157aaf7dbe22145f793a9d7485496c15, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.004
+    second: {fileID: 2100000, guid: 157aaf7dbe22145f793a9d7485496c15, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: eston_body
+    second: {fileID: 2100000, guid: d297f2376e4bc4c3e9192c783bfb2287, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: eston_face_brown
+    second: {fileID: 2100000, guid: 432c70cc9190d4dffb6a2c3e18770ff3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: eston_underarmor_legs_black
     second: {fileID: 2100000, guid: 34129c64bc9ba40efa8e6915ccafb1cf, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: nyx_face_brown
-    second: {fileID: 2100000, guid: 432c70cc9190d4dffb6a2c3e18770ff3, type: 2}
+      name: eston_underarmor_torso_imperial
+    second: {fileID: 2100000, guid: 34129c64bc9ba40efa8e6915ccafb1cf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: hair_black
+    second: {fileID: 2100000, guid: b9d3f9e6a62184978a8a364aef5a72e6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: mask_imperial
+    second: {fileID: 2100000, guid: 34129c64bc9ba40efa8e6915ccafb1cf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sash
+    second: {fileID: 2100000, guid: dc4fe04b7e7d04e84bebf0769d49b0cb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: steel
+    second: {fileID: 2100000, guid: 157aaf7dbe22145f793a9d7485496c15, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: steel.001
+    second: {fileID: 2100000, guid: 157aaf7dbe22145f793a9d7485496c15, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: trousers_imperial
+    second: {fileID: 2100000, guid: 34129c64bc9ba40efa8e6915ccafb1cf, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
@@ -103,7 +122,239 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: eston_rig|backflip
+      takeName: eston_rig|backflip
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 30
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: eston_rig|combat_parry
+      takeName: eston_rig|combat_parry
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 12
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: eston_rig|combat_shieldBash
+      takeName: eston_rig|combat_shieldBash
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 19
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: eston_rig|combat_shieldGaurd
+      takeName: eston_rig|combat_shieldGaurd
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 11
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: eston_rig|combat_shieldThrow
+      takeName: eston_rig|combat_shieldThrow
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 10
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: eston_rig|falling
+      takeName: eston_rig|falling
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 25
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: eston_rig|idle
+      takeName: eston_rig|idle
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 41
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: eston_rig|Run
+      takeName: eston_rig|Run
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 36
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 0
   meshes:
     lODScreenPercentages: []
@@ -146,58 +397,58 @@ ModelImporter:
     serializedVersion: 3
     human: []
     skeleton:
-    - name: Eston_unity_ready_v1(Clone)
+    - name: Eston(Clone)
       parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - name: mirror-mapped-face-forge
-      parentName: Eston_unity_ready_v1(Clone)
+    - name: Eston Face
+      parentName: Eston(Clone)
       position: {x: 0.019892018, y: -0.00014462211, z: 0.01826005}
       rotation: {x: -0.7071029, y: -0.0023515145, z: 0.0023515143, w: 0.70710284}
       scale: {x: 100, y: 100, z: 100}
-    - name: Nyx_body
-      parentName: Eston_unity_ready_v1(Clone)
+    - name: Eston Body
+      parentName: Eston(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
       scale: {x: 100, y: 100, z: 100}
-    - name: Hair_afroback.001
-      parentName: Eston_unity_ready_v1(Clone)
+    - name: Hair
+      parentName: Eston(Clone)
       position: {x: 0.22431417, y: 4.0516896, z: -0.13615865}
       rotation: {x: 0.92096204, y: -0.072474085, z: 0.026454987, w: -0.38193795}
       scale: {x: 21.215015, y: 21.215014, z: 21.215014}
     - name: Beads
-      parentName: Eston_unity_ready_v1(Clone)
-      position: {x: 0.21616568, y: 3.7347941, z: 0.09019128}
+      parentName: Eston(Clone)
+      position: {x: 0.23449247, y: 3.7347941, z: 0.09019128}
       rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
       scale: {x: 10.687603, y: 10.687612, z: 10.687612}
     - name: Boots
-      parentName: Eston_unity_ready_v1(Clone)
+      parentName: Eston(Clone)
       position: {x: 0.017245792, y: 0, z: 0}
       rotation: {x: 0.00000008146034, y: 0, z: -0, w: 1}
       scale: {x: 26.675177, y: 26.675177, z: 26.675177}
     - name: Trousers
-      parentName: Eston_unity_ready_v1(Clone)
+      parentName: Eston(Clone)
       position: {x: -0, y: 2.4935853, z: 0.3004964}
       rotation: {x: 0.000000081460335, y: 0, z: -0, w: 1}
       scale: {x: 100, y: 100, z: 100}
     - name: Metal Shingaurds
-      parentName: Eston_unity_ready_v1(Clone)
+      parentName: Eston(Clone)
       position: {x: -0, y: 2.4935853, z: 0.3004964}
       rotation: {x: 0.000000081460335, y: 0, z: -0, w: 1}
       scale: {x: 100, y: 100, z: 100}
     - name: Sash
-      parentName: Eston_unity_ready_v1(Clone)
+      parentName: Eston(Clone)
       position: {x: -0, y: 2.687604, z: 0.29361677}
       rotation: {x: 0.00000008146034, y: 0, z: -0, w: 1}
       scale: {x: 6.3270884, y: 6.3270884, z: 6.3270884}
-    - name: nyx_v2_rig
-      parentName: Eston_unity_ready_v1(Clone)
+    - name: eston_rig
+      parentName: Eston(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
       scale: {x: 100, y: 100, z: 100}
     - name: MCH-torso.parent
-      parentName: nyx_v2_rig
+      parentName: eston_rig
       position: {x: -0.000067691515, y: 0.0007119353, z: 0.022529308}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 0.9999999, z: 0.99999994}
@@ -1233,7 +1484,7 @@ ModelImporter:
     - name: MCH-upper_arm_parent_socket.R
       parentName: MCH-upper_arm_parent.R
       position: {x: 3.5623088e-10, y: -2.4214386e-10, z: 0.0000000018719584}
-      rotation: {x: 0.55684096, y: 0.61416435, z: -0.5293319, w: 0.1803832}
+      rotation: {x: 0.5568409, y: 0.61416435, z: -0.52933186, w: 0.18038331}
       scale: {x: 1, y: 1.0000001, z: 0.99999994}
     - name: upper_arm_parent.R
       parentName: MCH-upper_arm_parent_socket.R
@@ -1273,7 +1524,7 @@ ModelImporter:
     - name: upper_arm_ik.R
       parentName: MCH-upper_arm_parent.R
       position: {x: -0.0010419952, y: 0.00022659081, z: 0.00014822907}
-      rotation: {x: 0.55683994, y: 0.6141652, z: -0.52933145, w: 0.18038476}
+      rotation: {x: 0.55684, y: 0.61416525, z: -0.52933145, w: 0.18038478}
       scale: {x: 1.0396035, y: 1.0396035, z: 1.0396037}
     - name: MCH-forearm_ik.R
       parentName: upper_arm_ik.R
@@ -1288,7 +1539,7 @@ ModelImporter:
     - name: MCH-upper_arm_ik_stretch.R
       parentName: MCH-upper_arm_parent.R
       position: {x: 0.0000000015553087, y: -3.72529e-10, z: 0.0000000014156103}
-      rotation: {x: -0.5081733, y: -0.5918232, z: 0.5927358, w: -0.20042358}
+      rotation: {x: -0.5081732, y: -0.5918232, z: 0.5927357, w: -0.20042364}
       scale: {x: 0.96791416, y: 1.05, z: 0.96791404}
     - name: MCH-upper_arm_ik_stretch.R_end
       parentName: MCH-upper_arm_ik_stretch.R
@@ -1424,7 +1675,7 @@ ModelImporter:
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: MCH-hand_ik.parent.L
-      parentName: nyx_v2_rig
+      parentName: eston_rig
       position: {x: -0.013061758, y: -0.0002893078, z: 0.03188512}
       rotation: {x: -0.4910142, y: 0.64249825, z: -0.5606619, w: -0.17821148}
       scale: {x: 1, y: 1, z: 1}
@@ -1446,22 +1697,22 @@ ModelImporter:
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: MCH-upper_arm_ik_target.parent.L
-      parentName: nyx_v2_rig
+      parentName: eston_rig
       position: {x: -0.005452156, y: 0.009438843, z: 0.039370347}
       rotation: {x: 0.9674289, y: -0.10782227, z: -0.020472232, w: -0.22811525}
       scale: {x: 1, y: 1, z: 1.0000001}
     - name: upper_arm_ik_target.L
       parentName: MCH-upper_arm_ik_target.parent.L
       position: {x: 5.9604643e-10, y: 5.9604643e-10, z: -0.0000000026635825}
-      rotation: {x: 0.0000010825461, y: 0.0000006237533, z: 0.00000012200326, w: 1}
-      scale: {x: 1, y: 0.99999994, z: 1}
+      rotation: {x: 0.0000010979711, y: 0.00000062584877, z: 0.00000012945384, w: 1}
+      scale: {x: 1, y: 1, z: 1}
     - name: upper_arm_ik_target.L_end
       parentName: upper_arm_ik_target.L
       position: {x: -0, y: 0.0012062558, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: MCH-hand_ik.parent.R
-      parentName: nyx_v2_rig
+      parentName: eston_rig
       position: {x: 0.013061758, y: -0.0002893078, z: 0.03188512}
       rotation: {x: 0.4910142, y: 0.64249825, z: -0.5606619, w: 0.17821148}
       scale: {x: 1, y: 1, z: 1}
@@ -1483,7 +1734,7 @@ ModelImporter:
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: MCH-upper_arm_ik_target.parent.R
-      parentName: nyx_v2_rig
+      parentName: eston_rig
       position: {x: 0.005452155, y: 0.00943884, z: 0.03937034}
       rotation: {x: 0.96742886, y: 0.10782236, z: 0.020472419, w: -0.22811526}
       scale: {x: 0.9999997, y: 0.9999998, z: 0.99999976}
@@ -1498,7 +1749,7 @@ ModelImporter:
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: MCH-foot_ik.parent.L
-      parentName: nyx_v2_rig
+      parentName: eston_rig
       position: {x: -0.0014318681, y: 0.000057338453, z: 0.0033777435}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 0.99999994, z: 0.99999994}
@@ -1559,7 +1810,7 @@ ModelImporter:
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: MCH-thigh_ik_target.parent.L
-      parentName: nyx_v2_rig
+      parentName: eston_rig
       position: {x: 0.0014840884, y: -0.019649666, z: 0.012658108}
       rotation: {x: 0.008187397, y: -0.0000000070158386, z: 0.08493493, w: 0.9963529}
       scale: {x: 0.99999994, y: 1.0000001, z: 1}
@@ -1575,7 +1826,7 @@ ModelImporter:
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: MCH-foot_ik.parent.R
-      parentName: nyx_v2_rig
+      parentName: eston_rig
       position: {x: 0.0014318681, y: 0.000057338453, z: 0.0033777435}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 0.99999994, z: 0.99999994}
@@ -1636,7 +1887,7 @@ ModelImporter:
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: MCH-thigh_ik_target.parent.R
-      parentName: nyx_v2_rig
+      parentName: eston_rig
       position: {x: -0.0014840881, y: -0.019649666, z: 0.012658108}
       rotation: {x: 0.008187397, y: 0.0000000068862755, z: -0.08493493, w: 0.9963529}
       scale: {x: 0.99999994, y: 1.0000001, z: 1}
@@ -1651,7 +1902,7 @@ ModelImporter:
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: control_vertical
-      parentName: nyx_v2_rig
+      parentName: eston_rig
       position: {x: -0, y: 0, z: 0.00895237}
       rotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071067}
       scale: {x: 1, y: 1, z: 1}
@@ -1703,7 +1954,7 @@ ModelImporter:
     - name: VIS_upper_arm_ik_pole.L
       parentName: root
       position: {x: -0.007116182, y: 0.0002766813, z: 0.032630567}
-      rotation: {x: -0.08992897, y: 0.8186964, z: 0.30559838, w: -0.47776425}
+      rotation: {x: -0.08992907, y: 0.81869644, z: 0.3055984, w: -0.4777642}
       scale: {x: 0.99999994, y: 25.033876, z: 0.9999998}
     - name: VIS_upper_arm_ik_pole.L_end
       parentName: VIS_upper_arm_ik_pole.L
@@ -1713,7 +1964,7 @@ ModelImporter:
     - name: VIS_upper_arm_ik_pole.R
       parentName: root
       position: {x: 0.00711618, y: 0.00027668048, z: 0.03263057}
-      rotation: {x: 0.0899289, y: 0.81869656, z: 0.30559823, w: 0.47776404}
+      rotation: {x: 0.08992895, y: 0.8186966, z: 0.30559823, w: 0.47776404}
       scale: {x: 0.9999999, y: 25.033863, z: 0.99999976}
     - name: VIS_upper_arm_ik_pole.R_end
       parentName: VIS_upper_arm_ik_pole.R
@@ -1740,55 +1991,44 @@ ModelImporter:
       position: {x: -0, y: 0.0009634232, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - name: Breastplate_2
-      parentName: Eston_unity_ready_v1(Clone)
+    - name: Breastplate
+      parentName: Eston(Clone)
       position: {x: -0.00021578041, y: 3.127603, z: 0.38112456}
       rotation: {x: 0.000000021855694, y: 0, z: -0, w: 1}
       scale: {x: 100, y: 100, z: 100}
-    - name: GjuVisor_v1
-      parentName: Eston_unity_ready_v1(Clone)
+    - name: GjuVisor
+      parentName: Eston(Clone)
       position: {x: -0, y: 3.8487244, z: 0.31719923}
       rotation: {x: 0.000000021855696, y: 0, z: -0, w: 1}
       scale: {x: 11.689672, y: 9.550522, z: 7.289326}
-    - name: Faceplate_Crafting
-      parentName: Eston_unity_ready_v1(Clone)
+    - name: Faceplate
+      parentName: Eston(Clone)
       position: {x: -0.004414604, y: 3.934514, z: 0.26356018}
       rotation: {x: 0.000000021855694, y: 0, z: -0, w: 1}
       scale: {x: 2.644642, y: 2.7218182, z: 12.671479}
-    - name: Gorget_Forge_1
-      parentName: Eston_unity_ready_v1(Clone)
+    - name: Gorget
+      parentName: Eston(Clone)
       position: {x: -0, y: 3.4305356, z: 0}
       rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
       scale: {x: 29.224638, y: 29.099623, z: 53.14468}
-    - name: Plane.001
-      parentName: Eston_unity_ready_v1(Clone)
+    - name: Spaulders
+      parentName: Eston(Clone)
       position: {x: -0, y: 3.0018055, z: 0.63792294}
       rotation: {x: 0.000000021855694, y: 0, z: -0, w: 1}
       scale: {x: 100, y: 100, z: 100}
-    - name: Plane.002
-      parentName: Eston_unity_ready_v1(Clone)
+    - name: Vambrace
+      parentName: Eston(Clone)
       position: {x: -0, y: 2.0418527, z: 0.70330596}
       rotation: {x: 0.000000021855694, y: 0, z: -0, w: 1}
       scale: {x: 100, y: 100, z: 100}
-    - name: armor
-      parentName: Eston_unity_ready_v1(Clone)
+    - name: Gauntlets
+      parentName: Eston(Clone)
       position: {x: 0.019892018, y: -0.00014462211, z: 0.01826005}
       rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
       scale: {x: 100, y: 100, z: 100}
-    - name: TowerShield_shieldBash
-      parentName: Eston_unity_ready_v1(Clone)
-      position: {x: -0.19502984, y: 2.3479733, z: 0.5471126}
-      rotation: {x: 0.12072504, y: -0.76916873, z: -0.36465374, w: 0.5107177}
-      scale: {x: 99.61016, y: 99.61016, z: 99.61018}
-    - name: TowerShield_shieldGaurd
-      parentName: Eston_unity_ready_v1(Clone)
-      position: {x: -0.6689683, y: 2.3471575, z: 0.71771216}
-      rotation: {x: 0.00000005681068, y: 0.000000001862646, z: -0.000000025145711,
-        w: 1}
-      scale: {x: 99.999985, y: 100, z: 99.99999}
     - name: TowerShield_shieldSheathed
-      parentName: Eston_unity_ready_v1(Clone)
-      position: {x: 0.25955743, y: 2.0753722, z: -0.19814081}
+      parentName: Eston(Clone)
+      position: {x: 0.04581329, y: 2.7746267, z: -0.27419555}
       rotation: {x: -0.5075383, y: 0.8616292, z: -0.00000022245852, w: 0.0000003570137}
       scale: {x: 100, y: 100, z: 100}
     armTwist: 0.5

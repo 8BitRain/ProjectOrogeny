@@ -53,7 +53,9 @@ public class GameManager : MonoBehaviour
                 //Debug.Log("Player 1 Value " + InputUser.all[0].index);
                 spawnedPlayers[0] = GameObject.FindGameObjectWithTag("Player").transform;
                 spawnedPlayers[0].tag = "P1";   
-                spawnedPlayers[0].Find("Third Person Character").Find("animation_lab_nyx").tag = "P1";
+                //TODO change this function to grab the correct character name.
+                //Mesko, Eston, Jaco
+                spawnedPlayers[0].Find("Third Person Character").Find("Eston").tag = "P1";
                 spawnedPlayers[0].GetComponentInChildren<CinemachineInputProvider>().PlayerIndex = InputUser.all[0].index;
 
                 GameObject[] virtualCameras = GameObject.FindGameObjectsWithTag("VirtualCamera");
