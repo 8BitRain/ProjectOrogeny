@@ -21126,6 +21126,7 @@ MonoBehaviour:
     m_Bits: 1048576
   foes: []
   _controller: {fileID: 1752734369499009730}
+  characterName: Nyx
   cam: {fileID: 3530821983064046920}
   Orogene: {fileID: 6712688164114463187}
   wallRunningAnimationClip:

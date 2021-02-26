@@ -1437,6 +1437,8 @@ MonoBehaviour:
   cosmicPalmBeam: {fileID: 7450021438257590541, guid: bb84d86c4398f4ac6aa21c8bd197b45d,
     type: 3}
   _cosmicPalmBeamSpawnLocation: {fileID: 1752734367818053343}
+  specialAttack: {fileID: 7450021438257590541, guid: bb84d86c4398f4ac6aa21c8bd197b45d,
+    type: 3}
   cosmicPalmBeamDuration: 5
   cosmicPalmBeamSpeed: 15
   cosmicPalmBeamThrust: 10000
@@ -1451,6 +1453,7 @@ MonoBehaviour:
     m_Bits: 1048576
   foes: []
   _controller: {fileID: 5996932116839430840}
+  characterName: Eston
   cam: {fileID: 3530821983064046920}
   Orogene: {fileID: 3697220149502421911}
   wallRunningAnimationClip:

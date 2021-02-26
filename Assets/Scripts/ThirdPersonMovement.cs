@@ -104,6 +104,8 @@ public class ThirdPersonMovement : MonoBehaviour
     public GameObject cosmicPalmBeam;
     public Transform _cosmicPalmBeamSpawnLocation;
     private GameObject spawnedCosmicPalmBeam;
+    public GameObject specialAttack;
+    private GameObject instancedSpecialAttack;
     private Transform _laser;
     public float cosmicPalmBeamDuration = 5;
     public float cosmicPalmBeamSpeed = 5;
@@ -143,6 +145,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
     [Header("Character Settings")]
     public CharacterController _controller;
+    public System.String characterName;
     public Transform cam;
     //This is the reference to the player so we can pull components that are children
     public Transform Orogene;
@@ -202,6 +205,11 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             this.cam =  GameObject.FindGameObjectWithTag("MainCamera").transform;
         }*/
+
+        if(characterName.Equals(""))
+        {
+            characterName = "Generic";
+        }
     }
 
     // Update is called once per frame
@@ -569,13 +577,8 @@ public class ThirdPersonMovement : MonoBehaviour
                 _actionTimer += Time.deltaTime;
             }
 
-            //Trigger pressed or held
-            //Old Trigger
-            //if(Input.GetAxis("Right Trigger") == 1.0f){
+            //Special Attack
             if(cosmicPalmInput){
-                //Gravity,Sensitivty, and deadzone controller values were pulled from https://wiki.unity3d.com/index.php/Xbox360Controller
-                //print("COSMIC PAWLLLMMM action timer started");
-
                 //If 10 seconds have passed we can do this action
                 if(_actionTimer >= 10)
                 {
@@ -583,42 +586,34 @@ public class ThirdPersonMovement : MonoBehaviour
                     //Debug.Log("Reset action timer after hold for 10 seconds");
                     animator.SetBool("CosmicPalmAttack", false);
                     startTimer = false;
-
+                    specialAttack.GetComponent<SpecialAttack>().DisableSpecialAttack();
                     //The ability is finished, we should be able to move the character manually again
                     moveCharacter = true;
                     
                 }
 
                 if(_actionTimer == 0){
-                    if(spawnedCosmicPalmBeam == null)
+                    /*if(spawnedCosmicPalmBeam == null)
                     {
                         startCosmicPalmBeam();
-                    }
+                    }*/
                     animator.SetBool("CosmicPalmAttack", true);
                     Debug.Log("Starting Cosmic Palm Attack");
                     //Stop moving the character, the ability has started
                     moveCharacter = false;
+                    startSpecialAttack();
                     startTimer = true;
                 }
-
-                if(_actionTimer > .5){
-                    //Debug.Log("Holding Trigger for longer than .5 seconds");
-                    //print("CosmicPalm");
-                }
-
-                cosmicPalmTimer = combatAnimationClip[0].length;
             }
             
             //Trigger released
-            //OLD TRIGGER
-            //if(Input.GetAxis("Right Trigger") <= 0)
             if(!cosmicPalmInput)
             {
                 //Debug.Log("Trigger released");
                 if(_actionTimer >= 4)
                 {
-                    //Debug.Log("action time reset after trigger released");
                     startTimer = false;
+                    specialAttack.GetComponent<SpecialAttack>().DisableSpecialAttack();
                     _actionTimer = 0;
                     animator.SetBool("CosmicPalmAttack", false);
                     moveCharacter = true;
@@ -652,10 +647,10 @@ public class ThirdPersonMovement : MonoBehaviour
             _controller.Move(_velocity * Time.deltaTime);
 
             //Attack Timers
-            if(cosmicPalmTimer > 0 && startTimer)
+            /*if(cosmicPalmTimer > 0 && startTimer)
             {
                 cosmicPalmTimer -= Time.deltaTime;
-            }
+            }*/
 
             //Update cosmic palm Spawn to look at center of screen
             //_cosmicPalmBeamSpawnLocation.transform.LookAt(Camera.main.ViewportToWorldPoint(new Vector3(.5f,.5f,0)));
@@ -798,7 +793,7 @@ public class ThirdPersonMovement : MonoBehaviour
         
     }
 
-    void FixedUpdate()
+    /*void FixedUpdate()
     {
         if(spawnedCosmicPalmBeam != null)
         {
@@ -810,9 +805,32 @@ public class ThirdPersonMovement : MonoBehaviour
                 spawnedCosmicPalmBeam = null;
             }
         }
-    }
+    }*/
 
     //Combat function 
+    void startSpecialAttack()
+    {
+        //Set Special Attack Position & Rotation
+        specialAttack.GetComponent<SpecialAttack>().SetSpawnLocation(_cosmicPalmBeamSpawnLocation);
+
+        //Set Skill User
+        specialAttack.GetComponent<SpecialAttack>().SetSkillUser(this.transform);
+
+        //Set Skill User Animation
+        specialAttack.GetComponent<SpecialAttack>().SetSkillUserAnimator(this.animator);
+
+        //Set Special Attack Animation
+        specialAttack.GetComponent<SpecialAttack>().SetLinkedAnimationClip(combatAnimationClip[0]);
+
+        //Instantiate special Attack
+        instancedSpecialAttack = Instantiate(specialAttack, _cosmicPalmBeamSpawnLocation.position, _cosmicPalmBeamSpawnLocation.rotation) as GameObject;
+
+        //Look in direction of special attack
+        transform.rotation = Quaternion.Euler(_cosmicPalmBeamSpawnLocation.transform.rotation.eulerAngles.x, _cosmicPalmBeamSpawnLocation.transform.rotation.eulerAngles.y, 0);
+
+
+        specialAttack.GetComponent<SpecialAttack>().EnableSpecialAttack();
+    }
     void startCosmicPalmBeam()
     {
         //Spawn Cosmic Palm Beam
@@ -1038,6 +1056,11 @@ public class ThirdPersonMovement : MonoBehaviour
 
         //Debug ray describing Vector at 45 degree from wall
         Debug.DrawRay(_wallRunChecker.transform.position, transform.TransformDirection(wallJumpDirection), Color.cyan);
+    }
+
+    public float GetActionTimer()
+    {
+        return _actionTimer;
     }
 
     void StartWallRun(string direction)

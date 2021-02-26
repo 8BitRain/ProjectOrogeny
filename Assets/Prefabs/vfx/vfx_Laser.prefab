@@ -4824,6 +4824,7 @@ GameObject:
   - component: {fileID: 9070137538572867892}
   - component: {fileID: 4337375578534603995}
   - component: {fileID: 2482288996583553341}
+  - component: {fileID: 8043867542037009188}
   m_Layer: 0
   m_Name: vfx_Laser
   m_TagString: Untagged
@@ -4894,6 +4895,25 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 262144
   force: 500
+--- !u!114 &8043867542037009188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7450021438257590541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2d18a22f22444af286e1925896110b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  specialAttackName: Cosmic Palm
+  specialAttackSpeed: 5
+  specialAttackDuration: 15
+  spawnLocation: {fileID: 0}
+  skillType: 0
+  specialAttackAnimation: {fileID: 0}
+  thrust: 10000
 --- !u!1 &7450021439299820071
 GameObject:
   m_ObjectHideFlags: 0
