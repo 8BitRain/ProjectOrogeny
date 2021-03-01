@@ -101,15 +101,10 @@ public class ThirdPersonMovement : MonoBehaviour
 
     //Combat
     [Header("Combat Ability Management")]
-    public GameObject cosmicPalmBeam;
-    public Transform _cosmicPalmBeamSpawnLocation;
-    private GameObject spawnedCosmicPalmBeam;
+    public Transform _specialAttackSpawnLocation;
     public GameObject specialAttack;
     private GameObject instancedSpecialAttack;
-    private Transform _laser;
-    public float cosmicPalmBeamDuration = 5;
-    public float cosmicPalmBeamSpeed = 5;
-    public float cosmicPalmBeamThrust = 10000;
+
     
     //Camera Management
     [Header("Camera Management")]
@@ -141,7 +136,7 @@ public class ThirdPersonMovement : MonoBehaviour
     private float _actionTimer = 0;
     private bool startTimer = false;
     private bool firePalmIntoDistance = false;
-    private bool cosmicPalmInput = false;
+    private bool specialAttackInput = false;
 
     [Header("Character Settings")]
     public CharacterController _controller;
@@ -557,19 +552,6 @@ public class ThirdPersonMovement : MonoBehaviour
                 //TODO: Better Jumping Arc //Getting a better jumping arc will probably be factored here
                 //_velocity.y += Mathf.Sqrt(JumpHeight * -2f * gravity);
             }
-            
-
-            //Combat Player Input
-            /*2 considerations. 1 QuickFire 2. Holding Palm Attack*/
-            /*if(cosmicPalmTimer <= 0 && startTimer)
-            {
-                animator.SetBool("CosmicPalmAttack", false);
-                startTimer = false;
-                cosmicPalmTimer = 0;
-
-                //Send out cosmicPalm, animation is finished
-                startCosmicPalmBeam();
-            }*/
 
             //Action Timer
             if(startTimer)
@@ -578,7 +560,7 @@ public class ThirdPersonMovement : MonoBehaviour
             }
 
             //Special Attack
-            if(cosmicPalmInput){
+            if(specialAttackInput){
                 //If 10 seconds have passed we can do this action
                 print("Skill Duration: " + specialAttack.GetComponent<SpecialAttack>().GetSkillDuration());
                 if(_actionTimer >= specialAttack.GetComponent<SpecialAttack>().GetSkillDuration())
@@ -586,6 +568,7 @@ public class ThirdPersonMovement : MonoBehaviour
                     //10 is an arbitrary value for now. Replace with a quickfire animation time
                     //Debug.Log("Reset action timer after hold for 10 seconds");
                     animator.SetBool("CosmicPalmAttack", false);
+
                     startTimer = false;
                     specialAttack.GetComponent<SpecialAttack>().DisableSpecialAttack();
                     //The ability is finished, we should be able to move the character manually again
@@ -594,12 +577,9 @@ public class ThirdPersonMovement : MonoBehaviour
                 }
 
                 if(_actionTimer == 0){
-                    /*if(spawnedCosmicPalmBeam == null)
-                    {
-                        startCosmicPalmBeam();
-                    }*/
                     animator.SetBool("CosmicPalmAttack", true);
                     Debug.Log("Starting Cosmic Palm Attack");
+
                     //Stop moving the character, the ability has started
                     moveCharacter = false;
                     startSpecialAttack();
@@ -608,7 +588,7 @@ public class ThirdPersonMovement : MonoBehaviour
             }
             
             //Trigger released
-            if(!cosmicPalmInput)
+            if(!specialAttackInput)
             {
                 //Debug.Log("Trigger released");
                 //This was initially created so the player would stay posed up while the cosmic beam was firing
@@ -650,12 +630,12 @@ public class ThirdPersonMovement : MonoBehaviour
 
             //Special Attack Aiming Logic (Aims to Center of Screen)
             Ray ray = cam.gameObject.GetComponent<Camera>().ScreenPointToRay(new Vector3(cam.gameObject.GetComponent<Camera>().pixelWidth/2, cam.gameObject.GetComponent<Camera>().pixelHeight/2, 0));
-            _cosmicPalmBeamSpawnLocation.transform.LookAt(_cosmicPalmBeamSpawnLocation.transform.position + ray.direction);
+            _specialAttackSpawnLocation.transform.LookAt(_specialAttackSpawnLocation.transform.position + ray.direction);
 
             //Turn player towards special attack as it is happening. 
             if(startTimer)
             {
-                transform.rotation = Quaternion.Euler(_cosmicPalmBeamSpawnLocation.transform.rotation.eulerAngles.x, _cosmicPalmBeamSpawnLocation.transform.rotation.eulerAngles.y, 0);
+                transform.rotation = Quaternion.Euler(_specialAttackSpawnLocation.transform.rotation.eulerAngles.x, _specialAttackSpawnLocation.transform.rotation.eulerAngles.y, 0);
             }
         }
 
@@ -790,7 +770,7 @@ public class ThirdPersonMovement : MonoBehaviour
     void startSpecialAttack()
     {
         //Set Special Attack Position & Rotation
-        specialAttack.GetComponent<SpecialAttack>().SetSpawnLocation(_cosmicPalmBeamSpawnLocation);
+        specialAttack.GetComponent<SpecialAttack>().SetSpawnLocation(_specialAttackSpawnLocation);
 
         //Set Skill User
         specialAttack.GetComponent<SpecialAttack>().SetSkillUser(this.transform);
@@ -802,91 +782,15 @@ public class ThirdPersonMovement : MonoBehaviour
         specialAttack.GetComponent<SpecialAttack>().SetLinkedAnimationClip(combatAnimationClip[0]);
 
         //Instantiate special Attack
-        instancedSpecialAttack = Instantiate(specialAttack, _cosmicPalmBeamSpawnLocation.position, _cosmicPalmBeamSpawnLocation.rotation) as GameObject;
+        instancedSpecialAttack = Instantiate(specialAttack, _specialAttackSpawnLocation.position, _specialAttackSpawnLocation.rotation) as GameObject;
 
         //Look in direction of special attack
-        transform.rotation = Quaternion.Euler(_cosmicPalmBeamSpawnLocation.transform.rotation.eulerAngles.x, _cosmicPalmBeamSpawnLocation.transform.rotation.eulerAngles.y, 0);
+        transform.rotation = Quaternion.Euler(_specialAttackSpawnLocation.transform.rotation.eulerAngles.x, _specialAttackSpawnLocation.transform.rotation.eulerAngles.y, 0);
 
 
         specialAttack.GetComponent<SpecialAttack>().EnableSpecialAttack();
     }
-    void startCosmicPalmBeam()
-    {
-        //Spawn Cosmic Palm Beam
-        spawnedCosmicPalmBeam = Instantiate(cosmicPalmBeam, _cosmicPalmBeamSpawnLocation.position, _cosmicPalmBeamSpawnLocation.rotation) as GameObject;
 
-        //The laser is the first object
-        //TODO: Add error handling here. _laser has the possibility of not being the first child if the game object is not setup that way. 
-        _laser = spawnedCosmicPalmBeam.transform.GetChild(0);
-        if(_laser.gameObject.activeSelf)
-        {
-            //Set the laser beam to inactive. It should only form once the palm animation has finished. That way we get the anticipation effect of ki building in the palm.
-            _laser.gameObject.SetActive(false);
-        }
-
-        //let's have the character look at where the beam is firing
-        //transform.rotation = Quaternion.Euler(0, _cosmicPalmBeamSpawnLocation.transform.rotation.eulerAngles.y, 0);
-        transform.rotation = Quaternion.Euler(_cosmicPalmBeamSpawnLocation.transform.rotation.eulerAngles.x, _cosmicPalmBeamSpawnLocation.transform.rotation.eulerAngles.y, 0);
-    }
-
-    void updateCosmicPalmBeam()
-    {
-        if(spawnedCosmicPalmBeam != null)
-        {
-            //The beam updating depends upon the animation state CosmicPalmAttack. For now this move is animation locked.
-            if(animator.GetBool("CosmicPalmAttack"))
-            {
-                //Check timer to make sure we can summon the beam. We want to summon the beam once the cosmic palm strike animation completes
-                if(_actionTimer >= combatAnimationClip[0].length)
-                {
-                    if(!_laser.gameObject.activeSelf && spawnedCosmicPalmBeam != null)
-                    {
-                        _laser.gameObject.SetActive(true);
-                    }
-                }
-                spawnedCosmicPalmBeam.transform.position = _cosmicPalmBeamSpawnLocation.position;
-                spawnedCosmicPalmBeam.transform.rotation = _cosmicPalmBeamSpawnLocation.rotation;
-
-                //If the beam is active, have it grow larger and shoot further into the distance
-                if(_laser.gameObject.activeSelf)
-                {
-                    LineRenderer lineRenderer = _laser.GetComponent<LineRenderer>();
-                    //https://docs.unity3d.com/ScriptReference/LineRenderer.SetPosition.html
-                    //initialize length of beam to 0
-                    float previousBeamLength = lineRenderer.GetPosition(1).z;
-                    float updatedBeamLength = previousBeamLength + (cosmicPalmBeamSpeed * Time.deltaTime);
-    
-                    //Ensure hitbox of spawned beam moves
-                    spawnedCosmicPalmBeam.GetComponent<BoxCollider>().center = new Vector3(0,0,updatedBeamLength);
-                    Vector3 beamLength = new Vector3(0,0,updatedBeamLength);
-                    lineRenderer.SetPosition(1,beamLength);
-                }
-
-    
-                //let's have the character look at where the beam is firing
-                //transform.rotation = Quaternion.Euler(0, _cosmicPalmBeamSpawnLocation.transform.rotation.eulerAngles.y, 0);
-                transform.rotation = Quaternion.Euler(_cosmicPalmBeamSpawnLocation.transform.rotation.eulerAngles.x, _cosmicPalmBeamSpawnLocation.transform.rotation.eulerAngles.y, 0);
-            }
-            if(!animator.GetBool("CosmicPalmAttack"))
-            {
-                //reset player's rotation to an upright neutral position. Experiment :D You can even create a flip animation to flip back into a neutral rotation for flair.
-                transform.rotation = Quaternion.Euler(0,0,0);
-                stopCosmicPalmBeam();
-            }
-        }
-    }
-
-    void stopCosmicPalmBeam()
-    {
-        if(spawnedCosmicPalmBeam != null)
-        {
-            /*spawnedCosmicPalmBeam.gameObject.transform*/
-            //Destroy the beam after 3 seconds
-
-            Destroy(spawnedCosmicPalmBeam, 3);
-            firePalmIntoDistance = true;
-        }
-    }
 
     void Dash()
     {
@@ -1079,7 +983,7 @@ public class ThirdPersonMovement : MonoBehaviour
     //New Unity Input Management.
     public void OnMove(InputAction.CallbackContext ctx) => movementInput = ctx.ReadValue<Vector2>();
     public void OnJump(InputAction.CallbackContext ctx) => jumpPressed = ctx.ReadValueAsButton();
-    public void OnCosmicPalm(InputAction.CallbackContext ctx) => cosmicPalmInput = ctx.ReadValueAsButton();
+    public void OnSpecialAttack(InputAction.CallbackContext ctx) => specialAttackInput = ctx.ReadValueAsButton();
     public void OnDash(InputAction.CallbackContext ctx) => dashInput = ctx.ReadValueAsButton();
     public void OnLockOn(InputAction.CallbackContext ctx) => lockOnInput = ctx.ReadValueAsButton();
     public void OnLockOnSwitchTargetRight(InputAction.CallbackContext ctx) => targetSwitchRightInput = ctx.ReadValueAsButton();

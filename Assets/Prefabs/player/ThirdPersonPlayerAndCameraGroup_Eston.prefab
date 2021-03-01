@@ -1289,7 +1289,7 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7218219859856613832}
-        m_MethodName: OnCosmicPalm
+        m_MethodName: OnSpecialAttack
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1434,14 +1434,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 524288
   respawnPosition: {x: 0, y: 20, z: 0}
-  cosmicPalmBeam: {fileID: 7450021438257590541, guid: bb84d86c4398f4ac6aa21c8bd197b45d,
-    type: 3}
-  _cosmicPalmBeamSpawnLocation: {fileID: 1752734367818053343}
+  _specialAttackSpawnLocation: {fileID: 1752734367818053343}
   specialAttack: {fileID: 4939046190641134144, guid: ac3d6cf7e0fe54fa3a072e04f83e9fbe,
     type: 3}
-  cosmicPalmBeamDuration: 5
-  cosmicPalmBeamSpeed: 15
-  cosmicPalmBeamThrust: 10000
   mainCamera: {fileID: 0}
   aimCamera: {fileID: 0}
   aimReticle: {fileID: 0}
@@ -3163,7 +3158,7 @@ GameObject:
   - component: {fileID: 1752734367818053343}
   - component: {fileID: 1752734367818053340}
   m_Layer: 0
-  m_Name: _cosmicPalmBeamSpawnPosition
+  m_Name: _specialAttackSpawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

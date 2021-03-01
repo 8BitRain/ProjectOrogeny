@@ -13419,7 +13419,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2398749671249235683}
   m_Layer: 18
-  m_Name: ThirdPersonPlayerAndCameraGroup
+  m_Name: ThirdPersonPlayerAndCameraGroup_Nyx
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21109,12 +21109,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 524288
   respawnPosition: {x: 0, y: 20, z: 0}
-  cosmicPalmBeam: {fileID: 7450021438257590541, guid: bb84d86c4398f4ac6aa21c8bd197b45d,
+  _specialAttackSpawnLocation: {fileID: 1752734367818053343}
+  specialAttack: {fileID: 7450021438257590541, guid: bb84d86c4398f4ac6aa21c8bd197b45d,
     type: 3}
-  _cosmicPalmBeamSpawnLocation: {fileID: 1752734367818053343}
-  cosmicPalmBeamDuration: 5
-  cosmicPalmBeamSpeed: 15
-  cosmicPalmBeamThrust: 10000
   mainCamera: {fileID: 0}
   aimCamera: {fileID: 0}
   aimReticle: {fileID: 0}
@@ -21222,7 +21219,7 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1752734369499009740}
-        m_MethodName: OnCosmicPalm
+        m_MethodName: OnSpecialAttack
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
