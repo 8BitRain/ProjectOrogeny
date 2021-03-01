@@ -4909,11 +4909,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   specialAttackName: Cosmic Palm
   specialAttackSpeed: 5
-  specialAttackDuration: 15
-  spawnLocation: {fileID: 0}
+  specialAttackDuration: 10
   skillType: 0
-  specialAttackAnimation: {fileID: 0}
+  spawnLocation: {fileID: 0}
+  skillUser: {fileID: 0}
+  skillUserAnimator: {fileID: 0}
+  specialAttackAnimation: {fileID: -9200968973228944347, guid: 7021a47d0648646e58c471f61657180e,
+    type: 3}
   thrust: 10000
+  maxThrowDistance: 100
 --- !u!1 &7450021439299820071
 GameObject:
   m_ObjectHideFlags: 0

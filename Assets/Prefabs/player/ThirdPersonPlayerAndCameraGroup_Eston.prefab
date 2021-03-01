@@ -1437,7 +1437,7 @@ MonoBehaviour:
   cosmicPalmBeam: {fileID: 7450021438257590541, guid: bb84d86c4398f4ac6aa21c8bd197b45d,
     type: 3}
   _cosmicPalmBeamSpawnLocation: {fileID: 1752734367818053343}
-  specialAttack: {fileID: 7450021438257590541, guid: bb84d86c4398f4ac6aa21c8bd197b45d,
+  specialAttack: {fileID: 4939046190641134144, guid: ac3d6cf7e0fe54fa3a072e04f83e9fbe,
     type: 3}
   cosmicPalmBeamDuration: 5
   cosmicPalmBeamSpeed: 15
@@ -2263,7 +2263,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 991437342543889560}
-  m_LocalRotation: {x: 0.051546745, y: -0.000000002147938, z: 1.108666e-10, w: 0.9986706}
+  m_LocalRotation: {x: 0.05154675, y: 0.000000002147939, z: -1.10866656e-10, w: 0.9986706}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -2875,7 +2875,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1513510514445309743}
-  m_LocalRotation: {x: 0.035190895, y: -0.00000003162307, z: 0.0000000011135339, w: 0.99938065}
+  m_LocalRotation: {x: 0.035190895, y: 0.00000003162307, z: -0.0000000011135339, w: 0.99938065}
   m_LocalPosition: {x: 0.206, y: 4.306695, z: -8.953012}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -3177,7 +3177,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1752734367818053342}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.02, y: 1.9580002, z: 1.0649986}
+  m_LocalPosition: {x: 0.02, y: 1.9580002, z: 1.42}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3697220149502421911}
@@ -6089,7 +6089,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2398749671249235683
 Transform:
   m_ObjectHideFlags: 0
@@ -7873,7 +7873,7 @@ RectTransform:
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -8126,7 +8126,7 @@ GameObject:
   - component: {fileID: 2985416056799404817}
   - component: {fileID: 1072267096515369281}
   m_Layer: 0
-  m_Name: TowerShield_shieldSheathed
+  m_Name: TowerShield
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10358,7 +10358,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6279922386538411655}
-  m_LocalRotation: {x: 0.03337291, y: -0.000000017330626, z: 5.786958e-10, w: 0.999443}
+  m_LocalRotation: {x: 0.03337291, y: 0.000000017330624, z: -5.7869576e-10, w: 0.999443}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

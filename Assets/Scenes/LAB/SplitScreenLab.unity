@@ -14292,6 +14292,7 @@ MonoBehaviour:
   skillUserAnimator: {fileID: 0}
   specialAttackAnimation: {fileID: 0}
   thrust: 0
+  maxThrowDistance: 100
 --- !u!4 &1400211468
 Transform:
   m_ObjectHideFlags: 0

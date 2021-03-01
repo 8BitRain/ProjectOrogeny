@@ -39,6 +39,12 @@ public class SpecialAttack : MonoBehaviour
     [Header("Emission Settings")]
     public float thrust = 10000;
 
+    [Header("Throw Settings")]
+    public float maxThrowDistance = 100;
+    private bool thrown = false;
+    private bool startRecoil = false;
+    private bool _isRecoiling = false;
+
 
     void Start()
     {
@@ -50,6 +56,7 @@ public class SpecialAttack : MonoBehaviour
 
         if(skillType == SkillType.Throw)
         {
+            InitializeThrow();
         }
 
     }
@@ -74,8 +81,19 @@ public class SpecialAttack : MonoBehaviour
         if(skillType == SkillType.Emission)
         {
             print("Emitting");
-            this.GetComponent<Rigidbody>().AddForce(this.transform.forward * thrust);
+            this.GetComponent<Rigidbody>().AddForce(skillUser.transform.forward * thrust);
         }
+
+        if(skillType == SkillType.Throw)
+        {
+            //print("throwing");
+            UpdateThrow();
+        }
+    }
+
+    public float GetSkillDuration()
+    {
+        return this.specialAttackDuration;
     }
 
     public bool GetSkillUserAnimationState()
@@ -196,17 +214,56 @@ public class SpecialAttack : MonoBehaviour
 
     public void InitializeThrow()
     {
-
+        this.transform.rotation = Quaternion.Euler(270,0,0);
     }
 
     public void UpdateThrow()
     {
+        float currThrowDistance = (this.transform.position - skillUser.transform.position).magnitude;
+        //maxDistance not reached Throw away from skillUser 
+        if(currThrowDistance < maxThrowDistance && !thrown)
+        {
+            this.GetComponent<Rigidbody>().AddForce(skillUser.transform.forward * thrust, ForceMode.Impulse);
+            this.GetComponent<Rigidbody>().AddTorque(this.transform.TransformDirection(Vector3.forward) * 50, ForceMode.Impulse);
+            thrown = true;
+        }
+        
+        //maxDistance Reached Return to skillUser
+        if(currThrowDistance >= maxThrowDistance)
+        {
+            startRecoil = true;
+        }
+
+        //Recoil from maxDistance & return thrown object to player
+        if(startRecoil)
+        {
+            //Look at the player and return to the player
+            //this.transform.rotation = Quaternion.Euler(0,0,0);
+            //this.GetComponent<Rigidbody>().isKinematic = true;
+            this.transform.LookAt(skillUser.transform.position);
+            //this.GetComponent<Rigidbody>().AddForce(this.transform.forward * -thrust*2);
+            this.GetComponent<Rigidbody>().AddForce(transform.forward * thrust*2, ForceMode.Impulse);
+            print("Recoiling Thrown Object");
+            startRecoil = false;
+            _isRecoiling = true;
+        }
+
+
+        //Destroy Game Object once it has returned to player
+        if(currThrowDistance <= 10 && _isRecoiling)
+        {
+            skillUserAnimator.Play("Grounded.pull");
+            _isRecoiling = false;
+            thrown = false;
+            DisableThrow();
+        }
+
 
     }
 
     public void DisableThrow()
     {
-
+        Destroy(this.gameObject);
     }
 
 
