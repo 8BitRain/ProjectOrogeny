@@ -96,9 +96,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   specialAttackName: ShieldThrow
-  specialAttackSpeed: 5
+  specialAttackSpeed: 2
   specialAttackDuration: 0.5
   skillType: 1
+  mobilityType: 0
   spawnLocation: {fileID: 0}
   skillUser: {fileID: 0}
   skillUserAnimator: {fileID: 0}

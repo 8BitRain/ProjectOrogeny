@@ -4911,10 +4911,11 @@ MonoBehaviour:
   specialAttackSpeed: 5
   specialAttackDuration: 10
   skillType: 0
+  mobilityType: 1
   spawnLocation: {fileID: 0}
   skillUser: {fileID: 0}
   skillUserAnimator: {fileID: 0}
-  specialAttackAnimation: {fileID: -9200968973228944347, guid: 7021a47d0648646e58c471f61657180e,
+  specialAttackAnimation: {fileID: -6647425298583328627, guid: 958778ec87c354760b47db7a2d4bc352,
     type: 3}
   thrust: 10000
   maxThrowDistance: 100

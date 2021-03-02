@@ -14287,9 +14287,6 @@ MonoBehaviour:
   specialAttackSpeed: 15
   specialAttackDuration: 10
   skillType: 0
-  spawnLocation: {fileID: 0}
-  skillUser: {fileID: 0}
-  skillUserAnimator: {fileID: 0}
   specialAttackAnimation: {fileID: 0}
   thrust: 0
   maxThrowDistance: 100

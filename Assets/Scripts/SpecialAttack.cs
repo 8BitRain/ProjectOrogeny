@@ -19,12 +19,14 @@ public class SpecialAttack : MonoBehaviour
     public SkillType skillType;
     public enum SkillType {Beam, Throw, Physical, Emission};
 
+    [Header("Special Attack Mobility Settings")]
+    public MobilityType mobilityType;
+    public enum MobilityType {Mobile, Immobile, Mixed};
 
-    public Transform spawnLocation;
 
-    //References
-    public Transform skillUser;
-    public Animator skillUserAnimator;
+    [HideInInspector]public Transform spawnLocation;
+    [HideInInspector]public Transform skillUser;
+    [HideInInspector]public Animator skillUserAnimator;
 
 
     public AnimationClip specialAttackAnimation;
@@ -44,6 +46,7 @@ public class SpecialAttack : MonoBehaviour
     private bool thrown = false;
     private bool startRecoil = false;
     private bool _isRecoiling = false;
+    private float recoilLerp = 0;
 
 
     void Start()
@@ -91,6 +94,10 @@ public class SpecialAttack : MonoBehaviour
         }
     }
 
+    public MobilityType GetMobilityType()
+    {
+        return this.mobilityType;
+    }
     public float GetSkillDuration()
     {
         return this.specialAttackDuration;
@@ -242,16 +249,42 @@ public class SpecialAttack : MonoBehaviour
             //this.GetComponent<Rigidbody>().isKinematic = true;
             this.transform.LookAt(skillUser.transform.position);
             //this.GetComponent<Rigidbody>().AddForce(this.transform.forward * -thrust*2);
-            this.GetComponent<Rigidbody>().AddForce(transform.forward * thrust*2, ForceMode.Impulse);
+            //this.GetComponent<Rigidbody>().AddForce(transform.forward * thrust*2, ForceMode.Impulse);
+
+            
             print("Recoiling Thrown Object");
             startRecoil = false;
             _isRecoiling = true;
         }
 
+        if(_isRecoiling)
+        {
+            BezierCurve bezierCurve = new BezierCurve();
+            bezierCurve.startPoint = this.transform;
+            bezierCurve.endPoint = skillUser.transform;
+            bezierCurve.controlPointStart = skillUser.GetComponent<ThirdPersonMovement>()._shieldReturnControlPointStart.transform;
+            bezierCurve.controlPointEnd = skillUser.GetComponent<ThirdPersonMovement>()._shieldReturnControlPointEnd.transform;
+
+            print(recoilLerp);
+            if(this.recoilLerp < 1)
+            {
+                recoilLerp += Time.deltaTime / specialAttackSpeed;
+                //transform.position = Vector3.Lerp(transform.position, skillUser.transform.position, recoilLerp);
+                transform.position = bezierCurve.DeCasteljausAlgorithm(this.transform.position, bezierCurve.controlPointStart.position, bezierCurve.controlPointEnd.position, bezierCurve.endPoint.position, recoilLerp);
+                print(transform.position);
+            }
+            else
+            {
+                recoilLerp = 0;
+                _isRecoiling = false;
+            }
+        }
+
 
         //Destroy Game Object once it has returned to player
-        if(currThrowDistance <= 10 && _isRecoiling)
+        if(currThrowDistance <= 5 && _isRecoiling)
         {
+
             skillUserAnimator.Play("Grounded.pull");
             _isRecoiling = false;
             thrown = false;

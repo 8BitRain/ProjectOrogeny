@@ -132,11 +132,14 @@ public class ThirdPersonMovement : MonoBehaviour
 
     //Combat Management
     [Header("Combat Timer Management")]
-    private float cosmicPalmTimer = 0;
     private float _actionTimer = 0;
     private bool startTimer = false;
     private bool firePalmIntoDistance = false;
     private bool specialAttackInput = false;
+
+    [Header("Special Attack Settings")]
+    public Transform _shieldReturnControlPointStart;
+    public Transform _shieldReturnControlPointEnd;
 
     [Header("Character Settings")]
     public CharacterController _controller;
@@ -581,8 +584,11 @@ public class ThirdPersonMovement : MonoBehaviour
                     Debug.Log("Starting Cosmic Palm Attack");
 
                     //Stop moving the character, the ability has started
-                    moveCharacter = false;
-                    startSpecialAttack();
+                    if(specialAttack.GetComponent<SpecialAttack>().GetMobilityType() == SpecialAttack.MobilityType.Immobile)
+                    {
+                        moveCharacter = false;
+                    }
+                    //startSpecialAttack();
                     startTimer = true;
                 }
             }
