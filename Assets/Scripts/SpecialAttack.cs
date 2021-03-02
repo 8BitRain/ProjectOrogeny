@@ -47,6 +47,7 @@ public class SpecialAttack : MonoBehaviour
     private bool startRecoil = false;
     private bool _isRecoiling = false;
     private float recoilLerp = 0;
+    private Transform maxDistanceTransform;
 
 
     void Start()
@@ -77,6 +78,8 @@ public class SpecialAttack : MonoBehaviour
         {
             specialAttackTimer -= Time.deltaTime;
         }
+
+
     }
 
     void FixedUpdate()
@@ -239,6 +242,7 @@ public class SpecialAttack : MonoBehaviour
         if(currThrowDistance >= maxThrowDistance)
         {
             startRecoil = true;
+            maxDistanceTransform = this.transform;
         }
 
         //Recoil from maxDistance & return thrown object to player
@@ -260,7 +264,7 @@ public class SpecialAttack : MonoBehaviour
         if(_isRecoiling)
         {
             BezierCurve bezierCurve = new BezierCurve();
-            bezierCurve.startPoint = this.transform;
+            bezierCurve.startPoint = maxDistanceTransform;
             bezierCurve.endPoint = skillUser.transform;
             bezierCurve.controlPointStart = skillUser.GetComponent<ThirdPersonMovement>()._shieldReturnControlPointStart.transform;
             bezierCurve.controlPointEnd = skillUser.GetComponent<ThirdPersonMovement>()._shieldReturnControlPointEnd.transform;
@@ -270,7 +274,7 @@ public class SpecialAttack : MonoBehaviour
             {
                 recoilLerp += Time.deltaTime / specialAttackSpeed;
                 //transform.position = Vector3.Lerp(transform.position, skillUser.transform.position, recoilLerp);
-                transform.position = bezierCurve.DeCasteljausAlgorithm(this.transform.position, bezierCurve.controlPointStart.position, bezierCurve.controlPointEnd.position, bezierCurve.endPoint.position, recoilLerp);
+                transform.position = bezierCurve.DeCasteljausAlgorithm(bezierCurve.startPoint.position, bezierCurve.controlPointStart.position, bezierCurve.controlPointEnd.position, bezierCurve.endPoint.position, recoilLerp);
                 print(transform.position);
             }
             else
