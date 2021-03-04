@@ -43,11 +43,19 @@ public class SpecialAttack : MonoBehaviour
 
     [Header("Throw Settings")]
     public float maxThrowDistance = 100;
+    private Transform maxDistanceTransform;
     private bool thrown = false;
+
+    //Recoil Thrown Object
+    [Header("Recoil Thrown Object Settings")]
+    public GameObject kickbackSpecialHintVFX;
+    public GameObject kickbackSpecialVFX;
     private bool startRecoil = false;
     private bool _isRecoiling = false;
     private float recoilLerp = 0;
-    private Transform maxDistanceTransform;
+    private ParticleSystem ps;
+    private bool canKnockBackThrownObject = false;
+
 
 
     void Start()
@@ -225,6 +233,7 @@ public class SpecialAttack : MonoBehaviour
     public void InitializeThrow()
     {
         this.transform.rotation = Quaternion.Euler(270,0,0);
+        ps = kickbackSpecialHintVFX.GetComponent<ParticleSystem>();
     }
 
     public void UpdateThrow()
@@ -255,7 +264,11 @@ public class SpecialAttack : MonoBehaviour
             //this.GetComponent<Rigidbody>().AddForce(this.transform.forward * -thrust*2);
             //this.GetComponent<Rigidbody>().AddForce(transform.forward * thrust*2, ForceMode.Impulse);
 
-            
+            //ps.Play();
+            //var em = ps.emission;
+            //em.enabled = true;
+
+            //print("Particle System, " + ps);
             print("Recoiling Thrown Object");
             startRecoil = false;
             _isRecoiling = true;
@@ -265,9 +278,15 @@ public class SpecialAttack : MonoBehaviour
         {
             BezierCurve bezierCurve = new BezierCurve();
             bezierCurve.startPoint = maxDistanceTransform;
-            bezierCurve.endPoint = skillUser.transform;
+            bezierCurve.endPoint = skillUser.GetComponent<ThirdPersonMovement>()._shieldReturnRecoilEnd.transform;
             bezierCurve.controlPointStart = skillUser.GetComponent<ThirdPersonMovement>()._shieldReturnControlPointStart.transform;
             bezierCurve.controlPointEnd = skillUser.GetComponent<ThirdPersonMovement>()._shieldReturnControlPointEnd.transform;
+
+            //Move the controlPointEnd point to have the thrown object follow in front of player to kick.
+            if(skillUserAnimator.GetCurrentAnimatorStateInfo(0).IsName("kickThrownSpecialAttack"))
+            {
+                bezierCurve.controlPointEnd = skillUser.GetComponent<ThirdPersonMovement>()._shieldReturnKickControlPointEnd.transform;
+            }
 
             print(recoilLerp);
             if(this.recoilLerp < 1)
@@ -280,7 +299,19 @@ public class SpecialAttack : MonoBehaviour
             else
             {
                 recoilLerp = 0;
+                //this.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+                //transform.LookAt(bezierCurve.endPoint);
                 _isRecoiling = false;
+            }
+
+            //Turn on particle effect, this throwable object can be kicked again.
+            if(currThrowDistance <= 50 && currThrowDistance > 5)
+            {
+                //print("Emit particles");
+                canKnockBackThrownObject = true;
+                ToggleHintVFX(true);
+
+                //Debug.DrawRay(transform.position, transform.forward * (this.GetComponent<BoxCollider>().center.z + 2f), Color.red);
             }
         }
 
@@ -288,8 +319,18 @@ public class SpecialAttack : MonoBehaviour
         //Destroy Game Object once it has returned to player
         if(currThrowDistance <= 5 && _isRecoiling)
         {
+            canKnockBackThrownObject = false;
+            //Turn off particles
+            ToggleHintVFX(false);
 
-            skillUserAnimator.Play("Grounded.pull");
+            if(skillUserAnimator.GetCurrentAnimatorStateInfo(0).IsName("kickThrownSpecialAttack"))
+            {
+                print("DONT PLAY SHIELD GRAB");
+            }
+            else
+            {
+                skillUserAnimator.Play("Grounded.pull");
+            }
             _isRecoiling = false;
             thrown = false;
             DisableThrow();
@@ -301,6 +342,36 @@ public class SpecialAttack : MonoBehaviour
     public void DisableThrow()
     {
         Destroy(this.gameObject);
+    }
+
+    public void ToggleHintVFX(bool vfx)
+    {
+        if(vfx)
+        {
+            ps.Play();
+            var em = ps.emission;
+            em.enabled = true;
+        }
+
+        if(!vfx)
+        {
+            ps.Stop();
+            var em = ps.emission;
+            em.enabled = false;
+            Destroy(ps.gameObject);
+        }
+    }
+
+    public bool GetKnockbackThrownObjectStatus()
+    {
+        return this.canKnockBackThrownObject;
+    }
+
+    //Collisions
+    private void OnCollisionEnter(Collision collision)
+    {
+        print("HIT: " + collision.collisionHit.name);
+        this.GetComponent<Rigidbody>().isKinematic = true;
     }
 
 

@@ -105,6 +105,9 @@ public class ThirdPersonMovement : MonoBehaviour
     public GameObject specialAttack;
     private GameObject instancedSpecialAttack;
 
+    [Header("VFX Management")]
+    public GameObject combatVFXManager;
+
     
     //Camera Management
     [Header("Camera Management")]
@@ -136,10 +139,14 @@ public class ThirdPersonMovement : MonoBehaviour
     private bool startTimer = false;
     private bool firePalmIntoDistance = false;
     private bool specialAttackInput = false;
+    private bool kickThrownSpecialAttackInput = false;
 
     [Header("Special Attack Settings")]
     public Transform _shieldReturnControlPointStart;
     public Transform _shieldReturnControlPointEnd;
+    public Transform _shieldReturnKickControlPointEnd;
+    public Transform _shieldReturnRecoilEnd;
+    public Transform _shieldReturnRecoilKickSpawn;
 
     [Header("Character Settings")]
     public CharacterController _controller;
@@ -581,6 +588,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
                 if(_actionTimer == 0){
                     animator.SetBool("CosmicPalmAttack", true);
+                    //Special Attack is started by an event set on CosmicPalmAttack  (Special Attack)
                     Debug.Log("Starting Cosmic Palm Attack");
 
                     //Stop moving the character, the ability has started
@@ -606,6 +614,24 @@ public class ThirdPersonMovement : MonoBehaviour
                     animator.SetBool("CosmicPalmAttack", false);
                     moveCharacter = true;
                 }
+            }
+
+            //This could be a general melee skill that transforms!
+            if(kickThrownSpecialAttackInput)
+            {
+                
+                if(instancedSpecialAttack != null)
+                {
+                    print("KICK");
+                    //Check if we can kick the special thrown object
+                    SpecialAttack script = instancedSpecialAttack.GetComponent<SpecialAttack>();
+                    if(script.GetKnockbackThrownObjectStatus())
+                    {
+                        animator.Play("Grounded.kickThrownSpecialAttack");
+                        //Special Attack Throw is started from this animation event
+                    }
+                }
+                kickThrownSpecialAttackInput = false;
             }
 
             if(movementInput.x != 0 || movementInput.y != 0)
@@ -776,7 +802,13 @@ public class ThirdPersonMovement : MonoBehaviour
     void startSpecialAttack()
     {
         //Set Special Attack Position & Rotation
-        specialAttack.GetComponent<SpecialAttack>().SetSpawnLocation(_specialAttackSpawnLocation);
+        if(this.animator.GetCurrentAnimatorStateInfo(0).IsName("kickThrownSpecialAttack"))
+        {
+            specialAttack.GetComponent<SpecialAttack>().SetSpawnLocation(_shieldReturnRecoilKickSpawn);
+        }
+        else{
+            specialAttack.GetComponent<SpecialAttack>().SetSpawnLocation(_specialAttackSpawnLocation);
+        }
 
         //Set Skill User
         specialAttack.GetComponent<SpecialAttack>().SetSkillUser(this.transform);
@@ -795,6 +827,13 @@ public class ThirdPersonMovement : MonoBehaviour
 
 
         specialAttack.GetComponent<SpecialAttack>().EnableSpecialAttack();
+    }
+
+    void SpawnCombatVFX()
+    {
+        GameObject combatVFXManagerInstance = Instantiate(combatVFXManager, this.transform.position, this.transform.rotation) as GameObject;
+        combatVFXManagerInstance.GetComponent<CombatVFXManager>().SetCombatVFXSpawn(this._shieldReturnRecoilKickSpawn);
+        combatVFXManagerInstance.GetComponent<CombatVFXManager>().triggerSpecialVFX();
     }
 
 
@@ -995,6 +1034,7 @@ public class ThirdPersonMovement : MonoBehaviour
     public void OnLockOnSwitchTargetRight(InputAction.CallbackContext ctx) => targetSwitchRightInput = ctx.ReadValueAsButton();
     public void OnLockOnSwitchTargetLeft(InputAction.CallbackContext ctx) => targetSwitchLeftInput = ctx.ReadValueAsButton();
     public void OnEnviromentInteraction(InputAction.CallbackContext ctx) => enviromentActionInput = ctx.ReadValueAsButton();
+    public void OnKickThrownSpecialAttack(InputAction.CallbackContext ctx) => kickThrownSpecialAttackInput = ctx.ReadValueAsButton();
 
     //https://answers.unity.com/questions/242648/force-on-character-controller-knockback.html?_ga=2.213933971.521934289.1611610771-608714207.1587856867
     public void AddImpact(Vector3 direction, float force)
@@ -1031,6 +1071,17 @@ public class ThirdPersonMovement : MonoBehaviour
             foreach(RaycastHit foe in foeHit)
             {
                 print(foe.transform.name + " : " + foe.distance);
+                //Problem with rigidbodies read here https://forum.unity.com/threads/raycast-hit-rigidbody-object-instead-of-collider.544297/
+                /*if(foe.rigidbody != null)
+                {
+                    print(foe.rigidbody.transform);
+                    foes[iter] = foe.rigidbody.transform;
+                } 
+                else
+                {
+                    foes[iter] = foe.transform;
+                }*/
+                //print(foe.GetType().ToString());
                 foes[iter] = foe.transform;
                 iter++;
             }

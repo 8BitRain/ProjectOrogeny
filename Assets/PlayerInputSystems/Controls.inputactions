@@ -84,6 +84,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "KickThrownSpecialAttack",
+                    "type": "Button",
+                    "id": "3206872d-8fdf-49da-82c2-bef6b9159e02",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -194,6 +202,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "EnviromentAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bf874fe1-32a2-49f0-94f3-7555cfa9da3e",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "KickThrownSpecialAttack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
