@@ -63962,7 +63962,6 @@ GameObject:
   - component: {fileID: 301887140162793327}
   - component: {fileID: 6898404101195501960}
   - component: {fileID: 766412693}
-  - component: {fileID: 6588231220496743656}
   m_Layer: 20
   m_Name: Bladeclub_2
   m_TagString: Untagged
@@ -63970,19 +63969,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &6588231220496743656
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6588231220496743655}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b49d487fe4fd44ae08bdda5e08d2c19a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Head: {fileID: 871256285}
 --- !u!1 &6588231220507887867
 GameObject:
   m_ObjectHideFlags: 0
@@ -63994,7 +63980,6 @@ GameObject:
   - component: {fileID: 301887140050180979}
   - component: {fileID: 6898404101307065748}
   - component: {fileID: 387756108}
-  - component: {fileID: 6588231220507887868}
   m_Layer: 20
   m_Name: Bladeclub_3
   m_TagString: Untagged
@@ -64002,19 +63987,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &6588231220507887868
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6588231220507887867}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b49d487fe4fd44ae08bdda5e08d2c19a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Head: {fileID: 1022515334}
 --- !u!1 &6588231221069606354
 GameObject:
   m_ObjectHideFlags: 0
@@ -64041,7 +64013,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6588231221069606354}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b49d487fe4fd44ae08bdda5e08d2c19a, type: 3}
   m_Name: 
@@ -64058,7 +64030,6 @@ GameObject:
   - component: {fileID: 301887141353887906}
   - component: {fileID: 6898404102420194885}
   - component: {fileID: 595678103}
-  - component: {fileID: 6588231221419559723}
   m_Layer: 20
   m_Name: Bladeclub_4
   m_TagString: Untagged
@@ -64066,19 +64037,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &6588231221419559723
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6588231221419559722}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b49d487fe4fd44ae08bdda5e08d2c19a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Head: {fileID: 464780428}
 --- !u!1 &6588231221565883432
 GameObject:
   m_ObjectHideFlags: 0
@@ -64090,7 +64048,6 @@ GameObject:
   - component: {fileID: 301887141240330144}
   - component: {fileID: 6898404102264400199}
   - component: {fileID: 1527660347}
-  - component: {fileID: 6588231221565883433}
   m_Layer: 20
   m_Name: Bladeclub_6
   m_TagString: Untagged
@@ -64098,19 +64055,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &6588231221565883433
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6588231221565883432}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b49d487fe4fd44ae08bdda5e08d2c19a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Head: {fileID: 806464850}
 --- !u!1 &6588231222162183319
 GameObject:
   m_ObjectHideFlags: 0
@@ -64122,7 +64066,6 @@ GameObject:
   - component: {fileID: 301887140628563743}
   - component: {fileID: 6898404102860896760}
   - component: {fileID: 32428114}
-  - component: {fileID: 6588231222162183320}
   m_Layer: 20
   m_Name: Bladeclub_5
   m_TagString: Untagged
@@ -64130,19 +64073,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &6588231222162183320
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6588231222162183319}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b49d487fe4fd44ae08bdda5e08d2c19a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Head: {fileID: 938977564}
 --- !u!1 &6622672902378331298
 GameObject:
   m_ObjectHideFlags: 0
@@ -76519,6 +76449,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5006512736744132701}
   - component: {fileID: 3166231814621560103}
+  - component: {fileID: 8296172667783651920}
+  - component: {fileID: 8296172667783651919}
   m_Layer: 20
   m_Name: Bladeclub_v1 (2)
   m_TagString: Untagged
@@ -76526,6 +76458,35 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &8296172667783651919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8296172667783651918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b49d487fe4fd44ae08bdda5e08d2c19a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Head: {fileID: 1022515334}
+--- !u!54 &8296172667783651920
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8296172667783651918}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &8296172667838846546
 GameObject:
   m_ObjectHideFlags: 0
@@ -76536,6 +76497,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5006512736696280129}
   - component: {fileID: 3166231814642895163}
+  - component: {fileID: 8296172667838846548}
+  - component: {fileID: 8296172667838846547}
   m_Layer: 20
   m_Name: Bladeclub_v1 (1)
   m_TagString: Untagged
@@ -76543,6 +76506,35 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!54 &8296172667838846547
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8296172667838846546}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &8296172667838846548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8296172667838846546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b49d487fe4fd44ae08bdda5e08d2c19a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Head: {fileID: 871256285}
 --- !u!1 &8296172668344043367
 GameObject:
   m_ObjectHideFlags: 0
@@ -76553,6 +76545,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5006512736195409268}
   - component: {fileID: 3166231815148132366}
+  - component: {fileID: 8296172668344043369}
   - component: {fileID: 8296172668344043368}
   m_Layer: 20
   m_Name: Bladeclub_v1
@@ -76561,7 +76554,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!54 &8296172668344043368
+--- !u!114 &8296172668344043368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8296172668344043367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b49d487fe4fd44ae08bdda5e08d2c19a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Head: {fileID: 389740912}
+--- !u!54 &8296172668344043369
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -76587,6 +76593,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5006512735773610892}
   - component: {fileID: 3166231813451808502}
+  - component: {fileID: 8296172668761645473}
+  - component: {fileID: 8296172668761645472}
   m_Layer: 20
   m_Name: Bladeclub_v1 (3)
   m_TagString: Untagged
@@ -76594,6 +76602,35 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!54 &8296172668761645472
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8296172668761645471}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &8296172668761645473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8296172668761645471}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b49d487fe4fd44ae08bdda5e08d2c19a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Head: {fileID: 464780428}
 --- !u!1 &8296172668908793501
 GameObject:
   m_ObjectHideFlags: 0
@@ -76604,6 +76641,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5006512735618997390}
   - component: {fileID: 3166231813565624820}
+  - component: {fileID: 8296172668908793503}
+  - component: {fileID: 8296172668908793502}
   m_Layer: 20
   m_Name: Bladeclub_v1 (5)
   m_TagString: Untagged
@@ -76611,6 +76650,35 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
+--- !u!54 &8296172668908793502
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8296172668908793501}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &8296172668908793503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8296172668908793501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b49d487fe4fd44ae08bdda5e08d2c19a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Head: {fileID: 806464850}
 --- !u!1 &8296172669369531938
 GameObject:
   m_ObjectHideFlags: 0
@@ -76621,6 +76689,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5006512735157341233}
   - component: {fileID: 3166231814042902859}
+  - component: {fileID: 8296172669369531940}
+  - component: {fileID: 8296172669369531939}
   m_Layer: 20
   m_Name: Bladeclub_v1 (4)
   m_TagString: Untagged
@@ -76628,6 +76698,35 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &8296172669369531939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8296172669369531938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b49d487fe4fd44ae08bdda5e08d2c19a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Head: {fileID: 938977564}
+--- !u!54 &8296172669369531940
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8296172669369531938}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &8314533094474510310
 GameObject:
   m_ObjectHideFlags: 0
