@@ -56,6 +56,9 @@ public class SpecialAttack : MonoBehaviour
     private ParticleSystem ps;
     private bool canKnockBackThrownObject = false;
 
+    [Header("Debug Info Toggle")]
+    public bool toggleDebug = false;
+
 
 
     void Start()
@@ -94,13 +97,11 @@ public class SpecialAttack : MonoBehaviour
     {
         if(skillType == SkillType.Emission)
         {
-            print("Emitting");
             this.GetComponent<Rigidbody>().AddForce(skillUser.transform.forward * thrust);
         }
 
         if(skillType == SkillType.Throw)
         {
-            //print("throwing");
             UpdateThrow();
         }
     }
@@ -288,13 +289,13 @@ public class SpecialAttack : MonoBehaviour
                 bezierCurve.controlPointEnd = skillUser.GetComponent<ThirdPersonMovement>()._shieldReturnKickControlPointEnd.transform;
             }
 
-            print(recoilLerp);
+            //print(recoilLerp);
             if(this.recoilLerp < 1)
             {
                 recoilLerp += Time.deltaTime / specialAttackSpeed;
                 //transform.position = Vector3.Lerp(transform.position, skillUser.transform.position, recoilLerp);
                 transform.position = bezierCurve.DeCasteljausAlgorithm(bezierCurve.startPoint.position, bezierCurve.controlPointStart.position, bezierCurve.controlPointEnd.position, bezierCurve.endPoint.position, recoilLerp);
-                print(transform.position);
+                //print(transform.position);
             }
             else
             {
@@ -368,10 +369,17 @@ public class SpecialAttack : MonoBehaviour
     }
 
     //Collisions
-    private void OnCollisionEnter(Collision collision)
+    void OnCollisionEnter(UnityEngine.Collision col)
     {
-        print("HIT: " + collision.collisionHit.name);
-        this.GetComponent<Rigidbody>().isKinematic = true;
+        //print("HIT: " + collision.collisionHit.name);
+        if(col.gameObject.layer == LayerMask.NameToLayer("Wall"))
+        {
+            print("Collided with Wall");
+            ContactPoint contact = col.contacts[0];
+            maxDistanceTransform = this.transform;
+            startRecoil = true;
+        }
+        //this.GetComponent<Rigidbody>().isKinematic = true;
     }
 
 
