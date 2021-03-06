@@ -4822,7 +4822,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3728530579814432919}
   m_Layer: 0
-  m_Name: vfx_Sparks_Hit
+  m_Name: vfx_nightorb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

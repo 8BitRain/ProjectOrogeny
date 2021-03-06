@@ -805,6 +805,7 @@ public class ThirdPersonMovement : MonoBehaviour
         if(this.animator.GetCurrentAnimatorStateInfo(0).IsName("kickThrownSpecialAttack"))
         {
             specialAttack.GetComponent<SpecialAttack>().SetSpawnLocation(_shieldReturnRecoilKickSpawn);
+            //freeLookCamera.fo
         }
         else{
             specialAttack.GetComponent<SpecialAttack>().SetSpawnLocation(_specialAttackSpawnLocation);
