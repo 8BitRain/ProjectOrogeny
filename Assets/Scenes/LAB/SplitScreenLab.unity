@@ -2325,7 +2325,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &351142029
 Transform:
   m_ObjectHideFlags: 0
@@ -74754,7 +74754,6 @@ GameObject:
   - component: {fileID: 301887139523346010}
   - component: {fileID: 6898404101835342013}
   - component: {fileID: 1099726493}
-  - component: {fileID: 6588231221069606355}
   m_Layer: 20
   m_Name: Bladeclub_1
   m_TagString: Untagged
@@ -74762,19 +74761,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &6588231221069606355
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6588231221069606354}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b49d487fe4fd44ae08bdda5e08d2c19a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Head: {fileID: 389740912}
 --- !u!1 &6588231221419559722
 GameObject:
   m_ObjectHideFlags: 0
@@ -87213,7 +87199,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &8296172667783651919
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -87227,6 +87213,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Head: {fileID: 1022515334}
+  Player:
+    serializedVersion: 2
+    m_Bits: 0
+  hitBox: {fileID: 0}
 --- !u!54 &8296172667783651920
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -87261,7 +87251,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!54 &8296172667838846547
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -87291,6 +87281,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Head: {fileID: 871256285}
+  Player:
+    serializedVersion: 2
+    m_Bits: 0
+  hitBox: {fileID: 0}
 --- !u!1 &8296172668344043367
 GameObject:
   m_ObjectHideFlags: 0
@@ -87324,6 +87318,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Head: {fileID: 389740912}
+  Player:
+    serializedVersion: 2
+    m_Bits: 262144
+  hitBox: {fileID: 1099726493}
 --- !u!54 &8296172668344043369
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -87380,7 +87378,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!54 &8296172668761645472
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -87410,6 +87408,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Head: {fileID: 464780428}
+  Player:
+    serializedVersion: 2
+    m_Bits: 0
+  hitBox: {fileID: 0}
 --- !u!1 &8296172668908793501
 GameObject:
   m_ObjectHideFlags: 0
@@ -87428,7 +87430,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!54 &8296172668908793502
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -87458,6 +87460,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Head: {fileID: 806464850}
+  Player:
+    serializedVersion: 2
+    m_Bits: 0
+  hitBox: {fileID: 0}
 --- !u!1 &8296172669369531938
 GameObject:
   m_ObjectHideFlags: 0
@@ -87477,7 +87483,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &8296172669369531939
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -87491,6 +87497,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Head: {fileID: 938977564}
+  Player:
+    serializedVersion: 2
+    m_Bits: 0
+  hitBox: {fileID: 32428114}
 --- !u!54 &8296172669369531940
 Rigidbody:
   m_ObjectHideFlags: 0
