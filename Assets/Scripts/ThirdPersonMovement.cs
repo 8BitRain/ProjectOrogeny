@@ -188,6 +188,10 @@ public class ThirdPersonMovement : MonoBehaviour
         animatorOverrideController = new AnimatorOverrideController(animator.runtimeAnimatorController);
         animator.runtimeAnimatorController = animatorOverrideController;
 
+        //I have to generate a new Avatar at runtime because I'm overriding the runtime animator.
+        Avatar avatar = AvatarBuilder.BuildGenericAvatar(this.gameObject, "");
+        animator.avatar = avatar;
+
         defaultSpeed = speed;
         defaultDashSpeed = dashSpeed;
 

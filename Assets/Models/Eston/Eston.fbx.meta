@@ -1760,8 +1760,8 @@ ModelImporter:
     - name: upper_arm_ik_target.L
       parentName: MCH-upper_arm_ik_target.parent.L
       position: {x: 5.9604643e-10, y: 5.9604643e-10, z: -0.0000000026635825}
-      rotation: {x: 0.0000010979711, y: 0.00000062584877, z: 0.00000012945384, w: 1}
-      scale: {x: 1, y: 1, z: 1}
+      rotation: {x: 0.0000010826044, y: 0.0000006237533, z: 0.000000114552684, w: 1}
+      scale: {x: 1, y: 0.99999994, z: 1}
     - name: upper_arm_ik_target.L_end
       parentName: upper_arm_ik_target.L
       position: {x: -0, y: 0.0012062558, z: 0}
@@ -1873,7 +1873,7 @@ ModelImporter:
     - name: thigh_ik_target.L
       parentName: MCH-thigh_ik_target.parent.L
       position: {x: -1.1292286e-10, y: -0.0000000025518239, z: 6.8510414e-10}
-      rotation: {x: 0.00000002571323, y: 0.0000000016007105, z: -0.00000005584161,
+      rotation: {x: 0.000000040676237, y: 0.000000005384208, z: -0.000000055882083,
         w: 1}
       scale: {x: 1.0000001, y: 0.99999994, z: 1.0000001}
     - name: thigh_ik_target.L_end
