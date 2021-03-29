@@ -8,25 +8,25 @@ ModelImporter:
     second: Bardiche.R|AttackString1_stanceBlend
   - first:
       74: 686068963013333140
-    second: rig|AttackString1
+    second: AttackStringI
   - first:
       74: -2013944536964930598
-    second: rig|AttackString1_stanceBlend
+    second: AttackStringI_slowed
   - first:
       74: -1593387487876128846
-    second: rig|AttackString2
+    second: AttackStringII
   - first:
       74: -7630302468358512574
     second: rig|AttackString2-Hit
   - first:
       74: -5480419611278045171
-    second: rig|Run
+    second: Run
   - first:
       74: 8500995818462091022
-    second: rig|StageGrip
+    second: Boss Stance
   - first:
       74: -1102644584829743566
-    second: rig|Stance
+    second: Stance
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -66,36 +66,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Bardiche.R|AttackString1_stanceBlend
-      takeName: Bardiche.R|AttackString1_stanceBlend
-      internalID: 0
-      firstFrame: 0
-      lastFrame: 34
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: rig|AttackString1
+      name: AttackStringI
       takeName: rig|AttackString1
       internalID: 0
       firstFrame: 0
@@ -124,7 +95,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: rig|AttackString1_stanceBlend
+      name: AttackStringI_slowed
       takeName: rig|AttackString1_stanceBlend
       internalID: 0
       firstFrame: 0
@@ -153,7 +124,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: rig|AttackString2
+      name: AttackStringII
       takeName: rig|AttackString2
       internalID: 0
       firstFrame: 0
@@ -182,7 +153,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: rig|Run
+      name: Run
       takeName: rig|Run
       internalID: 0
       firstFrame: 0
@@ -193,7 +164,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -211,7 +182,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: rig|StageGrip
+      name: Boss Stance
       takeName: rig|StageGrip
       internalID: 0
       firstFrame: 0
@@ -240,7 +211,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: rig|Stance
+      name: Stance
       takeName: rig|Stance
       internalID: 0
       firstFrame: 0

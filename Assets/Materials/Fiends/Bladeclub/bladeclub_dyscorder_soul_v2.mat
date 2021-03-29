@@ -30,7 +30,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - FRESNEL: 0
-    - USE_TEXTURE: 1
+    - USE_TEXTURE: 0
     - Vector1_4EB297CF: 0.2
     - _Smoothness: 0.5
     m_Colors:

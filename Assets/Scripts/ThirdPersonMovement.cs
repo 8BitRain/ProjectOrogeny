@@ -731,7 +731,13 @@ public class ThirdPersonMovement : MonoBehaviour
                 //reset currentTarget 
                 currentTarget = 0;
                 targetToLock = foes[currentTarget];
-                Transform targetToLockHead = targetToLock.GetComponent<Foe>().Head;
+                //Need a better way to determine enemy
+                Transform targetToLockHead = targetToLock.GetComponent<Bladeclubber>().Head;
+                if(targetToLockHead == null)
+                {
+                    print("Reassinging bladeclubber head");
+                    targetToLockHead = targetToLock.GetComponent<Bladeclubber>().Head;
+                }
 
                 //Third object should be the "Head Game Object"
                 lockOnCamera.GetComponent<CinemachineVirtualCamera>().m_LookAt = targetToLockHead;
@@ -793,7 +799,17 @@ public class ThirdPersonMovement : MonoBehaviour
             //print(currentTarget);
 
             targetToLock = foes[currentTarget];
-            Transform targetToLockHead = targetToLock.GetComponent<Foe>().Head;
+
+            Transform targetToLockHead;
+            if(targetToLock.GetComponent<Foe>() == null)
+            {
+                
+                targetToLockHead = targetToLock.GetComponent<Bladeclubber>().Head;
+            }
+            else
+            {
+                targetToLockHead = targetToLock.GetComponent<Foe>().Head;
+            }
             lockOnCamera.GetComponent<CinemachineVirtualCamera>().m_LookAt = targetToLockHead;
             GameManager gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
             gameManager.updateTargetPosition(this.GetPlayerID(), targetToLockHead.gameObject);
