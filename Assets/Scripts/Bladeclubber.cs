@@ -77,7 +77,7 @@ public class Bladeclubber : MonoBehaviour
                 navMeshAgent.stoppingDistance = 15;
             }
 
-            if(targetDistance < 15) 
+            if(targetDistance < 15 && targetDistance > 5 && !this.animator.GetBool("Attacking")) 
             {
                 //navMeshAgent.
                 //print("Avoid player");
@@ -87,8 +87,13 @@ public class Bladeclubber : MonoBehaviour
 
             if(targetDistance < 5)
             {
-                Combat();                      
+                EngageCombat();                      
+            } 
+            else
+            {
+                DisengageCombat();
             }
+
             
 
         }
@@ -120,8 +125,11 @@ public class Bladeclubber : MonoBehaviour
 
     }
 
-    void Combat()
+    void EngageCombat()
     {
+        //Slide forward with combo
+        navMeshAgent.SetDestination(new Vector3(0,0,1));
+
         //Start Combat String 1
         //Play the animation
         if(!this.animator.GetBool("Attacking"))
@@ -148,17 +156,22 @@ public class Bladeclubber : MonoBehaviour
 
         if(!this.animator.GetCurrentAnimatorStateInfo(0).IsName("AttackStringI") && !this.animator.GetCurrentAnimatorStateInfo(0).IsName("AttackStringII"))
         {
-            weaponsL[0].GetComponent<Weapon>().DisableWeaponTrail();
-            weaponsR[0].GetComponent<Weapon>().DisableWeaponTrail();
-            animator.SetBool("Attacking", false);
+
+            //animator.SetBool("Attacking", false);
+            print("Not attacking");
             //animator.ResetTrigger("Initiate-AttackString");
         }
-
-
         
         //Create a random chance for the combo string to happen
         
         //Transition to combat string 2
         //Play the animation
+    }
+
+    void DisengageCombat()
+    {
+        animator.SetBool("Attacking", false);
+        weaponsL[0].GetComponent<Weapon>().DisableWeaponTrail();
+        weaponsR[0].GetComponent<Weapon>().DisableWeaponTrail();
     }
 }

@@ -48,17 +48,18 @@ public class Weapon : MonoBehaviour
             playerCharacter.AddImpact(transform.forward, force);
             playerCharacter.healthBar.SetHealth(playerCharacter.healthBar.GetHealth() - 2.5f);
 
-            SpawnCombatVFX();
+
+            SpawnCombatVFX(this.transform);
 
             hitCounter++;
             print("Hit Counter: " + hitCounter);
         }
     }
 
-    void SpawnCombatVFX()
+    void SpawnCombatVFX(Transform weaponTransform)
     {
-        GameObject combatVFXManagerInstance = Instantiate(combatVFXManager, this.transform.position, this.transform.rotation) as GameObject;
-        combatVFXManagerInstance.GetComponent<CombatVFXManager>().SetCombatVFXSpawn(this.transform);
+        GameObject combatVFXManagerInstance = Instantiate(combatVFXManager, weaponTransform.position, weaponTransform.rotation) as GameObject;
+        combatVFXManagerInstance.GetComponent<CombatVFXManager>().SetCombatVFXSpawn(weaponTransform);
         combatVFXManagerInstance.GetComponent<CombatVFXManager>().triggerSpecialVFX();
     }
 }

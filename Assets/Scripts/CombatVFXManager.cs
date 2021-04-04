@@ -65,7 +65,12 @@ public class CombatVFXManager : MonoBehaviour
         if(specialAttackVFXSpawn !=  null)
         {
             instancedSpecialVFX = Instantiate(specialAttackVFX, specialAttackVFXSpawn.position, specialAttackVFXSpawn.rotation) as GameObject;
-            instancedSpecialVFX.transform.rotation = Quaternion.Euler(90,0,0);
+            //This rotation is made for game objects that aren't already facing the correct direction. Should probably check for correct rotation here.
+            if(specialAttackVFX.name == "vfx_EarthernRise")
+            {
+                instancedSpecialVFX.transform.rotation = Quaternion.Euler(90,0,0);
+            }
+            
 
             if(enablePostProcessingEFX)
             {
