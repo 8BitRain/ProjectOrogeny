@@ -56,7 +56,7 @@ public class Bladeclubber : MonoBehaviour
         {
             transform.LookAt(target);
             Vector3 position = transform.position + hitBox.center;
-            RaycastHit hit;
+            //RaycastHit hit;
             float targetDistance = (transform.position - target.position).magnitude;
 
             /*if(Physics.SphereCast(position, 15f, transform.forward, out hit, 15f, Player))
