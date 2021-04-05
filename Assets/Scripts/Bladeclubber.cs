@@ -46,6 +46,8 @@ public class Bladeclubber : MonoBehaviour
 
         SeekPlayer();
 
+        EngageCombat();
+
 
         
     }
@@ -74,25 +76,25 @@ public class Bladeclubber : MonoBehaviour
             {
                 //print("Navigate to player");
                 navMeshAgent.SetDestination(target.transform.position);
-                navMeshAgent.stoppingDistance = 15;
+                //navMeshAgent.stoppingDistance = 15;
             }
 
             if(targetDistance < 15 && targetDistance > 5 && !this.animator.GetBool("Attacking")) 
             {
                 //navMeshAgent.
                 //print("Avoid player");
-                OrbitTarget();
-                //Combat();
+                //OrbitTarget();
             }
 
-            if(targetDistance < 5)
+            
+            /*if(targetDistance < 5)
             {
                 EngageCombat();                      
             } 
             else
             {
-                DisengageCombat();
-            }
+                //DisengageCombat();
+            }*/
 
             
 
@@ -127,18 +129,28 @@ public class Bladeclubber : MonoBehaviour
 
     void EngageCombat()
     {
+        float targetDistance = (transform.position - target.position).magnitude;
+        
         //Slide forward with combo
-        navMeshAgent.SetDestination(new Vector3(0,0,1));
+        //navMeshAgent.SetDestination(new Vector3(0,0,3));
+        if(this.animator.GetBool("Attacking"))
+        {
+            navMeshAgent.SetDestination(target.transform.position);
+        }
 
         //Start Combat String 1
         //Play the animation
-        if(!this.animator.GetBool("Attacking"))
+        if(targetDistance < 5)
         {
-            animator.SetTrigger("Initiate-AttackString");
-            animator.SetBool("Attacking", true);
-            //animator.Play("Base Layer.AttackStringI");
-            this.attackCombo = 0;   
+            if(!this.animator.GetBool("Attacking"))
+            {
+                animator.SetTrigger("Initiate-AttackString");
+                animator.SetBool("Attacking", true);
+                //animator.Play("Base Layer.AttackStringI");
+                this.attackCombo = 0;   
+            }
         }
+
 
         if(this.animator.GetCurrentAnimatorStateInfo(0).IsName("AttackStringI"))
         {
@@ -157,8 +169,10 @@ public class Bladeclubber : MonoBehaviour
         if(!this.animator.GetCurrentAnimatorStateInfo(0).IsName("AttackStringI") && !this.animator.GetCurrentAnimatorStateInfo(0).IsName("AttackStringII"))
         {
 
-            //animator.SetBool("Attacking", false);
-            print("Not attacking");
+            animator.SetBool("Attacking", false);
+            //print("Not attacking");
+            weaponsL[0].GetComponent<Weapon>().DisableWeaponTrail();
+            weaponsR[0].GetComponent<Weapon>().DisableWeaponTrail();
             //animator.ResetTrigger("Initiate-AttackString");
         }
         
@@ -171,7 +185,7 @@ public class Bladeclubber : MonoBehaviour
     void DisengageCombat()
     {
         animator.SetBool("Attacking", false);
-        weaponsL[0].GetComponent<Weapon>().DisableWeaponTrail();
-        weaponsR[0].GetComponent<Weapon>().DisableWeaponTrail();
+        //weaponsL[0].GetComponent<Weapon>().DisableWeaponTrail();
+        //weaponsR[0].GetComponent<Weapon>().DisableWeaponTrail();
     }
 }

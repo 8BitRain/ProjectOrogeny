@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
+    public Transform Wielder;
     public Transform weaponTrail;
     public LayerMask Player;
-    public float force = 10;
+    public float force = 40;
 
     private int hitCounter = 0;
+    private int hitCounter1 = 0;
+    private int hitCounter2 = 0;
 
     public GameObject combatVFXManager;
     // Start is called before the first frame update
@@ -45,14 +48,32 @@ public class Weapon : MonoBehaviour
             print(Player);
 
             ThirdPersonMovement playerCharacter = other.transform.GetComponent<ThirdPersonMovement>();
-            playerCharacter.AddImpact(transform.forward, force);
+            //TODO: Make this generic. Currently this "Weapon" is setup for a bladeclubber's animations
+            if(Wielder.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("AttackStringI"))
+            {
+                //playerCharacter.AddImpact(transform.forward, 1.0f);
+                print("Knockback 1");
+                hitCounter1++;
+                print("Hit Counter Attack String I: " + hitCounter1);
+            }
+            else if(Wielder.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("AttackStringII"))
+            {
+                playerCharacter.AddImpact(Wielder.transform.forward, force);    
+                print("Knockback 10");
+                hitCounter2++;
+                print("Hit Counter Attack String II: " + hitCounter2);
+
+            }
+            /*else
+            {
+                playerCharacter.AddImpact(transform.forward, force);
+            }*/
+            
             playerCharacter.healthBar.SetHealth(playerCharacter.healthBar.GetHealth() - 2.5f);
 
 
             SpawnCombatVFX(this.transform);
 
-            hitCounter++;
-            print("Hit Counter: " + hitCounter);
         }
     }
 

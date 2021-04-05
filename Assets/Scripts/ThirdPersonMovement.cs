@@ -1061,6 +1061,8 @@ public class ThirdPersonMovement : MonoBehaviour
     public void AddImpact(Vector3 direction, float force)
     {
        direction.Normalize();
+       //direction = direction.normalized;
+
        if(direction.y < 0)
        {
            //reflects downard force
