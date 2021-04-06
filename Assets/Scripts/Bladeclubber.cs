@@ -75,8 +75,12 @@ public class Bladeclubber : MonoBehaviour
             if(targetDistance >= 15)
             {
                 //print("Navigate to player");
-                navMeshAgent.SetDestination(target.transform.position);
-                //navMeshAgent.stoppingDistance = 15;
+                if(navMeshAgent.enabled)
+                {
+                    navMeshAgent.SetDestination(target.transform.position);
+                    
+                }
+                //navMeshAgent.stoppingDistance = 5;
             }
 
             if(targetDistance < 15 && targetDistance > 5 && !this.animator.GetBool("Attacking")) 
@@ -136,6 +140,15 @@ public class Bladeclubber : MonoBehaviour
         if(this.animator.GetBool("Attacking"))
         {
             navMeshAgent.SetDestination(target.transform.position);
+            //navMeshAgent.stoppingDistance = 1;
+            //navMeshAgent.enabled = false;
+            
+            //this.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
+        }
+        else
+        {
+            navMeshAgent.enabled = true;
+            //this.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
         }
 
         //Start Combat String 1
@@ -154,16 +167,31 @@ public class Bladeclubber : MonoBehaviour
 
         if(this.animator.GetCurrentAnimatorStateInfo(0).IsName("AttackStringI"))
         {
-            //print("Attack String I");
+            print("Current Animation State is: Attack String I");
             weaponsR[0].GetComponent<Weapon>().EnableWeaponTrail();
+            weaponsR[0].GetComponent<BoxCollider>().enabled = true;
+
             weaponsL[0].GetComponent<Weapon>().DisableWeaponTrail();
+            weaponsL[0].GetComponent<BoxCollider>().enabled = false;
+
+            transform.LookAt(target.GetComponent<ThirdPersonMovement>().Body);
+            print("Target Box Collider Center: " + target.GetComponent<ThirdPersonMovement>().Body);
+            print("Target Box Collider Position: " + target.GetComponent<BoxCollider>().transform.position);
         }
 
         if(this.animator.GetCurrentAnimatorStateInfo(0).IsName("AttackStringII"))
         {
-            //print("Attack String II");
+            print("Current Animation State is: Attack String II");
             weaponsL[0].GetComponent<Weapon>().EnableWeaponTrail();
+            weaponsL[0].GetComponent<BoxCollider>().enabled = true;
+
             weaponsR[0].GetComponent<Weapon>().DisableWeaponTrail();
+            weaponsR[0].GetComponent<BoxCollider>().enabled = false;
+
+            //Currently Bladeclubber looks a bit above the player character. This causes the Axe swing in AttackStringII to uppercut the player to the sky
+            transform.LookAt(target);
+
+
         }
 
         if(!this.animator.GetCurrentAnimatorStateInfo(0).IsName("AttackStringI") && !this.animator.GetCurrentAnimatorStateInfo(0).IsName("AttackStringII"))
@@ -174,6 +202,12 @@ public class Bladeclubber : MonoBehaviour
             weaponsL[0].GetComponent<Weapon>().DisableWeaponTrail();
             weaponsR[0].GetComponent<Weapon>().DisableWeaponTrail();
             //animator.ResetTrigger("Initiate-AttackString");
+
+            weaponsL[0].GetComponent<BoxCollider>().enabled = false;
+            weaponsR[0].GetComponent<BoxCollider>().enabled = false;
+
+            weaponsL[0].GetComponent<Weapon>().ResetHitCounters();
+            weaponsR[0].GetComponent<Weapon>().ResetHitCounters();
         }
         
         //Create a random chance for the combo string to happen

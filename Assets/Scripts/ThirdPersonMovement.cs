@@ -90,6 +90,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
     [Header("VFX")]
     public GameObject speedLines;
+    public GameObject dustTrails;
 
     //Respawn
     [Header("Respawn")]
@@ -168,6 +169,9 @@ public class ThirdPersonMovement : MonoBehaviour
     private bool running;
     private float animCounter;
 
+    [Header("Rigging Settings")]
+    public Transform Body;
+
     [Header("Animation Settings")]
     public AnimationClip[] wallRunningAnimationClip;
     public AnimationClip[] jumpingAnimationClip;
@@ -232,11 +236,13 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             //print("grounded");
             //canMove = true;
+
         }
 
         //We are in the air!
         if(!_isGrounded)
         {
+            if(dustTrails != null) dustTrails.SetActive(false);
             //Raycast and see if we are facing a ledge
             //print("Airborne");
             RaycastHit ledgeSeekerHit;
@@ -308,6 +314,15 @@ public class ThirdPersonMovement : MonoBehaviour
                         speedLines.SetActive(false);
                     }
                 }
+
+                if(dustTrails != null && direction.magnitude != 0) 
+                {
+                    dustTrails.SetActive(true);
+                } else if(direction.magnitude == 0)
+                {
+                    dustTrails.SetActive(false);
+                }
+
             }
 
             if(!_isGrounded)
@@ -1069,6 +1084,7 @@ public class ThirdPersonMovement : MonoBehaviour
            direction.y = -direction.y;
        }
        impact += direction.normalized * force / mass;
+       //impact += direction * force / mass;
        print("Adding impact: " + impact);
 
        //Apply screenshake TODO: Supply a variable to this function that holds the intensity and time values, that way each effect that defines an impact can define a screenshake!

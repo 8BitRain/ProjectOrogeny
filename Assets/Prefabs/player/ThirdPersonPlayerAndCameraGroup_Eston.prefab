@@ -1514,6 +1514,7 @@ MonoBehaviour:
   windResetVelocityY: -10
   mass: 3
   speedLines: {fileID: 6869995504950854639}
+  dustTrails: {fileID: 6294157288991313184}
   Bounds:
     serializedVersion: 2
     m_Bits: 524288
@@ -1542,6 +1543,7 @@ MonoBehaviour:
   characterName: Eston
   cam: {fileID: 3530821983064046920}
   Orogene: {fileID: 3697220149502421911}
+  Body: {fileID: 7724968650866828350}
   wallRunningAnimationClip:
   - {fileID: 1742145234810461679, guid: 958778ec87c354760b47db7a2d4bc352, type: 3}
   - {fileID: 8766899527109677652, guid: 958778ec87c354760b47db7a2d4bc352, type: 3}
@@ -3269,8 +3271,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1513510514445309743}
-  m_LocalRotation: {x: 0.035190895, y: 0.000000030763285, z: -0.0000000010832585,
-    w: 0.99938065}
+  m_LocalRotation: {x: 0.035190895, y: -0.00000003162307, z: 0.0000000011135339, w: 0.99938065}
   m_LocalPosition: {x: 1.056, y: 4.306695, z: -8.953012}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -10978,7 +10979,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6279922386538411655}
-  m_LocalRotation: {x: 0.03337291, y: 0.000000017330626, z: -5.786958e-10, w: 0.999443}
+  m_LocalRotation: {x: 0.03337291, y: -0.000000017330624, z: 5.7869576e-10, w: 0.999443}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -17081,6 +17082,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: vfx_smoke_trails_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 577068690942235682, guid: b2627bcba1e824f9fb74d5df9746a307,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b2627bcba1e824f9fb74d5df9746a307, type: 3}

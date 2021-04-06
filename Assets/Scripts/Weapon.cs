@@ -49,19 +49,26 @@ public class Weapon : MonoBehaviour
 
             ThirdPersonMovement playerCharacter = other.transform.GetComponent<ThirdPersonMovement>();
             //TODO: Make this generic. Currently this "Weapon" is setup for a bladeclubber's animations
-            if(Wielder.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("AttackStringI"))
+            if(Wielder.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("AttackStringI") && hitCounter1 < 1)
             {
                 //playerCharacter.AddImpact(transform.forward, 1.0f);
+                playerCharacter.AddImpact(Vector3.zero, 0);
                 print("Knockback 1");
                 hitCounter1++;
                 print("Hit Counter Attack String I: " + hitCounter1);
+
+                playerCharacter.healthBar.SetHealth(playerCharacter.healthBar.GetHealth() - 2.5f);
+                SpawnCombatVFX(this.transform);
             }
-            else if(Wielder.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("AttackStringII"))
+            else if(Wielder.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("AttackStringII") && hitCounter2 < 1)
             {
                 playerCharacter.AddImpact(Wielder.transform.forward, force);    
                 print("Knockback 10");
                 hitCounter2++;
                 print("Hit Counter Attack String II: " + hitCounter2);
+
+                playerCharacter.healthBar.SetHealth(playerCharacter.healthBar.GetHealth() - 2.5f);
+                SpawnCombatVFX(this.transform);
 
             }
             /*else
@@ -69,10 +76,7 @@ public class Weapon : MonoBehaviour
                 playerCharacter.AddImpact(transform.forward, force);
             }*/
             
-            playerCharacter.healthBar.SetHealth(playerCharacter.healthBar.GetHealth() - 2.5f);
 
-
-            SpawnCombatVFX(this.transform);
 
         }
     }
@@ -82,5 +86,11 @@ public class Weapon : MonoBehaviour
         GameObject combatVFXManagerInstance = Instantiate(combatVFXManager, weaponTransform.position, weaponTransform.rotation) as GameObject;
         combatVFXManagerInstance.GetComponent<CombatVFXManager>().SetCombatVFXSpawn(weaponTransform);
         combatVFXManagerInstance.GetComponent<CombatVFXManager>().triggerSpecialVFX();
+    }
+
+    public void ResetHitCounters()
+    {
+        hitCounter1 = 0;
+        hitCounter2 = 0;
     }
 }

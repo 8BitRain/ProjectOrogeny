@@ -20,9 +20,9 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: vfx_smoke
-  m_Shader: {fileID: 4800000, guid: 650dd9526735d5b46b79224bc6e94025, type: 3}
-  m_ShaderKeywords: _ALPHATEST_ON
+  m_Name: vfx_smoke_particle_experiment_I
+  m_Shader: {fileID: 4800000, guid: 0406db5a14f94604a8c57ccfbc9f3b46, type: 3}
+  m_ShaderKeywords: _ALPHATEST_ON _COLORADDSUBDIFF_ON
   m_LightmapFlags: 6
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 1
@@ -70,9 +70,9 @@ Material:
     - _CameraFadingEnabled: 0
     - _CameraFarFadeDistance: 2
     - _CameraNearFadeDistance: 1
-    - _ColorMode: 0
+    - _ColorMode: 1
     - _Cull: 0
-    - _Cutoff: 1
+    - _Cutoff: 0.527
     - _DistortionBlend: 0.5
     - _DistortionEnabled: 0
     - _DistortionStrength: 1
