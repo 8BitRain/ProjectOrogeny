@@ -173,10 +173,12 @@ public class Bladeclubber : MonoBehaviour
 
             weaponsL[0].GetComponent<Weapon>().DisableWeaponTrail();
             weaponsL[0].GetComponent<BoxCollider>().enabled = false;
-
-            transform.LookAt(target.GetComponent<ThirdPersonMovement>().Body);
-            print("Target Box Collider Center: " + target.GetComponent<ThirdPersonMovement>().Body);
-            print("Target Box Collider Position: " + target.GetComponent<BoxCollider>().transform.position);
+             
+            transform.LookAt(target.GetComponent<ThirdPersonMovement>().Body.transform.position);
+            //transform.LookAt(target.GetComponent<ThirdPersonMovement>().Body.transform.TransformPoint(target.GetComponent<ThirdPersonMovement>().Body.transform.position));
+            print("Bladeclubbers's position: " + this.transform.position);
+            print("Target's Body Position: " + target.GetComponent<ThirdPersonMovement>().Body.transform.position);
+            print("Target's Box Collider Position: " + target.GetComponent<BoxCollider>().transform.position);
         }
 
         if(this.animator.GetCurrentAnimatorStateInfo(0).IsName("AttackStringII"))
@@ -189,7 +191,11 @@ public class Bladeclubber : MonoBehaviour
             weaponsR[0].GetComponent<BoxCollider>().enabled = false;
 
             //Currently Bladeclubber looks a bit above the player character. This causes the Axe swing in AttackStringII to uppercut the player to the sky
-            transform.LookAt(target);
+            GameObject aboveTarget = new GameObject();
+            //aboveTarget.transform.position = 
+            transform.LookAt(target.transform.position + transform.up);
+            
+
 
 
         }
