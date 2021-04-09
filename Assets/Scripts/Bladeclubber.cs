@@ -6,6 +6,7 @@ using UnityEngine;
 public class Bladeclubber : MonoBehaviour
 {
     public Transform Head;
+    public Transform Body;
 
     public LayerMask Player;
     
@@ -21,6 +22,8 @@ public class Bladeclubber : MonoBehaviour
 
     public Animator animator;
     public float combatTimer = 0;
+
+    public HealthBar healthBar;
     // Start is called before the first frame update
     void Start()
     {

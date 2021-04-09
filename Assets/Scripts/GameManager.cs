@@ -11,6 +11,9 @@ public class GameManager : MonoBehaviour
     [Header("Players")]
     public Transform[] spawnedPlayers;
 
+    [Header("Antagonists")]
+    public Transform[] enemies;
+
     [Header("UI Settings")]
     public GameObject canvas;
     public bool canDisplayWidescreenUI;
@@ -123,7 +126,9 @@ public class GameManager : MonoBehaviour
                         // See InputDeviceChange reference for other event types.
                         break;
                 }
-            };*/        
+            };*/  
+
+            displayEnemyHealthBar();      
         }
 
     }
@@ -189,6 +194,16 @@ public class GameManager : MonoBehaviour
         if(playerNum == 1)
         {
             canvas.GetComponent<UI>().target.gameObject.SetActive(false);
+        }
+    }
+
+    public void displayEnemyHealthBar()
+    {
+        foreach (Transform enemy in enemies)
+        {
+            HealthBar enemyHealthBar = enemy.GetComponent<Bladeclubber>().healthBar;
+            RectTransform enemyHealthBarRT = enemyHealthBar.gameObject.GetComponent<RectTransform>();
+            enemyHealthBar.PositionEnemyHealthBar(spawnedPlayers[0].GetComponentInChildren<ThirdPersonMovement>().cam.GetComponent<Camera>(), enemy, spawnedPlayers[0].GetComponentInChildren<ThirdPersonMovement>().transform);
         }
     }
 }

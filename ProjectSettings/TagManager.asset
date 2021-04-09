@@ -16,6 +16,7 @@ TagManager:
   - Bounds
   - TargetLock
   - GameManager
+  - Enemy
   layers:
   - Default
   - TransparentFX
