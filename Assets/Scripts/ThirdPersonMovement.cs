@@ -125,6 +125,7 @@ public class ThirdPersonMovement : MonoBehaviour
     private float _swapTimer = 0;
     public Transform targetToLock;
     public LayerMask Foe; 
+    private Transform combatant;
 
     public Transform[] foes;
 
@@ -875,86 +876,184 @@ public class ThirdPersonMovement : MonoBehaviour
 
     void Dash()
     {
-        //print("Dashing");
-        moveCharacter = false;
-        if(lockedOn)
+        //We aren't engaged in combat
+        if(!GetCombatState())
         {
-            transform.LookAt(GetCurrentTarget().transform);
-        }
-        if(_dashTimer == 0)
-        {
-            print("_dashTimer is 0 teleport");
-            
-            //Game Thiccness - adding field of view adjustment to dash
-            freeLookCamera.GetComponent<CinemachineFreeLook>().m_Lens.FieldOfView = 80;
-           
-            //https://answers.unity.com/questions/1614287/teleporting-character-issue-with-transformposition.html
-            _controller.enabled = false;
-            //If > 0 we want to teleport forward
-            //If < 0 we want to teleport backward
-            print(movementInput.y);
-            if(movementInput.y > 0 || movementInput.y == 0)
+            moveCharacter = false;
+            if(lockedOn)
             {
-                transform.position = transform.position + transform.forward * 2;
-            } else 
-            {
-                transform.position = transform.position + transform.forward * -2;
+                transform.LookAt(GetCurrentTarget().transform);
             }
-            _controller.enabled = true;
-            
-        }
-        _controller.Move(transform.forward * dashSpeed * Time.deltaTime);
-
-        //Increase dashTimer.
-        _dashTimer += Time.deltaTime;
-
-        if(dashSpeed > 0)
-        {
-            if(!_isGrounded)
+            if(_dashTimer == 0)
             {
-                animator.SetBool("Jumping", false);
-                animator.SetBool("Falling", true);
+                print("_dashTimer is 0 teleport");
+
+                //Game Thiccness - adding field of view adjustment to dash
+                freeLookCamera.GetComponent<CinemachineFreeLook>().m_Lens.FieldOfView = 80;
+
+                //https://answers.unity.com/questions/1614287/teleporting-character-issue-with-transformposition.html
+                _controller.enabled = false;
+                //If > 0 we want to teleport forward
+                //If < 0 we want to teleport backward
+                print(movementInput.y);
+                if(movementInput.y > 0 || movementInput.y == 0)
+                {
+                    transform.position = transform.position + transform.forward * 2;
+                } else 
+                {
+                    transform.position = transform.position + transform.forward * -2;
+                }
+                _controller.enabled = true;
+
             }
-            animator.Play("Grounded.freeRun", 0, 0.5f);
-            animator.speed = 0;
-            dashInput = false;
-            dashSpeed = dashSpeed - (dashFriction * Time.deltaTime);
-            this.glide = true;
+            _controller.Move(transform.forward * dashSpeed * Time.deltaTime);
+
+            //Increase dashTimer.
+            _dashTimer += Time.deltaTime;
+
+            if(dashSpeed > 0)
+            {
+                if(!_isGrounded)
+                {
+                    animator.SetBool("Jumping", false);
+                    animator.SetBool("Falling", true);
+                }
+                animator.Play("Grounded.freeRun", 0, 0.5f);
+                animator.speed = 0;
+                dashInput = false;
+                dashSpeed = dashSpeed - (dashFriction * Time.deltaTime);
+                this.glide = true;
+            }
+
+            if(dashSpeed < 0) 
+            {
+                //resetting speed to default. If you want a more natural acceleration, allow speed to = 0. 
+                this.glide = false;
+                dashSpeed = defaultDashSpeed;
+                animator.speed = 1;
+                _dashTimer = 0;
+                moveCharacter = true;
+            }
+
+            if(_dashTimer >= .5)
+            {
+                this.glide = false;
+                dashSpeed = defaultDashSpeed;
+                animator.speed = 1;
+                _dashTimer = 0;
+                moveCharacter = true;
+                freeLookCamera.GetComponent<CinemachineFreeLook>().m_Lens.FieldOfView = 40;
+            }
+
+            if(_afterImageTimer == 0)
+            {
+                Instantiate(glideAfterImage, this.transform.position, this.transform.rotation);
+            }
+
+            if(_afterImageTimer >= .2)
+            {
+                _afterImageTimer = 0;
+            } 
+            else 
+            {
+                _afterImageTimer += Time.deltaTime;
+            }
         }
 
-        if(dashSpeed < 0) 
+        //Player is engaged in combat, dash can optionally move character behind opponent.
+        if(GetCombatState())
         {
-            //resetting speed to default. If you want a more natural acceleration, allow speed to = 0. 
-            this.glide = false;
-            dashSpeed = defaultDashSpeed;
-            animator.speed = 1;
-            _dashTimer = 0;
-            moveCharacter = true;
+            moveCharacter = false;
+            if(lockedOn)
+            {
+                transform.LookAt(GetCurrentTarget().transform);
+            }
+            
+            if(_dashTimer == 0)
+            {
+                print("_dashTimer is 0 teleport");
+
+                //Game Thiccness - adding field of view adjustment to dash
+                freeLookCamera.GetComponent<CinemachineFreeLook>().m_Lens.FieldOfView = 80;
+
+                //https://answers.unity.com/questions/1614287/teleporting-character-issue-with-transformposition.html
+            }
+            //_controller.Move(transform.forward * dashSpeed * Time.deltaTime);
+            //Rotate player around combatant
+            if(combatant != null)
+            {
+                _controller.enabled = false;
+                transform.RotateAround(combatant.transform.position, Vector3.up, 180 * Time.deltaTime);
+            }
+
+            //Increase dashTimer.
+            _dashTimer += Time.deltaTime;
+
+            if(dashSpeed > 0)
+            {
+                if(!_isGrounded)
+                {
+                    animator.SetBool("Jumping", false);
+                    animator.SetBool("Falling", true);
+                }
+                animator.Play("Grounded.freeRun", 0, 0.5f);
+                animator.speed = 0;
+                dashInput = false;
+                dashSpeed = dashSpeed - (dashFriction * Time.deltaTime);
+                this.glide = true;
+
+                //We are dodging so let's bring the camera out.
+                freeLookCamera.GetComponent<CinemachineFreeLook>().m_Orbits[1].m_Radius = 40;
+            }
+
+            if(dashSpeed < 0) 
+            {
+                //resetting speed to default. If you want a more natural acceleration, allow speed to = 0. 
+                this.glide = false;
+                dashSpeed = defaultDashSpeed;
+                animator.speed = 1;
+                _dashTimer = 0;
+                moveCharacter = true;
+            }
+
+            //Combatant current animation frame
+            AnimationClip combatAnimationClip = combatant.GetComponent<Animator>().GetCurrentAnimatorClipInfo(0)[0].clip;
+            float combatantAnimationTime = combatAnimationClip.length;
+            Debug.Log("Combatant Animation Length: " + combatantAnimationTime);
+            Debug.Log("Player is dodging " + combatant.name + "'s " + combatAnimationClip.name);
+
+            if(_dashTimer >= combatantAnimationTime)
+            {
+                this.glide = false;
+                dashSpeed = defaultDashSpeed;
+                animator.speed = 1;
+                _dashTimer = 0;
+                _controller.enabled = true;
+                moveCharacter = true;
+                freeLookCamera.GetComponent<CinemachineFreeLook>().m_Lens.FieldOfView = 40;
+                freeLookCamera.GetComponent<CinemachineFreeLook>().m_Orbits[1].m_Radius = 9;
+            }
+
+            //TODO turn into a function
+            if(_afterImageTimer == 0)
+            {
+                Instantiate(glideAfterImage, this.transform.position, this.transform.rotation);
+            }
+
+            if(_afterImageTimer >= .2)
+            {
+                _afterImageTimer = 0;
+            } 
+            else 
+            {
+                _afterImageTimer += Time.deltaTime;
+            }
         }
 
-        if(_dashTimer >= .5)
-        {
-            this.glide = false;
-            dashSpeed = defaultDashSpeed;
-            animator.speed = 1;
-            _dashTimer = 0;
-            moveCharacter = true;
-            freeLookCamera.GetComponent<CinemachineFreeLook>().m_Lens.FieldOfView = 40;
-        }
 
-        if(_afterImageTimer == 0)
-        {
-            Instantiate(glideAfterImage, this.transform.position, this.transform.rotation);
-        }
 
-        if(_afterImageTimer >= .2)
-        {
-            _afterImageTimer = 0;
-        } 
-        else 
-        {
-            _afterImageTimer += Time.deltaTime;
-        }
+
+
 
 
         /*
@@ -1246,4 +1345,29 @@ public class ThirdPersonMovement : MonoBehaviour
         Time.timeScale = time;
         Time.fixedDeltaTime = time * .02f;
     }
+
+    //TODO: Consider a 1 v 1 or 1 vs many scenario. Does it make sense to set just one combatant, multiple combatants, or only focus the target?
+    public void SetCombatState(bool combatState, Transform combatant)
+    {
+        animator.SetBool("EngagedInCombat", combatState);
+        this.combatant = combatant;
+    }
+
+    public void UpdateCombatState()
+    {
+        //How should we link a dodge?
+    }
+
+    public bool GetCombatState()
+    {
+        if(animator == null)
+        {
+            return false;
+        }
+        else
+        {
+            return animator.GetBool("EngagedInCombat");
+        }
+    }
+    
 }

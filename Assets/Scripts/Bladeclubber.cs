@@ -136,32 +136,46 @@ public class Bladeclubber : MonoBehaviour
 
     void EngageCombat()
     {
-        float targetDistance = (transform.position - target.position).magnitude;
+        //sentinel value
+        float targetDistance = -1;
+        if(target != null)
+        {
+            targetDistance = (transform.position - target.position).magnitude;
+        }
+        
         
         //Slide forward with combo
         //navMeshAgent.SetDestination(new Vector3(0,0,3));
         if(this.animator.GetBool("Attacking"))
         {
             navMeshAgent.SetDestination(target.transform.position);
-            //navMeshAgent.stoppingDistance = 1;
-            //navMeshAgent.enabled = false;
-            
-            //this.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
+
+            //Force the target into a combat state
+            //TODO: Test with multiple combatants. How does the state respond?
+            target.GetComponent<ThirdPersonMovement>().SetCombatState(true, this.transform);
         }
         else
         {
+            //TODO: Test with multiple combatants. How does the state respond?
+            //Concern:
+            if(target != null)
+            {
+                target.GetComponent<ThirdPersonMovement>().SetCombatState(false, null);
+            }
             navMeshAgent.enabled = true;
             //this.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
         }
 
         //Start Combat String 1
         //Play the animation
-        if(targetDistance < 5)
+        if(targetDistance < 5 && targetDistance != -1)
         {
             if(!this.animator.GetBool("Attacking"))
             {
                 animator.SetTrigger("Initiate-AttackString");
                 animator.SetBool("Attacking", true);
+                animator.SetBool("WindUp-AttackStringI", true);
+                animator.SetBool("WindUp-AttackStringII", true);
                 //animator.Play("Base Layer.AttackStringI");
                 this.attackCombo = 0;   
             }
@@ -176,8 +190,12 @@ public class Bladeclubber : MonoBehaviour
 
             weaponsL[0].GetComponent<Weapon>().DisableWeaponTrail();
             weaponsL[0].GetComponent<BoxCollider>().enabled = false;
-             
-            transform.LookAt(target.GetComponent<ThirdPersonMovement>().Body.transform.position);
+
+            if(animator.GetBool("WindUp-AttackStringI"))
+            {
+                transform.LookAt(target.GetComponent<ThirdPersonMovement>().Body.transform.position);
+                animator.SetBool("WindUp-AttackStringI", false);
+            }
             //transform.LookAt(target.GetComponent<ThirdPersonMovement>().Body.transform.TransformPoint(target.GetComponent<ThirdPersonMovement>().Body.transform.position));
             print("Bladeclubbers's position: " + this.transform.position);
             print("Target's Body Position: " + target.GetComponent<ThirdPersonMovement>().Body.transform.position);
@@ -193,14 +211,14 @@ public class Bladeclubber : MonoBehaviour
             weaponsR[0].GetComponent<Weapon>().DisableWeaponTrail();
             weaponsR[0].GetComponent<BoxCollider>().enabled = false;
 
-            //Currently Bladeclubber looks a bit above the player character. This causes the Axe swing in AttackStringII to uppercut the player to the sky
-            GameObject aboveTarget = new GameObject();
-            //aboveTarget.transform.position = 
-            transform.LookAt(target.transform.position + transform.up);
-            
-
-
-
+            if(animator.GetBool("WindUp-AttackStringII"))
+            {
+                //Currently Bladeclubber looks a bit above the player character. This causes the Axe swing in AttackStringII to uppercut the player to the sky
+                GameObject aboveTarget = new GameObject();
+                //aboveTarget.transform.position = 
+                transform.LookAt(target.transform.position + transform.up);
+                animator.SetBool("WindUp-AttackStringII", false);
+            }
         }
 
         if(!this.animator.GetCurrentAnimatorStateInfo(0).IsName("AttackStringI") && !this.animator.GetCurrentAnimatorStateInfo(0).IsName("AttackStringII"))

@@ -38,13 +38,11 @@ public class HealthBar : MonoBehaviour
         Renderer enemy_renderer = enemy.GetComponent<Bladeclubber>().Body.GetComponent<Renderer>();
         if(enemy_renderer.isVisible)
         {
-            Debug.Log("Game object is visible");
             Canvas healthBarCanvas = this.GetComponentInParent<Canvas>();
             healthBarCanvas.enabled = true;
 
         } else
         {
-            Debug.Log("Game object is invisible");
             Canvas healthBarCanvas = this.GetComponentInParent<Canvas>();
             healthBarCanvas.enabled = false;
 

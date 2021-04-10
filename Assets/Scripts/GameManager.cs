@@ -128,7 +128,11 @@ public class GameManager : MonoBehaviour
                 }
             };*/  
 
-            displayEnemyHealthBar();      
+            //Check that one player is at least spawned before displaying enemy health bars
+            if(spawnedPlayers[0] != null)
+            {
+                displayEnemyHealthBar();
+            }      
         }
 
     }
