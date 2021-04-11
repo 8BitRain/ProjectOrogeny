@@ -1002,8 +1002,7 @@ public class ThirdPersonMovement : MonoBehaviour
                 dashSpeed = dashSpeed - (dashFriction * Time.deltaTime);
                 this.glide = true;
 
-                //We are dodging so let's bring the camera out.
-                freeLookCamera.GetComponent<CinemachineFreeLook>().m_Orbits[1].m_Radius = 40;
+                
             }
 
             if(dashSpeed < 0) 
@@ -1022,6 +1021,14 @@ public class ThirdPersonMovement : MonoBehaviour
             Debug.Log("Combatant Animation Length: " + combatantAnimationTime);
             Debug.Log("Player is dodging " + combatant.name + "'s " + combatAnimationClip.name);
 
+            if(_dashTimer < combatantAnimationTime)
+            {
+                //Player is dodging so let's zoom the camera out.
+                freeLookCamera.GetComponent<CinemachineFreeLook>().m_Orbits[1].m_Radius = 40;
+                
+                //Slow down time
+                SetSlowTime(true);
+            }
             if(_dashTimer >= combatantAnimationTime)
             {
                 this.glide = false;
@@ -1030,6 +1037,7 @@ public class ThirdPersonMovement : MonoBehaviour
                 _dashTimer = 0;
                 _controller.enabled = true;
                 moveCharacter = true;
+                SetSlowTime(false);
                 freeLookCamera.GetComponent<CinemachineFreeLook>().m_Lens.FieldOfView = 40;
                 freeLookCamera.GetComponent<CinemachineFreeLook>().m_Orbits[1].m_Radius = 9;
             }

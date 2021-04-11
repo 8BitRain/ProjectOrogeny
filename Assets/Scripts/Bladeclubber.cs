@@ -47,7 +47,11 @@ public class Bladeclubber : MonoBehaviour
             AssignTarget();
         }
 
-        SeekPlayer();
+        if(!this.animator.GetBool("Attacking"))
+        {
+            SeekPlayer();   
+        }
+        
 
         EngageCombat();
 
@@ -60,20 +64,9 @@ public class Bladeclubber : MonoBehaviour
         if(this.navMeshAgent != null && target != null)
         {
             transform.LookAt(target);
+
             Vector3 position = transform.position + hitBox.center;
-            //RaycastHit hit;
             float targetDistance = (transform.position - target.position).magnitude;
-
-            /*if(Physics.SphereCast(position, 15f, transform.forward, out hit, 15f, Player))
-            {
-        
-                targetDistance = hit.distance;
-                print("PlayerHit");
-                print(hit.transform);
-            }*/
-
-            //print("Sphere Cast reported target distance: " + targetDistance);
-            //print("Manual calculation of distance: " + (transform.position - target.transform.position).magnitude);
 
             if(targetDistance >= 15)
             {
@@ -92,19 +85,6 @@ public class Bladeclubber : MonoBehaviour
                 //print("Avoid player");
                 //OrbitTarget();
             }
-
-            
-            /*if(targetDistance < 5)
-            {
-                EngageCombat();                      
-            } 
-            else
-            {
-                //DisengageCombat();
-            }*/
-
-            
-
         }
     }
 
@@ -148,8 +128,6 @@ public class Bladeclubber : MonoBehaviour
         //navMeshAgent.SetDestination(new Vector3(0,0,3));
         if(this.animator.GetBool("Attacking"))
         {
-            navMeshAgent.SetDestination(target.transform.position);
-
             //Force the target into a combat state
             //TODO: Test with multiple combatants. How does the state respond?
             target.GetComponent<ThirdPersonMovement>().SetCombatState(true, this.transform);
@@ -175,7 +153,6 @@ public class Bladeclubber : MonoBehaviour
                 animator.SetTrigger("Initiate-AttackString");
                 animator.SetBool("Attacking", true);
                 animator.SetBool("WindUp-AttackStringI", true);
-                animator.SetBool("WindUp-AttackStringII", true);
                 //animator.Play("Base Layer.AttackStringI");
                 this.attackCombo = 0;   
             }
@@ -193,6 +170,7 @@ public class Bladeclubber : MonoBehaviour
 
             if(animator.GetBool("WindUp-AttackStringI"))
             {
+                navMeshAgent.SetDestination(target.transform.position);
                 transform.LookAt(target.GetComponent<ThirdPersonMovement>().Body.transform.position);
                 animator.SetBool("WindUp-AttackStringI", false);
             }
@@ -204,6 +182,7 @@ public class Bladeclubber : MonoBehaviour
 
         if(this.animator.GetCurrentAnimatorStateInfo(0).IsName("AttackStringII"))
         {
+            //if(!animator.GetBool())
             print("Current Animation State is: Attack String II");
             weaponsL[0].GetComponent<Weapon>().EnableWeaponTrail();
             weaponsL[0].GetComponent<BoxCollider>().enabled = true;
