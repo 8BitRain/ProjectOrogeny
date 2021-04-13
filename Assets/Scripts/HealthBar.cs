@@ -32,8 +32,9 @@ public class HealthBar : MonoBehaviour
     public void PositionEnemyHealthBar(Camera playerCam, Transform enemy, Transform player)
     {
         RectTransform healthBarRectTransform = this.GetComponent<RectTransform>();
-        //healthBarRectTransform.position = playerCam.WorldToScreenPoint(enemy.GetComponent<Bladeclubber>().Head.position + new Vector3(0,1,0));\healthBarRectTransform.position = playerCam.WorldToScreenPoint(enemy.GetComponent<Bladeclubber>().Head.position + new Vector3(0,1,0));
-        healthBarRectTransform.position = playerCam.WorldToScreenPoint(enemy.transform.position + new Vector3(0,8,0));
+        healthBarRectTransform.position = playerCam.WorldToScreenPoint(new Vector3(enemy.position.x,enemy.GetComponent<Bladeclubber>().Head.position.y,enemy.position.z) + new Vector3(0,3,0));
+        //healthBarRectTransform.position = playerCam.WorldToScreenPoint(enemy.transform.position + new Vector3(0,8,0));
+        //healthBarRectTransform.position = playerCam.WorldToScreenPoint(enemy.transform.position);
 
         Renderer enemy_renderer = enemy.GetComponent<Bladeclubber>().Body.GetComponent<Renderer>();
         if(enemy_renderer.isVisible)

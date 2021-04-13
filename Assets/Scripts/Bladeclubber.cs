@@ -17,8 +17,10 @@ public class Bladeclubber : MonoBehaviour
 
     public float attackCombo = 1;
 
+
     public Transform[] weaponsL;
     public Transform[] weaponsR;
+    public bool hitBoxEnabled = false;
 
     public Animator animator;
     public float combatTimer = 0;
@@ -161,9 +163,24 @@ public class Bladeclubber : MonoBehaviour
 
         if(this.animator.GetCurrentAnimatorStateInfo(0).IsName("AttackStringI"))
         {
+            //Get the time duration of AttackStringII
+            AnimatorStateInfo combatAnimatorStateInfo = this.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0);
+            float combatantAnimationTimeElapsed = combatAnimatorStateInfo.length;
+
+            print("Combatant Time Elapsed: " + combatantAnimationTimeElapsed);
+
             print("Current Animation State is: Attack String I");
             weaponsR[0].GetComponent<Weapon>().EnableWeaponTrail();
-            weaponsR[0].GetComponent<BoxCollider>().enabled = true;
+            
+            //Hitbox only activates when triggered by an event in the Bladeclubber animation. This way we have control over the timing without having to do timing calculations here.
+            if(hitBoxEnabled)
+            {
+                weaponsR[0].GetComponent<BoxCollider>().enabled = true;
+            } else 
+            {
+                weaponsR[0].GetComponent<BoxCollider>().enabled = false;
+            }
+            
 
             weaponsL[0].GetComponent<Weapon>().DisableWeaponTrail();
             weaponsL[0].GetComponent<BoxCollider>().enabled = false;
@@ -173,6 +190,8 @@ public class Bladeclubber : MonoBehaviour
                 navMeshAgent.SetDestination(target.transform.position);
                 transform.LookAt(target.GetComponent<ThirdPersonMovement>().Body.transform.position);
                 animator.SetBool("WindUp-AttackStringI", false);
+                //animator.SetBool("WindUp-AttackStringII", true);
+                //Cache wind up for second hit
             }
             //transform.LookAt(target.GetComponent<ThirdPersonMovement>().Body.transform.TransformPoint(target.GetComponent<ThirdPersonMovement>().Body.transform.position));
             print("Bladeclubbers's position: " + this.transform.position);
@@ -182,10 +201,22 @@ public class Bladeclubber : MonoBehaviour
 
         if(this.animator.GetCurrentAnimatorStateInfo(0).IsName("AttackStringII"))
         {
+            //Get the time duration of AttackStringII
+            AnimatorStateInfo combatAnimatorStateInfo = this.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0);
+            float combatantAnimationTimeElapsed = combatAnimatorStateInfo.length;
             //if(!animator.GetBool())
             print("Current Animation State is: Attack String II");
             weaponsL[0].GetComponent<Weapon>().EnableWeaponTrail();
-            weaponsL[0].GetComponent<BoxCollider>().enabled = true;
+
+            //Hitbox only activates when triggered by an event in the Bladeclubber animation. This way we have control over the timing without having to do timing calculations here.
+            if(hitBoxEnabled)
+            {
+                weaponsL[0].GetComponent<BoxCollider>().enabled = true;
+            } else 
+            {
+                
+                weaponsL[0].GetComponent<BoxCollider>().enabled = false;
+            }
 
             weaponsR[0].GetComponent<Weapon>().DisableWeaponTrail();
             weaponsR[0].GetComponent<BoxCollider>().enabled = false;
@@ -227,5 +258,17 @@ public class Bladeclubber : MonoBehaviour
         animator.SetBool("Attacking", false);
         //weaponsL[0].GetComponent<Weapon>().DisableWeaponTrail();
         //weaponsR[0].GetComponent<Weapon>().DisableWeaponTrail();
+    }
+
+    void EnableHitBoxes()
+    {
+        Debug.Log("HitBoxEnabled");
+        hitBoxEnabled = true;
+    }
+
+    void DisableHitBoxes()
+    {
+        Debug.Log("HitBoxDisabled");
+        hitBoxEnabled = false;
     }
 }

@@ -29,6 +29,18 @@ public class Weapon : MonoBehaviour
         
     }
 
+    void OnDrawGizmos()
+    {
+        Gizmos.color = new Color(1, 0, 0, 1f);
+        Gizmos.matrix = transform.localToWorldMatrix;
+        if(this.GetComponent<BoxCollider>().enabled)
+        {
+            Gizmos.DrawWireCube(this.GetComponent<BoxCollider>().center, this.GetComponent<BoxCollider>().size);
+        }
+        
+        //Gizmos.DrawWireCube(this.transform.position, new Vector3(2,2,2));
+    }
+
     public void EnableWeaponTrail()
     {
         weaponTrail.gameObject.SetActive(true);
@@ -52,24 +64,29 @@ public class Weapon : MonoBehaviour
             if(Wielder.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("AttackStringI") && hitCounter1 < 1)
             {
                 //playerCharacter.AddImpact(transform.forward, 1.0f);
-                playerCharacter.AddImpact(Vector3.zero, 0);
-                print("Knockback 1");
-                hitCounter1++;
-                print("Hit Counter Attack String I: " + hitCounter1);
+                if(!playerCharacter.GetIframe())
+                {
+                    playerCharacter.AddImpact(Vector3.zero, 0);
+                    print("Knockback 1");
+                    hitCounter1++;
+                    print("Hit Counter Attack String I: " + hitCounter1);
 
-                playerCharacter.healthBar.SetHealth(playerCharacter.healthBar.GetHealth() - 2.5f);
-                SpawnCombatVFX(this.transform);
+                    playerCharacter.healthBar.SetHealth(playerCharacter.healthBar.GetHealth() - 2.5f);
+                    SpawnCombatVFX(this.transform);
+                }
             }
             else if(Wielder.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("AttackStringII") && hitCounter2 < 1)
             {
-                playerCharacter.AddImpact(Wielder.transform.forward, force);    
-                print("Knockback 10");
-                hitCounter2++;
-                print("Hit Counter Attack String II: " + hitCounter2);
+                if(!playerCharacter.GetIframe())
+                {
+                    playerCharacter.AddImpact(Wielder.transform.forward, force);    
+                    print("Knockback 10");
+                    hitCounter2++;
+                    print("Hit Counter Attack String II: " + hitCounter2);
 
-                playerCharacter.healthBar.SetHealth(playerCharacter.healthBar.GetHealth() - 2.5f);
-                SpawnCombatVFX(this.transform);
-
+                    playerCharacter.healthBar.SetHealth(playerCharacter.healthBar.GetHealth() - 2.5f);
+                    SpawnCombatVFX(this.transform);
+                }
             }
             /*else
             {

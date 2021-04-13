@@ -143,6 +143,9 @@ public class ThirdPersonMovement : MonoBehaviour
     private bool specialAttackInput = false;
     private bool kickThrownSpecialAttackInput = false;
 
+    [Header("Combat Settings")]
+    private bool iframe = false;
+
     [Header("Special Attack Settings")]
     public Transform _shieldReturnControlPointStart;
     public Transform _shieldReturnControlPointEnd;
@@ -490,9 +493,14 @@ public class ThirdPersonMovement : MonoBehaviour
                 _isTilting = false;
             }*/
 
-            if(dashInput || glide)
+            if(dashInput || glide && !GetCombatState())
             {
                 Dash();
+            }
+
+            if(dashInput || glide && GetCombatState())
+            {
+                DodgeBulletTime();
             }
 
             //Constant subtration of friction for glide/decceleration
@@ -960,6 +968,38 @@ public class ThirdPersonMovement : MonoBehaviour
             }
         }
 
+        /*
+         //Increase speed when we want to accelerate or glide. For now we call this gliding due to the flight like effect. Think Dissidia.
+                if(glide)
+                {
+                    if(speed < maxSpeed){
+                        speed = speed + acceleration * Time.deltaTime;
+                    }
+                }
+        */
+
+        //Constant subtration of friction for glide/decceleration
+        //https://www.gamasutra.com/blogs/MarkVenturelli/20140821/223866/Game_Feel_Tips_II_Speed_Gravity_Friction.php
+        //Update dash here like glide
+        /*if(glide)
+        {
+            Vector3 moveDir = transform.forward;
+            _controller.Move(moveDir.normalized * speed * Time.deltaTime); 
+            if(speed > 0)
+            {
+                speed = speed - (friction * Time.deltaTime);
+            }
+            if(speed < 0)
+            {
+                //resetting speed to default. If you want a more natural acceleration, allow speed to = 0. 
+                this.glide = false;
+                speed = defaultSpeed;
+            }   
+        }*/
+    }
+
+    void DodgeBulletTime()
+    {
         //Player is engaged in combat, dash can optionally move character behind opponent.
         if(GetCombatState())
         {
@@ -974,7 +1014,7 @@ public class ThirdPersonMovement : MonoBehaviour
                 print("_dashTimer is 0 teleport");
 
                 //Game Thiccness - adding field of view adjustment to dash
-                freeLookCamera.GetComponent<CinemachineFreeLook>().m_Lens.FieldOfView = 80;
+                //freeLookCamera.GetComponent<CinemachineFreeLook>().m_Lens.FieldOfView = 25;
 
                 //https://answers.unity.com/questions/1614287/teleporting-character-issue-with-transformposition.html
             }
@@ -1024,10 +1064,17 @@ public class ThirdPersonMovement : MonoBehaviour
             if(_dashTimer < combatantAnimationTime)
             {
                 //Player is dodging so let's zoom the camera out.
-                freeLookCamera.GetComponent<CinemachineFreeLook>().m_Orbits[1].m_Radius = 40;
+                //freeLookCamera.GetComponent<CinemachineFreeLook>().m_Orbits[1].m_Radius = 40;
+                freeLookCamera.GetComponent<CinemachineFreeLook>().m_Lens.FieldOfView = 50;
+
+                SetIframe(true);
                 
                 //Slow down time
-                SetSlowTime(true);
+                //SetSlowTime(true);
+
+                //Slow down animation time for the combatant
+                combatant.GetComponent<Animator>().speed = .3f;
+                
             }
             if(_dashTimer >= combatantAnimationTime)
             {
@@ -1037,7 +1084,12 @@ public class ThirdPersonMovement : MonoBehaviour
                 _dashTimer = 0;
                 _controller.enabled = true;
                 moveCharacter = true;
-                SetSlowTime(false);
+
+                //SetSlowTime(false);
+                //Slow down animation time for the combatant
+                combatant.GetComponent<Animator>().speed = 1f;
+
+                SetIframe(false);
                 freeLookCamera.GetComponent<CinemachineFreeLook>().m_Lens.FieldOfView = 40;
                 freeLookCamera.GetComponent<CinemachineFreeLook>().m_Orbits[1].m_Radius = 9;
             }
@@ -1057,41 +1109,6 @@ public class ThirdPersonMovement : MonoBehaviour
                 _afterImageTimer += Time.deltaTime;
             }
         }
-
-
-
-
-
-
-
-        /*
-         //Increase speed when we want to accelerate or glide. For now we call this gliding due to the flight like effect. Think Dissidia.
-                if(glide)
-                {
-                    if(speed < maxSpeed){
-                        speed = speed + acceleration * Time.deltaTime;
-                    }
-                }
-        */
-
-        //Constant subtration of friction for glide/decceleration
-        //https://www.gamasutra.com/blogs/MarkVenturelli/20140821/223866/Game_Feel_Tips_II_Speed_Gravity_Friction.php
-        //Update dash here like glide
-        /*if(glide)
-        {
-            Vector3 moveDir = transform.forward;
-            _controller.Move(moveDir.normalized * speed * Time.deltaTime); 
-            if(speed > 0)
-            {
-                speed = speed - (friction * Time.deltaTime);
-            }
-            if(speed < 0)
-            {
-                //resetting speed to default. If you want a more natural acceleration, allow speed to = 0. 
-                this.glide = false;
-                speed = defaultSpeed;
-            }   
-        }*/
     }
     /*Inspired by the algorithm provided here http://www.footnotesforthefuture.com/words/wall-running-1/*/
     void CheckForWall()
@@ -1376,6 +1393,16 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             return animator.GetBool("EngagedInCombat");
         }
+    }
+
+    public void SetIframe(bool iframeValue)
+    {
+        iframe = iframeValue;
+    }
+
+    public bool GetIframe()
+    {
+        return iframe;
     }
     
 }
