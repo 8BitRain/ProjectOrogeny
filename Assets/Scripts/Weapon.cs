@@ -6,7 +6,7 @@ public class Weapon : MonoBehaviour
 {
     public Transform Wielder;
     public Transform weaponTrail;
-    public LayerMask Player;
+    public LayerMask Target;
     public float force = 40;
 
     private int hitCounter = 0;
@@ -53,11 +53,17 @@ public class Weapon : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        switch (gameObject.tag)
+        {
+            
+            default:
+                break;
+        }
         //https://answers.unity.com/questions/50279/check-if-layer-is-in-layermask.html
-        if(Player == (Player | (1 << other.gameObject.layer)))
+        if(Target == (Target | (1 << other.gameObject.layer)))
         {
             print("Collided with " + other.gameObject.name + "Layer: " + other.gameObject.layer);
-            print(Player);
+            print(Target);
 
             ThirdPersonMovement playerCharacter = other.transform.GetComponent<ThirdPersonMovement>();
             //TODO: Make this generic. Currently this "Weapon" is setup for a bladeclubber's animations
