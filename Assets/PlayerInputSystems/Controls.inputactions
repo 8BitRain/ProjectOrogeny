@@ -92,6 +92,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "GroundMeleeAttack1",
+                    "type": "Button",
+                    "id": "6004e7c3-9568-4c07-b54e-3f53370eab98",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -213,6 +221,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "KickThrownSpecialAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "17661cd5-9d72-4668-98df-c970242687d5",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "GroundMeleeAttack1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

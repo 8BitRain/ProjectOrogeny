@@ -144,6 +144,15 @@ public class ThirdPersonMovement : MonoBehaviour
     private bool kickThrownSpecialAttackInput = false;
 
     [Header("Combat Settings")]
+    public float combatSlideSpeed = 10.0f;
+    public float combatSlideFriction = 20;
+    public bool combatForwardMomentum = false;
+    public bool combatRecoilMomentum = false;
+    private bool combatSlide = false;
+
+    private float combatStateIndex = 0;
+    
+    private bool groundMeleeAttack1Input = false;
     private bool iframe = false;
 
     [Header("Special Attack Settings")]
@@ -644,6 +653,17 @@ public class ThirdPersonMovement : MonoBehaviour
                 }
             }
 
+            //GroundMeleeAttack1
+            if(groundMeleeAttack1Input)
+            {
+                animator.SetTrigger("combo1");
+                groundMeleeAttack1Input = false;
+                MeleeCombo1();
+                
+            }
+
+
+
             //This could be a general melee skill that transforms!
             if(kickThrownSpecialAttackInput)
             {
@@ -714,7 +734,7 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             Respawn();
         }
-
+        /* LOCK ON LOGIC */
         //Turn LockOn Off
         if(lockOnInput && lockedOn)
         {
@@ -838,6 +858,9 @@ public class ThirdPersonMovement : MonoBehaviour
             GameManager gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
             gameManager.updateTargetPosition(this.GetPlayerID(), targetToLockHead.gameObject);
         }
+
+        //Movement that should be applied due to other techniques.
+        MeleeCombo1Movement();
 
         
     }
@@ -1195,6 +1218,7 @@ public class ThirdPersonMovement : MonoBehaviour
     public void OnLockOnSwitchTargetLeft(InputAction.CallbackContext ctx) => targetSwitchLeftInput = ctx.ReadValueAsButton();
     public void OnEnviromentInteraction(InputAction.CallbackContext ctx) => enviromentActionInput = ctx.ReadValueAsButton();
     public void OnKickThrownSpecialAttack(InputAction.CallbackContext ctx) => kickThrownSpecialAttackInput = ctx.ReadValueAsButton();
+    public void OnGroundMeleeAttack1(InputAction.CallbackContext ctx) => groundMeleeAttack1Input = ctx.ReadValueAsButton();
 
     //https://answers.unity.com/questions/242648/force-on-character-controller-knockback.html?_ga=2.213933971.521934289.1611610771-608714207.1587856867
     public void AddImpact(Vector3 direction, float force)
@@ -1344,6 +1368,67 @@ public class ThirdPersonMovement : MonoBehaviour
         print("Mantling");
     }
 
+    void MeleeCombo1()
+    {
+        //moveCharacter = false;
+        combatSlide = true;
+        this.combatForwardMomentum = true;
+        this.combatRecoilMomentum = false;
+        combatSlideSpeed = 10.0f;
+        
+
+    }
+
+    void MeleeCombo1Movement()
+    {
+        if(combatSlide)
+        {
+            Vector3 moveDir = transform.forward;
+            if(this.combatForwardMomentum)
+            {
+                moveDir = transform.forward;
+                _controller.Move(moveDir.normalized * combatSlideSpeed * Time.deltaTime); 
+            }
+            if(this.combatRecoilMomentum)
+            {
+                moveDir = -transform.forward;
+                _controller.Move(moveDir.normalized * combatSlideSpeed * Time.deltaTime); 
+                print("Moving backwards");
+                print("Current CombatSlideSpeed: " + combatSlideSpeed);
+            }
+            
+            //Animation specific logic to control when combatRecoilForwardMomentum and backwardMomentum end
+            
+            //Controls the glide acceleration/decelleration
+            if(combatSlideSpeed > 0)
+            {
+                combatSlideSpeed = combatSlideSpeed - (combatSlideFriction * Time.deltaTime);
+            }
+            if(combatSlideSpeed < 0)
+            {
+                //resetting speed to default. If you want a more natural acceleration, allow speed to = 0.
+                if(combatForwardMomentum)
+                {
+                    this.combatSlideSpeed = 10.0f;
+                    this.combatForwardMomentum = false;
+                    this.combatRecoilMomentum = true;
+                    print("Resetting combat forward momentum");
+                    return;
+                }
+
+                if(combatRecoilMomentum)
+                {
+                    print("combat recoil activated");
+                    this.combatSlide = false;
+                    this.combatRecoilMomentum = false;
+                    this.combatSlideSpeed = 10.0f;
+                }
+                
+
+            }   
+        }
+    }
+
 
     void Respawn()
     {
@@ -1378,9 +1463,20 @@ public class ThirdPersonMovement : MonoBehaviour
         this.combatant = combatant;
     }
 
-    public void UpdateCombatState()
+    public void UpdateCombatState(float index)
     {
         //How should we link a dodge?
+
+        //Handling Combat 
+        switch (index)
+        {
+            case 0: 
+                MeleeCombo1Movement();
+                break;
+            default:
+                break;
+        }
+
     }
 
     public bool GetCombatState()
