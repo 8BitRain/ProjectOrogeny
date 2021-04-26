@@ -155,6 +155,9 @@ public class ThirdPersonMovement : MonoBehaviour
     private bool groundMeleeAttack1Input = false;
     private bool iframe = false;
 
+    private float animationWindow = 0;
+    private bool startAnimationWindow = false;
+
     [Header("Special Attack Settings")]
     public Transform _shieldReturnControlPointStart;
     public Transform _shieldReturnControlPointEnd;
@@ -656,11 +659,37 @@ public class ThirdPersonMovement : MonoBehaviour
             //GroundMeleeAttack1
             if(groundMeleeAttack1Input)
             {
-                animator.SetTrigger("combo1");
-                groundMeleeAttack1Input = false;
-                MeleeCombo1();
                 
+                if(combatStateIndex == 0)
+                {
+                    animator.SetTrigger("combo1");
+                    groundMeleeAttack1Input = false;
+                    MeleeCombo1();
+                    combatStateIndex = 1;
+                    return;
+                }
+
+                //TODO: Turn this into a method for combo input detection
+                //poll for combo
+                if(combatStateIndex == 1 && animationWindow != 0)
+                {
+                        print("Hook Combo Played");
+                        AnimationClip animatorClipInfo = animator.GetCurrentAnimatorClipInfo(0)[0].clip;
+                        //if(animatorClipInfo.length > .56 && animatorClipInfo.length <= 1)
+                        //{
+                        //animator.SetTrigger("combo1_link2");
+                        //animator.SetBool("isComboing", true);
+                        animator.Play("Grounded.combo1_1_leftHook");
+                        groundMeleeAttack1Input = false;
+                        MeleeCombo1();
+                        //end of combo so let's set the combatStateIndex back to 0.
+                         combatStateIndex = 2;
+                        return;
+                        //}   
+                }
             }
+
+
 
 
 
@@ -861,6 +890,9 @@ public class ThirdPersonMovement : MonoBehaviour
 
         //Movement that should be applied due to other techniques.
         MeleeCombo1Movement();
+
+        //Animation Window Timing
+        UpdateAnimationWindow();
 
         
     }
@@ -1371,12 +1403,88 @@ public class ThirdPersonMovement : MonoBehaviour
     void MeleeCombo1()
     {
         //moveCharacter = false;
-        combatSlide = true;
-        this.combatForwardMomentum = true;
-        this.combatRecoilMomentum = false;
+        EngageCombatSlide();
+        InitiateForwardMomentum();
         combatSlideSpeed = 10.0f;
-        
+    }
 
+    void UpdateAnimationWindow()
+    {
+        AnimatorStateInfo animatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
+        //TODO for readability, we could change combatStateIndex to rather correspond with an arrayList of "Strings" with the animation name
+        if(this.combatStateIndex == 1)
+        {
+            if(animatorStateInfo.normalizedTime >= .56 && animationWindow == 0)
+            {
+                //Animation window exists for 1.5 seconds
+                animationWindow = 1f;
+                startAnimationWindow = true;
+            }
+            
+            if(animationWindow > 0 && startAnimationWindow)
+            {
+                animationWindow -= Time.deltaTime;
+            }
+
+            if(animationWindow <= 0 && startAnimationWindow)
+            {
+                animationWindow = 0;
+
+                //reset comboState to 0
+                combatStateIndex = 0;
+                startAnimationWindow = false;
+            }
+        }
+
+        if(this.combatStateIndex == 2)
+        {
+            if(animatorStateInfo.normalizedTime >= .56 && animationWindow == 0)
+            {
+                //Animation window exists for 1.5 seconds
+                animationWindow = 5f;
+                startAnimationWindow = true;
+            }
+            
+            if(animationWindow > 0 && startAnimationWindow)
+            {
+                animationWindow -= Time.deltaTime;
+            }
+
+            if(animationWindow <= 0 && startAnimationWindow)
+            {
+                animationWindow = 0;
+
+                //reset comboState to 0
+                combatStateIndex = 0;
+                startAnimationWindow = false;
+            }
+        }
+
+        print("Current animation window time: " + animationWindow);
+    }
+
+    void EngageCombatSlide()
+    {
+        combatSlide = true;
+    }
+
+    void DisengageCombatSlide()
+    {
+        combatSlide = false;
+    }
+
+    void InitiateForwardMomentum()
+    {
+        combatSlideSpeed = 10.0f;
+        this.combatRecoilMomentum = false;
+        this.combatForwardMomentum = true;
+    }
+
+    void InitiateRecoilMomentum()
+    {
+        combatSlideSpeed = 10.0f;
+        this.combatForwardMomentum = false;
+        this.combatRecoilMomentum = true;
     }
 
     void MeleeCombo1Movement()
@@ -1404,16 +1512,13 @@ public class ThirdPersonMovement : MonoBehaviour
             {
                 combatSlideSpeed = combatSlideSpeed - (combatSlideFriction * Time.deltaTime);
             }
-            if(combatSlideSpeed < 0)
+            /*if(combatSlideSpeed < 0)
             {
                 //resetting speed to default. If you want a more natural acceleration, allow speed to = 0.
                 if(combatForwardMomentum)
                 {
                     this.combatSlideSpeed = 10.0f;
                     this.combatForwardMomentum = false;
-                    this.combatRecoilMomentum = true;
-                    print("Resetting combat forward momentum");
-                    return;
                 }
 
                 if(combatRecoilMomentum)
@@ -1425,7 +1530,7 @@ public class ThirdPersonMovement : MonoBehaviour
                 }
                 
 
-            }   
+            }   */
         }
     }
 
@@ -1462,6 +1567,8 @@ public class ThirdPersonMovement : MonoBehaviour
         animator.SetBool("EngagedInCombat", combatState);
         this.combatant = combatant;
     }
+
+    //public void SetCombatTimer
 
     public void UpdateCombatState(float index)
     {
