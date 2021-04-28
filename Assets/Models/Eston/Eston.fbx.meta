@@ -45,6 +45,15 @@ ModelImporter:
   - first:
       74: -7664358766505838531
     second: eston_rig|combat_groundCombo2_3_shieldBash
+  - first:
+      74: -6684839888101049477
+    second: eston_rig|combat_0_rightStraightPunch
+  - first:
+      74: -7454912123084500352
+    second: eston_rig|combat_1_leftHook.002_legLiftExperiment.001
+  - first:
+      74: 8407957344488900584
+    second: eston_rig|combat_2_jumpingMeiaLua.001
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -424,8 +433,8 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: eston_rig|combat_groundCombo2_0_rightStraightPunch
-      takeName: eston_rig|combat_groundCombo2_0_rightStraightPunch
+      name: eston_rig|combat_0_rightStraightPunch
+      takeName: eston_rig|combat_0_rightStraightPunch
       internalID: 0
       firstFrame: 0
       lastFrame: 12
@@ -437,60 +446,10 @@ ModelImporter:
       hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
-      loopBlendOrientation: 1
-      loopBlendPositionY: 1
-      loopBlendPositionXZ: 1
-      keepOriginalOrientation: 1
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events:
-      - time: 0.5608696
-        functionName: InitiateRecoilMomentum
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.060869563
-        functionName: InitiateForwardMomentum
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 1
-        functionName: DisengageCombatSlide
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: eston_rig|combat_groundCombo2_1_leftHook
-      takeName: eston_rig|combat_groundCombo2_1_leftHook
-      internalID: 0
-      firstFrame: 0
-      lastFrame: 15
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 1
-      loopBlendPositionY: 1
-      loopBlendPositionXZ: 1
-      keepOriginalOrientation: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
       heightFromFeet: 0
@@ -503,11 +462,11 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: eston_rig|combat_groundCombo2_2_jumpingMeiaLua
-      takeName: eston_rig|combat_groundCombo2_2_jumpingMeiaLua
+      name: eston_rig|combat_1_leftHook.002_legLiftExperiment.001
+      takeName: eston_rig|combat_1_leftHook.002_legLiftExperiment.001
       internalID: 0
       firstFrame: 0
-      lastFrame: 25
+      lastFrame: 23
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -517,11 +476,11 @@ ModelImporter:
       loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
-      loopBlendPositionY: 1
-      loopBlendPositionXZ: 1
-      keepOriginalOrientation: 1
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
       keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 1
+      keepOriginalPositionXZ: 0
       heightFromFeet: 0
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
@@ -532,11 +491,11 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: eston_rig|combat_groundCombo2_3_shieldBash
-      takeName: eston_rig|combat_groundCombo2_3_shieldBash
+      name: eston_rig|combat_2_jumpingMeiaLua.001
+      takeName: eston_rig|combat_2_jumpingMeiaLua.001
       internalID: 0
       firstFrame: 0
-      lastFrame: 25
+      lastFrame: 16
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

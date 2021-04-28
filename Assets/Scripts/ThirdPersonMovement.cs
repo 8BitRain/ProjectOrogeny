@@ -683,9 +683,18 @@ public class ThirdPersonMovement : MonoBehaviour
                         groundMeleeAttack1Input = false;
                         MeleeCombo1();
                         //end of combo so let's set the combatStateIndex back to 0.
-                         combatStateIndex = 2;
+                        combatStateIndex = 2;
                         return;
                         //}   
+                }
+
+                if(combatStateIndex == 2 && animationWindow != 0)
+                {
+                    print("High Kick Combo played");
+                    animator.Play("Grounded.combo1_2_meialouaKick");
+                    groundMeleeAttack1Input = false;
+                    MeleeCombo1();
+                    combatStateIndex = 3;
                 }
             }
 
@@ -1437,6 +1446,30 @@ public class ThirdPersonMovement : MonoBehaviour
         }
 
         if(this.combatStateIndex == 2)
+        {
+            if(animatorStateInfo.normalizedTime >= .85 && animationWindow == 0)
+            {
+                //Animation window exists for 1.5 seconds
+                animationWindow = 5f;
+                startAnimationWindow = true;
+            }
+            
+            if(animationWindow > 0 && startAnimationWindow)
+            {
+                animationWindow -= Time.deltaTime;
+            }
+
+            if(animationWindow <= 0 && startAnimationWindow)
+            {
+                animationWindow = 0;
+
+                //reset comboState to 0
+                combatStateIndex = 0;
+                startAnimationWindow = false;
+            }
+        }
+
+        if(this.combatStateIndex == 3)
         {
             if(animatorStateInfo.normalizedTime >= .56 && animationWindow == 0)
             {
