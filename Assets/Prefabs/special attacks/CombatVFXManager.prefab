@@ -43,11 +43,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58d071896470a4a03912e9bed5f3a81c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  specialAttackVFX: {fileID: 700636547141717355, guid: 5ee3cefd4cbfe43649f3749c5d3e63af,
-    type: 3}
+  specialAttackVFX:
+  - {fileID: 700636547141717355, guid: 5ee3cefd4cbfe43649f3749c5d3e63af, type: 3}
+  - {fileID: 7366246667160297133, guid: b92bb2a67c3f5497cbede8a28b8cb6c3, type: 3}
   specialAttackVFXSpawn: {fileID: 0}
-  postProcessingEFX: {fileID: 1158301578873960827, guid: bd8c6c8673884459d8c9484a35ffb6c6,
-    type: 3}
-  postProcessingEFXDuration: 1
-  enablePostProcessingEFX: 1
+  postProcessingEFX: {fileID: 0}
+  postProcessingEFXDuration: 0
+  enablePostProcessingEFX: 0
   postProcessingSpeed: 0.5

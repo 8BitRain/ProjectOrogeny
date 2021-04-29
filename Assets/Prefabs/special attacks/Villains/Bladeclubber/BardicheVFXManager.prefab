@@ -44,8 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58d071896470a4a03912e9bed5f3a81c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  specialAttackVFX: {fileID: 7366246667160297133, guid: cbc7a825e5b2a416092dda83f25807fb,
-    type: 3}
+  specialAttackVFX:
+  - {fileID: 7366246667160297133, guid: cbc7a825e5b2a416092dda83f25807fb, type: 3}
   specialAttackVFXSpawn: {fileID: 0}
   postProcessingEFX: {fileID: 1158301578873960827, guid: bd8c6c8673884459d8c9484a35ffb6c6,
     type: 3}

@@ -108,6 +108,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
     [Header("VFX Management")]
     public GameObject combatVFXManager;
+    public Transform _vfxPositionCombo1;
 
     
     //Camera Management
@@ -938,11 +939,24 @@ public class ThirdPersonMovement : MonoBehaviour
         specialAttack.GetComponent<SpecialAttack>().EnableSpecialAttack();
     }
 
-    void SpawnCombatVFX()
+    void SpawnCombatVFX(string vfxName)
     {
-        GameObject combatVFXManagerInstance = Instantiate(combatVFXManager, this.transform.position, this.transform.rotation) as GameObject;
-        combatVFXManagerInstance.GetComponent<CombatVFXManager>().SetCombatVFXSpawn(this._shieldReturnRecoilKickSpawn);
-        combatVFXManagerInstance.GetComponent<CombatVFXManager>().triggerSpecialVFX();
+        switch (vfxName)
+        {
+            case "vfx_EarthernRise":
+                GameObject combatVFXManagerInstance = Instantiate(combatVFXManager, this.transform.position, this.transform.rotation) as GameObject;
+                combatVFXManagerInstance.GetComponent<CombatVFXManager>().SetCombatVFXSpawn(this._shieldReturnRecoilKickSpawn);
+                combatVFXManagerInstance.GetComponent<CombatVFXManager>().triggerSpecialVFX("vfx_EarthernRise");
+                return;
+            case "vfx_estonCombo_hit_connected":
+                GameObject combatVFXManagerInstance2 = Instantiate(combatVFXManager, this.transform.position, this.transform.rotation) as GameObject;
+                combatVFXManagerInstance2.GetComponent<CombatVFXManager>().SetCombatVFXSpawn(this._vfxPositionCombo1);
+                combatVFXManagerInstance2.GetComponent<CombatVFXManager>().triggerSpecialVFX("vfx_estonCombo_hit_connected");
+                break;
+            default:
+                break;
+        }
+        
     }
 
 
@@ -1493,7 +1507,7 @@ public class ThirdPersonMovement : MonoBehaviour
             }
         }
 
-        print("Current animation window time: " + animationWindow);
+        //print("Current animation window time: " + animationWindow);
     }
 
     void EngageCombatSlide()

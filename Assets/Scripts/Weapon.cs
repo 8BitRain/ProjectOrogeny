@@ -108,7 +108,7 @@ public class Weapon : MonoBehaviour
     {
         GameObject combatVFXManagerInstance = Instantiate(combatVFXManager, weaponTransform.position, weaponTransform.rotation) as GameObject;
         combatVFXManagerInstance.GetComponent<CombatVFXManager>().SetCombatVFXSpawn(weaponTransform);
-        combatVFXManagerInstance.GetComponent<CombatVFXManager>().triggerSpecialVFX();
+        combatVFXManagerInstance.GetComponent<CombatVFXManager>().triggerSpecialVFX("vfx_hit_connected");
     }
 
     public void ResetHitCounters()

@@ -7,7 +7,8 @@ using UnityEngine;
 
 public class CombatVFXManager : MonoBehaviour
 {
-    public GameObject specialAttackVFX;
+    //public GameObject specialAttackVFX;
+    public GameObject[] specialAttackVFX;
     public Transform specialAttackVFXSpawn;
     public GameObject postProcessingEFX;
     public float postProcessingEFXDuration;
@@ -60,23 +61,46 @@ public class CombatVFXManager : MonoBehaviour
             efx.weight = Mathf.Lerp(1,0, postProcessingTime);
         //}
     }
-    public void triggerSpecialVFX()
+    public void triggerSpecialVFX(string vfxName)
     {
-        if(specialAttackVFXSpawn !=  null)
+        print("VFXName: " + vfxName);
+        if(specialAttackVFXSpawn != null)
         {
-            instancedSpecialVFX = Instantiate(specialAttackVFX, specialAttackVFXSpawn.position, specialAttackVFXSpawn.rotation) as GameObject;
-            //This rotation is made for game objects that aren't already facing the correct direction. Should probably check for correct rotation here.
-            if(specialAttackVFX.name == "vfx_EarthernRise")
+            GameObject specialAttackVFXInstance = null;
+            for(int i = 0; i < specialAttackVFX.Length; i++)
             {
-                instancedSpecialVFX.transform.rotation = Quaternion.Euler(90,0,0);
+                print("Special Attack Name: " + specialAttackVFX[i].name);
+                if(specialAttackVFX[i].name == vfxName)
+                {
+                    specialAttackVFXInstance = specialAttackVFX[i].gameObject;
+                    print("Special Attack Assigned");
+                }    
             }
-            
-
-            if(enablePostProcessingEFX)
+            if(specialAttackVFXInstance != null)
             {
-                instancedPostProcessingEFX = Instantiate(postProcessingEFX, specialAttackVFXSpawn.position, specialAttackVFXSpawn.rotation) as GameObject;
+                instancedSpecialVFX = Instantiate(specialAttackVFXInstance, specialAttackVFXSpawn.position, specialAttackVFXSpawn.rotation) as GameObject;
+                print("instancedSpecialVFX Name: " + instancedSpecialVFX.name);
+                //This rotation is made for game objects that aren't already facing the correct direction. Should probably check for correct rotation here.
+                if(specialAttackVFXInstance.name == "vfx_EarthernRise")
+                {
+                    instancedSpecialVFX.transform.rotation = Quaternion.Euler(90,0,0);
+                }
+
+                if(specialAttackVFXInstance.name == "vfx_estonCombo_hit_connected")
+                {
+                    instancedSpecialVFX.transform.rotation = Quaternion.Euler(0,180,0);
+                    //Spawning at the player's hand plus 2 units in the z direction
+                    instancedSpecialVFX.transform.position += new Vector3(0,0,2);
+                }
+
                 
-            }    
+
+                if(enablePostProcessingEFX)
+                {
+                    instancedPostProcessingEFX = Instantiate(postProcessingEFX, specialAttackVFXSpawn.position, specialAttackVFXSpawn.rotation) as GameObject;
+                    
+                }    
+            }
         }
     }
 
