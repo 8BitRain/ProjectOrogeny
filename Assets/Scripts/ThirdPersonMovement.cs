@@ -145,7 +145,8 @@ public class ThirdPersonMovement : MonoBehaviour
     private bool kickThrownSpecialAttackInput = false;
 
     [Header("Combat Settings")]
-    public float combatSlideSpeed = 10.0f;
+    public float maxCombatSlideSpeed = 10.0f;
+    public float currentCombatSlideSpeed = 0;
     public float combatSlideFriction = 20;
     public bool combatForwardMomentum = false;
     public bool combatRecoilMomentum = false;
@@ -696,6 +697,7 @@ public class ThirdPersonMovement : MonoBehaviour
                     groundMeleeAttack1Input = false;
                     MeleeCombo1();
                     combatStateIndex = 3;
+                    return;
                 }
             }
 
@@ -1431,7 +1433,11 @@ public class ThirdPersonMovement : MonoBehaviour
 
         EngageCombatSlide();
         InitiateForwardMomentum();
-        combatSlideSpeed = 10.0f;
+        currentCombatSlideSpeed = maxCombatSlideSpeed;
+
+        //Reset animation window
+        startAnimationWindow = false;
+        animationWindow = 0;
     }
 
     void UpdateAnimationWindow()
@@ -1459,6 +1465,7 @@ public class ThirdPersonMovement : MonoBehaviour
                 //reset comboState to 0
                 combatStateIndex = 0;
                 startAnimationWindow = false;
+                DisengageCombatSlide();
             }
         }
 
@@ -1467,7 +1474,7 @@ public class ThirdPersonMovement : MonoBehaviour
             if(animatorStateInfo.normalizedTime >= .85 && animationWindow == 0)
             {
                 //Animation window exists for 1.5 seconds
-                animationWindow = 5f;
+                animationWindow = 1f;
                 startAnimationWindow = true;
             }
             
@@ -1483,6 +1490,7 @@ public class ThirdPersonMovement : MonoBehaviour
                 //reset comboState to 0
                 combatStateIndex = 0;
                 startAnimationWindow = false;
+                DisengageCombatSlide();
             }
         }
 
@@ -1491,7 +1499,7 @@ public class ThirdPersonMovement : MonoBehaviour
             if(animatorStateInfo.normalizedTime >= .56 && animationWindow == 0)
             {
                 //Animation window exists for 1.5 seconds
-                animationWindow = 5f;
+                animationWindow = .5f;
                 startAnimationWindow = true;
             }
             
@@ -1507,6 +1515,7 @@ public class ThirdPersonMovement : MonoBehaviour
                 //reset comboState to 0
                 combatStateIndex = 0;
                 startAnimationWindow = false;
+                DisengageCombatSlide();
             }
         }
 
@@ -1520,19 +1529,20 @@ public class ThirdPersonMovement : MonoBehaviour
 
     void DisengageCombatSlide()
     {
+        print("Combat Slide Disengaged");
         combatSlide = false;
     }
 
     void InitiateForwardMomentum()
     {
-        combatSlideSpeed = 10.0f;
+        currentCombatSlideSpeed = maxCombatSlideSpeed;
         this.combatRecoilMomentum = false;
         this.combatForwardMomentum = true;
     }
 
     void InitiateRecoilMomentum()
     {
-        combatSlideSpeed = 10.0f;
+        currentCombatSlideSpeed = maxCombatSlideSpeed;
         this.combatForwardMomentum = false;
         this.combatRecoilMomentum = true;
     }
@@ -1545,29 +1555,29 @@ public class ThirdPersonMovement : MonoBehaviour
             if(this.combatForwardMomentum)
             {
                 moveDir = transform.forward;
-                _controller.Move(moveDir.normalized * combatSlideSpeed * Time.deltaTime); 
+                _controller.Move(moveDir.normalized * currentCombatSlideSpeed * Time.deltaTime); 
             }
             if(this.combatRecoilMomentum)
             {
                 moveDir = -transform.forward;
-                _controller.Move(moveDir.normalized * combatSlideSpeed * Time.deltaTime); 
+                _controller.Move(moveDir.normalized * currentCombatSlideSpeed * Time.deltaTime); 
                 print("Moving backwards");
-                print("Current CombatSlideSpeed: " + combatSlideSpeed);
+                print("Current currentCombatSlideSpeed: " + currentCombatSlideSpeed);
             }
             
             //Animation specific logic to control when combatRecoilForwardMomentum and backwardMomentum end
             
             //Controls the glide acceleration/decelleration
-            if(combatSlideSpeed > 0)
+            if(currentCombatSlideSpeed > 0)
             {
-                combatSlideSpeed = combatSlideSpeed - (combatSlideFriction * Time.deltaTime);
+                currentCombatSlideSpeed = currentCombatSlideSpeed - (combatSlideFriction * Time.deltaTime);
             }
-            /*if(combatSlideSpeed < 0)
+            /*if(currentCombatSlideSpeed < 0)
             {
                 //resetting speed to default. If you want a more natural acceleration, allow speed to = 0.
                 if(combatForwardMomentum)
                 {
-                    this.combatSlideSpeed = 10.0f;
+                    this.currentCombatSlideSpeed = maxCombatSlideSpeed;
                     this.combatForwardMomentum = false;
                 }
 
@@ -1576,7 +1586,7 @@ public class ThirdPersonMovement : MonoBehaviour
                     print("combat recoil activated");
                     this.combatSlide = false;
                     this.combatRecoilMomentum = false;
-                    this.combatSlideSpeed = 10.0f;
+                    this.currentCombatSlideSpeed = maxCombatSlideSpeed;
                 }
                 
 
