@@ -1426,6 +1426,9 @@ public class ThirdPersonMovement : MonoBehaviour
     void MeleeCombo1()
     {
         //moveCharacter = false;
+        //Face direction player is aiming.
+        transform.LookAt(transform.position + cam.transform.forward);
+
         EngageCombatSlide();
         InitiateForwardMomentum();
         combatSlideSpeed = 10.0f;

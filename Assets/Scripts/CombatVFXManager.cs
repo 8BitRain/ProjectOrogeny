@@ -88,9 +88,12 @@ public class CombatVFXManager : MonoBehaviour
 
                 if(specialAttackVFXInstance.name == "vfx_estonCombo_hit_connected")
                 {
-                    instancedSpecialVFX.transform.rotation = Quaternion.Euler(0,180,0);
+                    
                     //Spawning at the player's hand plus 2 units in the z direction
-                    instancedSpecialVFX.transform.position += new Vector3(0,0,2);
+                    instancedSpecialVFX.transform.position += transform.forward;
+                    //instancedSpecialVFX.transform.rotation = Quaternion.Euler(0,180,0);
+                    instancedSpecialVFX.transform.LookAt(transform.position + Camera.main.transform.forward);
+                    instancedSpecialVFX.transform.rotation = Quaternion.Euler(0,instancedSpecialVFX.transform.eulerAngles.y,0);
                 }
 
                 
