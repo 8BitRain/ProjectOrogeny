@@ -175,6 +175,7 @@ public class ThirdPersonMovement : MonoBehaviour
     public Transform Orogene;
 
     private bool canMove = true;
+    private bool canPlayerInputMove = true;
     
     /* MESSAGE: CanRotate: This variable is to help define when the player should rotate. Use this tor situations where you want the player
     *  to continue moving, but lock this scripts control of the rotation. I'm doing this so I can let the ThirdPersonCamera Script Drive Camera interaction
@@ -296,7 +297,12 @@ public class ThirdPersonMovement : MonoBehaviour
             //Player x and y movement OLD Unity Input Manager
             /*float horizontal = Input.GetAxisRaw("Horizontal");
             float veritical = Input.GetAxisRaw("Vertical");*/
-            Vector3 direction = new Vector3(movementInput.x, 0, movementInput.y).normalized;
+            Vector3 direction = new Vector3(0,0,0);
+            if(canPlayerInputMove)
+            {
+                direction = new Vector3(movementInput.x, 0, movementInput.y).normalized;
+            }
+            
 
             //Grounded status
             //_isGrounded = Physics.CheckSphere(_groundChecker.position, GroundDistance, Ground, QueryTriggerInteraction.Ignore);
@@ -1260,9 +1266,9 @@ public class ThirdPersonMovement : MonoBehaviour
          animator.SetBool("WallRunning", false);
         _isWallRunning = false;
     }
-    void toggleMovement(bool toggle)
+    void togglePlayerMovementControl(bool toggle)
     {
-        canMove = toggle;
+        canPlayerInputMove = toggle;
     }
 
     //New Unity Input Management.
@@ -1474,7 +1480,7 @@ public class ThirdPersonMovement : MonoBehaviour
             if(animatorStateInfo.normalizedTime >= .85 && animationWindow == 0)
             {
                 //Animation window exists for 1.5 seconds
-                animationWindow = 1f;
+                animationWindow = .5f;
                 startAnimationWindow = true;
             }
             
@@ -1525,12 +1531,20 @@ public class ThirdPersonMovement : MonoBehaviour
     void EngageCombatSlide()
     {
         combatSlide = true;
+
+        //TODO: Experiment with toggling player control of movement off. 
+        togglePlayerMovementControl(false);
+        
     }
 
     void DisengageCombatSlide()
     {
         print("Combat Slide Disengaged");
         combatSlide = false;
+
+        //TODO: Experiment with toggling player control of movement off. 
+        togglePlayerMovementControl(true);
+        
     }
 
     void InitiateForwardMomentum()
