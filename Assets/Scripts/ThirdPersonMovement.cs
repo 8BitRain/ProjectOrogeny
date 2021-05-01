@@ -150,6 +150,8 @@ public class ThirdPersonMovement : MonoBehaviour
     public float combatSlideFriction = 20;
     public bool combatForwardMomentum = false;
     public bool combatRecoilMomentum = false;
+
+    public HitBox[] hitBoxes;
     private bool combatSlide = false;
 
     private float combatStateIndex = 0;
@@ -1528,15 +1530,24 @@ public class ThirdPersonMovement : MonoBehaviour
         //print("Current animation window time: " + animationWindow);
     }
 
+    //TODO: Refactor this name. This function is quickly becoming an initializer for combat
     void EngageCombatSlide()
     {
         combatSlide = true;
 
         //TODO: Experiment with toggling player control of movement off. 
         togglePlayerMovementControl(false);
+
+        //turn hit boxes on.
+        foreach (var hitBox in hitBoxes)
+        {
+            hitBox.ActivateHitBox();
+        }
+
         
     }
 
+    //TODO: Refactor this name. This function is quickly becoming a terminator for combat
     void DisengageCombatSlide()
     {
         print("Combat Slide Disengaged");
@@ -1544,6 +1555,12 @@ public class ThirdPersonMovement : MonoBehaviour
 
         //TODO: Experiment with toggling player control of movement off. 
         togglePlayerMovementControl(true);
+
+        //turn hit boxes off.
+        foreach (var hitBox in hitBoxes)
+        {
+            hitBox.DeactivateHitBox();
+        }
         
     }
 

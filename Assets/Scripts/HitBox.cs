@@ -43,6 +43,16 @@ public class HitBox : MonoBehaviour
         }
     }
 
+    public void ActivateHitBox()
+    {
+        this.GetComponent<BoxCollider>().enabled = true;
+    }
+
+    public void DeactivateHitBox()
+    {
+        this.GetComponent<BoxCollider>().enabled = false;
+    } 
+
     void OnDrawGizmos()
     {
         Gizmos.color = new Color(1, 0, 0, 1f);

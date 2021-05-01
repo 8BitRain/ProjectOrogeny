@@ -72,6 +72,10 @@ public class CombatAction : MonoBehaviour
         Debug.Log("Combat: " + target.name + " applied a force of " + force + " in direction " + (-target.transform.forward));
 
         //Experiment hit stun, turning off agent so it can fly?
+        //This experiment works! When we disabel the nav mesh, we can send the target flying. However, the "Bladeclubber" automatically resets its navMeshAgent to enabled
+        //after it has exited combat. In order to have the desired effect, we should gate a period of time where the navMeshAgent can not be reeanbled. 
+
+        //A stun timer method would work well. 
         target.GetComponentInParent<NavMeshAgent>().enabled = false;
     }
 
