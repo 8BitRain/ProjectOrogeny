@@ -41,6 +41,7 @@ public class CombatAction : MonoBehaviour
             if(currentHitCount < hitCount)
             {
                 DealDamage(this.damage, this.target);
+                DealPoiseDamage(this.damage, this.target);
                 AddImpact(this.impactForce, this.target);
                 currentHitCount++;
                 return;
@@ -64,6 +65,13 @@ public class CombatAction : MonoBehaviour
         }*/
         targetHealthReference.SetHealth(targetHealthReference.GetHealth() - damage);
         Debug.Log("Combat: " + target.name + " dealt " + damage + " damage");
+    }
+
+    void DealPoiseDamage(float damage, GameObject target)
+    {
+        PoiseMeter targetPoiseReference = target.GetComponentInParent<Bladeclubber>().poiseMeter;
+        targetPoiseReference.SetPoise(targetPoiseReference.GetPoise() - damage);
+        Debug.Log("Combat: " + target.name + " dealt " + damage + " poise damage");
     }
 
     void AddImpact(float force, GameObject target)

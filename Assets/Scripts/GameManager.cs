@@ -132,6 +132,7 @@ public class GameManager : MonoBehaviour
             if(spawnedPlayers[0] != null)
             {
                 displayEnemyHealthBar();
+                displayEnemyPoiseBar();
             }      
         }
 
@@ -210,4 +211,16 @@ public class GameManager : MonoBehaviour
             enemyHealthBar.PositionEnemyHealthBar(spawnedPlayers[0].GetComponentInChildren<ThirdPersonMovement>().cam.GetComponent<Camera>(), enemy, spawnedPlayers[0].GetComponentInChildren<ThirdPersonMovement>().transform);
         }
     }
+
+    public void displayEnemyPoiseBar()
+    {
+        foreach (Transform enemy in enemies)
+        {
+            PoiseMeter enemyPoiseMeter = enemy.GetComponent<Bladeclubber>().poiseMeter;
+            RectTransform enemyPoiseMeterRT = enemyPoiseMeter.gameObject.GetComponent<RectTransform>();
+            enemyPoiseMeter.PositionEnemyPoiseMeter(spawnedPlayers[0].GetComponentInChildren<ThirdPersonMovement>().cam.GetComponent<Camera>(), enemy, spawnedPlayers[0].GetComponentInChildren<ThirdPersonMovement>().transform);
+        }
+    }
+
+
 }

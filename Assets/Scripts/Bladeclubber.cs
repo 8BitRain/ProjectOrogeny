@@ -26,6 +26,7 @@ public class Bladeclubber : MonoBehaviour
     public float combatTimer = 0;
 
     public HealthBar healthBar;
+    public PoiseMeter poiseMeter;
     // Start is called before the first frame update
     void Start()
     {
