@@ -11,9 +11,49 @@ public class PoiseMeter : MonoBehaviour
     private GameManager gameManager;
     private Camera[] playerCameras;
 
+    private float refillPoiseTimer = 3.0f;
+    private bool startRefillPoiseTimer = false;
+    private bool refillGauge = false;
+
+    void Update()
+    {
+        if(startRefillPoiseTimer)
+        {
+            UpdatePoiseTimer();
+        }
+
+        if(refillGauge)
+        {
+            RefillPoiseMeter();
+        }
+    }
+
+    void UpdatePoiseTimer()
+    {
+        print("UI: Updating Pose Timer: " + refillPoiseTimer);
+        if(startRefillPoiseTimer)
+        {
+            refillPoiseTimer -= Time.deltaTime;
+        }
+
+        if(refillPoiseTimer <= 0)
+        {
+            refillPoiseTimer = 3.0f;
+            refillGauge = true;
+            startRefillPoiseTimer = false;
+        }
+
+    }
+
     // Start is called before the first frame update
     public void SetPoise(float poise)
     {
+        if(poise < GetMaxPoise())
+        {
+            this.startRefillPoiseTimer = true;
+            refillPoiseTimer = 3.0f;
+        }
+        this.refillGauge = false;
         slider.value = poise;
     }
 
@@ -23,9 +63,29 @@ public class PoiseMeter : MonoBehaviour
         slider.value = poise;
     }
 
+    public float GetMaxPoise()
+    {
+        return slider.maxValue;
+    }
+
     public float GetPoise()
     {
         return slider.value;
+    }
+
+    public void RefillPoiseMeter()
+    {
+        if(GetPoise() < GetMaxPoise())
+        {
+            //SetPoise(GetPoise() + 5/60);
+            Debug.Log("UI: Refilling Poise Meter: " + GetPoise() + 5.0f/60 + "/" + GetMaxPoise());
+            slider.value = GetPoise() + (5.0f/60);
+        }
+
+        if(GetPoise() >= GetMaxPoise())
+        {
+            SetPoise(GetMaxPoise());
+        }
     }
 
     //Update enemy poise bar

@@ -76,15 +76,26 @@ public class CombatAction : MonoBehaviour
 
     void AddImpact(float force, GameObject target)
     {
+
+        //This Force pattern knocks the enemy back and upwards
+        //TODO: Add conditional logic to switch how the force vector is applied. For example, a floating type that has the enemy hovering in the air.
         target.GetComponentInParent<Rigidbody>().AddForce((-target.transform.forward + target.transform.up) * force);
         Debug.Log("Combat: " + target.name + " applied a force of " + force + " in direction " + (-target.transform.forward));
+
 
         //Experiment hit stun, turning off agent so it can fly?
         //This experiment works! When we disabel the nav mesh, we can send the target flying. However, the "Bladeclubber" automatically resets its navMeshAgent to enabled
         //after it has exited combat. In order to have the desired effect, we should gate a period of time where the navMeshAgent can not be reeanbled. 
 
-        //A stun timer method would work well. 
-        target.GetComponentInParent<NavMeshAgent>().enabled = false;
+        //Basing offNaveMesh interaction on Poisemeter being broken. 
+        PoiseMeter targetPoiseReference = target.GetComponentInParent<Bladeclubber>().poiseMeter;
+        if(targetPoiseReference.GetPoise() <= 0)
+        {
+             //A stun timer method would work well. 
+            target.GetComponentInParent<NavMeshAgent>().enabled = false;
+        }
+
+
     }
 
     public void Initialize(float damage, float impactForce, AnimatorStateInfo animatorStateInfo, GameObject target, GameObject combatVFX, int hitCount)
