@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.InputSystem;
 using UnityEngine;
 
 public class HitBox : MonoBehaviour
@@ -11,6 +12,8 @@ public class HitBox : MonoBehaviour
     
     public CombatType combatType;
     public enum CombatType {Light, Medium, Heavy, Misc};
+
+    private bool rumble = true;
 
 
     // Start is called before the first frame update
@@ -31,13 +34,17 @@ public class HitBox : MonoBehaviour
         {
             if(layer == (layer | (1 << other.gameObject.layer)))
             {
-                Debug.Log("Combat: Eston's fists Collided with Enemy: " + other.gameObject.name);
+                Debug.Log("Combat: Eston's fists Collided with Enemy: " + other.gameObject.name + "at: " + Time.time);
                 if(this.combatType == CombatType.Light)
                 {
                     Debug.Log("Combat: Light Attack triggered");
                     //CombatAction combatActionSpecifics = new CombatAction(10, 10, Agent.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0), other.gameObject, null, 1);
                     GameObject combatActionInstance = Instantiate(combatAction);
                     combatActionInstance.GetComponent<CombatAction>().Initialize(5f, 1000, Agent.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0), other.gameObject, null, 1);
+
+                    Gamepad.current.SetMotorSpeeds(0.25f,0.55f);
+                    StartCoroutine(RumbleCountdown(.2f));
+                    rumble = false;
                 }
             }
         }
@@ -63,5 +70,18 @@ public class HitBox : MonoBehaviour
         }
         
         //Gizmos.DrawWireCube(this.transform.position, new Vector3(2,2,2));
+    }
+
+    IEnumerator RumbleCountdown (float seconds) 
+    {
+        int counter = 1;
+        while (counter > 0) {
+            yield return new WaitForSeconds (seconds);
+            counter--;
+        }
+        Gamepad.current.SetMotorSpeeds(0,0);
+        rumble = true;
+        //Gamepad.current.PauseHaptics();
+        //Gamepad.current.ResetHaptics();
     }
 }

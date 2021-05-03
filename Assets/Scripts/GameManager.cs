@@ -74,6 +74,9 @@ public class GameManager : MonoBehaviour
 
                 //Setup Player 1 UI
                 setupUI(1);
+
+                Gamepad.current.SetMotorSpeeds(0.75f, 0.75f);
+                StartCoroutine(RumbleCountdown(.5f));
             }
             //Loading Player 2
             if(InputUser.all.Count == 2 && spawnedPlayers[1] == null)
@@ -220,6 +223,17 @@ public class GameManager : MonoBehaviour
             RectTransform enemyPoiseMeterRT = enemyPoiseMeter.gameObject.GetComponent<RectTransform>();
             enemyPoiseMeter.PositionEnemyPoiseMeter(spawnedPlayers[0].GetComponentInChildren<ThirdPersonMovement>().cam.GetComponent<Camera>(), enemy, spawnedPlayers[0].GetComponentInChildren<ThirdPersonMovement>().transform);
         }
+    }
+
+    IEnumerator RumbleCountdown (float seconds) 
+    {
+        int counter = 1;
+        while (counter > 0) {
+            yield return new WaitForSeconds (seconds);
+            counter--;
+        }
+        Gamepad.current.PauseHaptics();
+        Gamepad.current.ResetHaptics();
     }
 
 

@@ -12,6 +12,7 @@ public class PoiseMeter : MonoBehaviour
     private Camera[] playerCameras;
 
     private float refillPoiseTimer = 3.0f;
+    private float _poiseCooldownTime = 3.0f;
     private bool startRefillPoiseTimer = false;
     private bool refillGauge = false;
 
@@ -28,30 +29,13 @@ public class PoiseMeter : MonoBehaviour
         }
     }
 
-    void UpdatePoiseTimer()
-    {
-        print("UI: Updating Pose Timer: " + refillPoiseTimer);
-        if(startRefillPoiseTimer)
-        {
-            refillPoiseTimer -= Time.deltaTime;
-        }
-
-        if(refillPoiseTimer <= 0)
-        {
-            refillPoiseTimer = 3.0f;
-            refillGauge = true;
-            startRefillPoiseTimer = false;
-        }
-
-    }
-
     // Start is called before the first frame update
     public void SetPoise(float poise)
     {
         if(poise < GetMaxPoise())
         {
             this.startRefillPoiseTimer = true;
-            refillPoiseTimer = 3.0f;
+            refillPoiseTimer = _poiseCooldownTime;
         }
         this.refillGauge = false;
         slider.value = poise;
@@ -86,6 +70,28 @@ public class PoiseMeter : MonoBehaviour
         {
             SetPoise(GetMaxPoise());
         }
+    }
+
+    public void SetPoiseCooldownTime(float time)
+    {
+        this._poiseCooldownTime = time;
+    }
+
+    void UpdatePoiseTimer()
+    {
+        print("UI: Updating Pose Timer: " + refillPoiseTimer);
+        if(startRefillPoiseTimer)
+        {
+            refillPoiseTimer -= Time.deltaTime;
+        }
+
+        if(refillPoiseTimer <= 0)
+        {
+            refillPoiseTimer = _poiseCooldownTime;
+            refillGauge = true;
+            startRefillPoiseTimer = false;
+        }
+
     }
 
     //Update enemy poise bar

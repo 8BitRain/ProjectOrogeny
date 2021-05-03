@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.AI;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Users;
 using UnityEngine;
 
 public class CombatAction : MonoBehaviour
@@ -30,7 +32,7 @@ public class CombatAction : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        currentHitCount = 0;
+        //currentHitCount = 0;
     }
 
     // Update is called once per frame
@@ -49,6 +51,7 @@ public class CombatAction : MonoBehaviour
 
             if(currentHitCount == hitCount)
             {
+                Debug.Log("Destroy " + this.gameObject.name);
                 Destroy(this.gameObject);
             }
         }
@@ -64,7 +67,7 @@ public class CombatAction : MonoBehaviour
             targetHealthReference = target.GetComponentInParent<HealthBar>();
         }*/
         targetHealthReference.SetHealth(targetHealthReference.GetHealth() - damage);
-        Debug.Log("Combat: " + target.name + " dealt " + damage + " damage");
+        Debug.Log("Combat: " + target.name + " dealt " + damage + " damage");      
     }
 
     void DealPoiseDamage(float damage, GameObject target)
@@ -76,13 +79,6 @@ public class CombatAction : MonoBehaviour
 
     void AddImpact(float force, GameObject target)
     {
-
-        //This Force pattern knocks the enemy back and upwards
-        //TODO: Add conditional logic to switch how the force vector is applied. For example, a floating type that has the enemy hovering in the air.
-        target.GetComponentInParent<Rigidbody>().AddForce((-target.transform.forward + target.transform.up) * force);
-        Debug.Log("Combat: " + target.name + " applied a force of " + force + " in direction " + (-target.transform.forward));
-
-
         //Experiment hit stun, turning off agent so it can fly?
         //This experiment works! When we disabel the nav mesh, we can send the target flying. However, the "Bladeclubber" automatically resets its navMeshAgent to enabled
         //after it has exited combat. In order to have the desired effect, we should gate a period of time where the navMeshAgent can not be reeanbled. 
@@ -91,8 +87,25 @@ public class CombatAction : MonoBehaviour
         PoiseMeter targetPoiseReference = target.GetComponentInParent<Bladeclubber>().poiseMeter;
         if(targetPoiseReference.GetPoise() <= 0)
         {
+            //This Force pattern knocks the enemy back and upwards
+            //TODO: Add conditional logic to switch how the force vector is applied. For example, a floating type that has the enemy hovering in the air.
+            target.GetComponentInParent<Rigidbody>().AddForce((-target.transform.forward + target.transform.up) * force);
+            Debug.Log("Combat: " + target.name + " applied a force of " + force + " in direction " + (-target.transform.forward));
+
              //A stun timer method would work well. 
             target.GetComponentInParent<NavMeshAgent>().enabled = false;
+        }
+        else
+        {
+            //target.GetComponentInParent<Rigidbody>().AddForce((-target.transform.forward) * force/10.0f);
+
+            //Shake the target
+            target.GetComponentInParent<NavMeshAgent>().enabled = false;
+            float shakeFactor = Mathf.Sin(Time.time * 30f) * 1;
+            target.transform.position = new Vector3(target.transform.position.x + shakeFactor , target.transform.position.y +shakeFactor, target.transform.position.z);
+            target.GetComponentInParent<NavMeshAgent>().enabled = true;
+
+            Debug.Log("Combat: " + target.name + " applied a force of " + force + " in direction " + (-target.transform.forward));
         }
 
 
@@ -109,6 +122,5 @@ public class CombatAction : MonoBehaviour
         this.currentHitCount = 0;
         this.initialized = true;
     }
-
 
 }
