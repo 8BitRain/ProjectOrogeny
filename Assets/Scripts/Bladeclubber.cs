@@ -143,7 +143,8 @@ public class Bladeclubber : MonoBehaviour
             {
                 target.GetComponent<ThirdPersonMovement>().SetCombatState(false, null);
             }
-            navMeshAgent.enabled = true;
+            //TODO: Enable this navmesh to have the agent reset to the track
+            //navMeshAgent.enabled = true;
             //this.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
         }
 

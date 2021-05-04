@@ -2683,7 +2683,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 991437342543889560}
-  m_LocalRotation: {x: 0.05154675, y: 0.000000002147939, z: -1.10866656e-10, w: 0.9986706}
+  m_LocalRotation: {x: 0.051546745, y: -0.000000002147938, z: 1.108666e-10, w: 0.9986706}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -3295,8 +3295,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1513510514445309743}
-  m_LocalRotation: {x: 0.035190895, y: -0.000000030763285, z: 0.0000000010832585,
-    w: 0.99938065}
+  m_LocalRotation: {x: 0.035190895, y: -0.00000003162307, z: 0.0000000011135339, w: 0.99938065}
   m_LocalPosition: {x: 1.056, y: 4.306695, z: -8.953012}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -17491,6 +17490,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: HitBox
       objectReference: {fileID: 0}
+    - target: {fileID: 6653263823454569719, guid: 10cf11ed3527e4d47be6bc24b3cd57be,
+        type: 3}
+      propertyPath: Agent
+      value: 
+      objectReference: {fileID: 3697220149502421911}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 10cf11ed3527e4d47be6bc24b3cd57be, type: 3}
 --- !u!114 &1138032005541890613 stripped
