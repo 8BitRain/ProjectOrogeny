@@ -1124,7 +1124,7 @@ public class ThirdPersonMovement : MonoBehaviour
                     animator.SetBool("Jumping", false);
                     animator.SetBool("Falling", true);
                 }
-                animator.Play("Grounded.freeRun", 0, 0.5f);
+                animator.Play("Grounded.sideDodgeLeft", 0, 0.5f);
                 animator.speed = 0;
                 dashInput = false;
                 dashSpeed = dashSpeed - (dashFriction * Time.deltaTime);

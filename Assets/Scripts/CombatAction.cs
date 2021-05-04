@@ -74,7 +74,10 @@ public class CombatAction : MonoBehaviour
             targetHealthReference = target.GetComponentInParent<HealthBar>();
         }*/
         targetHealthReference.SetHealth(targetHealthReference.GetHealth() - damage);
-        Debug.Log("Combat: " + target.name + " dealt " + damage + " damage");      
+        Debug.Log("Combat: " + target.name + " dealt " + damage + " damage"); 
+
+        //shake the target
+        target.GetComponentInParent<Bladeclubber>().HandleHitStun();    
     }
 
     void DealPoiseDamage(float damage, GameObject target)
@@ -97,37 +100,11 @@ public class CombatAction : MonoBehaviour
             //This Force pattern knocks the enemy back and upwards
             //TODO: Add conditional logic to switch how the force vector is applied. For example, a floating type that has the enemy hovering in the air.
             target.GetComponentInParent<Rigidbody>().AddForce((-target.transform.forward + target.transform.up) * force);
-            Debug.Log("Combat: " + target.name + " applied a force of " + force + " in direction " + (-target.transform.forward));
+            Debug.Log("Combat: " + target.name + " applied a force of " + force + " in direction " + (-target.transform.forward) + target.transform.up);
 
              //A stun timer method would work well. 
             target.GetComponentInParent<NavMeshAgent>().enabled = false;
         }
-        else
-        {
-            //target.GetComponentInParent<Rigidbody>().AddForce((-target.transform.forward) * force/10.0f);
-
-            //Shake the target
-            Debug.Log("Combat: Poise UP add some hitstun shake");
-            Debug.Log("Combat: NavMesh Value: " + target.GetComponentInParent<NavMeshAgent>().enabled);
-            target.GetComponentInParent<NavMeshAgent>().enabled = false;
-            Debug.Log("Combat: NavMesh Value: " + target.GetComponentInParent<NavMeshAgent>().enabled);
-            float shakeFactor = Mathf.Sin(Time.time * 30f) * 2;
-            
-            //parent transform
-            Transform parentTransform = target.GetComponentInParent<Transform>();
-            Vector3 objectShakeVector = new Vector3(parentTransform.transform.position.x + shakeFactor , parentTransform.transform.position.y + shakeFactor, parentTransform.transform.position.z);
-            parentTransform.transform.position = objectShakeVector;
-            //target.transform.position = new Vector3(0,0,0);
-            
-            //target.transform.position = new Vector3(target.transform.position.x + shakeFactor, target.transform.position.y + shakeFactor, target.transform.position.z);
-
-            //target.GetComponentInParent<NavMeshAgent>().enabled = true;
-
-            Debug.Log("Combat: " + target.name + " applied a force of " + force + " in direction " + (-target.transform.forward));
-            Debug.Log("Combat: Shake Factor" + shakeFactor);
-        }
-
-
     }
 
     public void Initialize(float damage, float impactForce, AnimatorStateInfo animatorStateInfo, GameObject target, GameObject combatVFX, int hitCount)

@@ -1504,7 +1504,7 @@ MonoBehaviour:
   dashSpeed: 20
   maxSpeed: 12
   dashFriction: 0.025
-  glideAfterImage: {fileID: 2264488335221938838, guid: cef06634d039d440b9ffc5954c79c4f6,
+  glideAfterImage: {fileID: 8672226337225613809, guid: 122170cf38f064ed3ba192577be32f0f,
     type: 3}
   _groundChecker: {fileID: 1752734369801175066}
   GroundDistance: 0.2
@@ -3295,7 +3295,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1513510514445309743}
-  m_LocalRotation: {x: 0.035190895, y: -0.00000003162307, z: 0.0000000011135339, w: 0.99938065}
+  m_LocalRotation: {x: 0.035190895, y: 0.000000030763285, z: -0.0000000010832585,
+    w: 0.99938065}
   m_LocalPosition: {x: 1.056, y: 4.306695, z: -8.953012}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -10990,7 +10991,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6279922386538411655}
-  m_LocalRotation: {x: 0.03337291, y: -0.000000017330624, z: 5.7869576e-10, w: 0.999443}
+  m_LocalRotation: {x: 0.03337291, y: 0.000000017330626, z: -5.786958e-10, w: 0.999443}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

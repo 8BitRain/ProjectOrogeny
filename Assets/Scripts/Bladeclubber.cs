@@ -273,4 +273,35 @@ public class Bladeclubber : MonoBehaviour
         Debug.Log("HitBoxDisabled");
         hitBoxEnabled = false;
     }
+
+    public void HandleHitStun()
+    {
+        //Shake the target
+        Debug.Log("Combat: Poise UP add some hitstun shake");
+        Debug.Log("Combat: NavMesh Value: " + transform.GetComponent<NavMeshAgent>().enabled);
+        transform.GetComponent<NavMeshAgent>().enabled = false;
+        Debug.Log("Combat: NavMesh Value: " + transform.GetComponent<NavMeshAgent>().enabled);
+
+        StartCoroutine(HitStunEnumerator(10));
+
+
+    }
+
+    IEnumerator HitStunEnumerator (int frames) 
+    {
+        int count = frames;
+        while (count > 0) {
+            float shakeFactor = Mathf.Sin(Time.time * 2f) * .1f;
+            Debug.Log("HitStun: " + transform.name + " Frame: " + count + " Timestamp: " + Time.time);
+            Vector3 objectShakeVector = new Vector3(transform.transform.position.x + shakeFactor , transform.transform.position.y + shakeFactor, transform.transform.position.z);
+            transform.transform.position = objectShakeVector;
+            Debug.Log("HitStun: Shake vector: " + objectShakeVector);
+            count--;
+        }
+        transform.GetComponent<NavMeshAgent>().enabled = true;
+
+        yield return null;
+
+
+    }
 }
