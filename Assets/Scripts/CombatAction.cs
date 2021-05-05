@@ -10,6 +10,7 @@ public class CombatAction : MonoBehaviour
     public float damage;
     public float impactForce;
     public AnimatorStateInfo animatorStateInfo;
+    public GameObject wielder;
     public GameObject target;
     public GameObject combatVFX;
     public int hitCount;
@@ -119,15 +120,18 @@ public class CombatAction : MonoBehaviour
         if(targetPoiseReference.GetPoise() <= 0)
         {
             Debug.Log("Combat: Floating Target");
-            target.GetComponentInParent<Bladeclubber>().HandleFloatState();
+            GameObject targetReference = target.GetComponentInParent<Transform>().gameObject;
+            wielder.GetComponent<ThirdPersonMovement>().EngageDynamicCameraTargetFloating(targetReference);
+            target.GetComponentInParent<Bladeclubber>().HandleFloatState(wielder);
         }
     }
 
-    public void Initialize(float damage, float impactForce, AnimatorStateInfo animatorStateInfo, GameObject target, GameObject combatVFX, int hitCount)
+    public void Initialize(float damage, float impactForce, AnimatorStateInfo animatorStateInfo, GameObject wielder, GameObject target, GameObject combatVFX, int hitCount)
     {
         this.damage = damage;
         this.impactForce = impactForce;
         this.animatorStateInfo = animatorStateInfo;
+        this.wielder = wielder;
         this.target = target;
         this.combatVFX = combatVFX;
         this.hitCount = hitCount;

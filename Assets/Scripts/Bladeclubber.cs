@@ -307,7 +307,7 @@ public class Bladeclubber : MonoBehaviour
 
     }
 
-    public void HandleFloatState()
+    public void HandleFloatState(GameObject aggresor)
     {
         Debug.Log("Combat: Floating Target");
  
@@ -315,11 +315,11 @@ public class Bladeclubber : MonoBehaviour
         //throwing in if block to limit accidental triggers
         if(!_floatState)
         {
-            StartCoroutine(FloatStateEnumerator(7));
+            StartCoroutine(FloatStateEnumerator(7, aggresor.GetComponent<ThirdPersonMovement>()));
         }
     }
 
-    IEnumerator FloatStateEnumerator (float time) 
+    IEnumerator FloatStateEnumerator (float time, ThirdPersonMovement aggresor) 
     {
         _floatState = true;
 
@@ -369,6 +369,8 @@ public class Bladeclubber : MonoBehaviour
         
         transform.GetComponent<NavMeshAgent>().enabled = true;
         _floatState = false;
+
+        aggresor.DisengageDynamicCameraTargetFloating();
 
 
     }

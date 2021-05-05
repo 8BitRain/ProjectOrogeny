@@ -40,7 +40,7 @@ public class HitBox : MonoBehaviour
                     Debug.Log("Combat: Light Attack triggered");
                     //CombatAction combatActionSpecifics = new CombatAction(10, 10, Agent.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0), other.gameObject, null, 1);
                     GameObject combatActionInstance = Instantiate(combatAction);
-                    combatActionInstance.GetComponent<CombatAction>().Initialize(5f, 1000, Agent.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0), other.gameObject, null, 1);
+                    combatActionInstance.GetComponent<CombatAction>().Initialize(5f, 1000, Agent.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0), Agent.gameObject, other.gameObject, null, 1);
 
                     Gamepad.current.SetMotorSpeeds(0.25f,0.55f);
                     StartCoroutine(RumbleCountdown(.2f));

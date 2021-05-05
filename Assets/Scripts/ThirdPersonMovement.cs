@@ -118,6 +118,7 @@ public class ThirdPersonMovement : MonoBehaviour
     public GameObject aimReticle;
     public GameObject freeLookCamera;
     public GameObject lockOnCamera;
+    public GameObject dynamicCameraFloatingTarget;
     private bool lockOnInput = false;
     private bool targetSwitchRightInput = false;
     private bool targetSwitchLeftInput = false;
@@ -1697,6 +1698,28 @@ public class ThirdPersonMovement : MonoBehaviour
     public bool GetIframe()
     {
         return iframe;
+    }
+
+    public void EngageDynamicCameraTargetFloating(GameObject target)
+    {
+        freeLookCamera.SetActive(false);
+        lockOnCamera.SetActive(false);
+
+        CinemachineTargetGroup targetGroup = dynamicCameraFloatingTarget.GetComponentInChildren<CinemachineTargetGroup>();
+        targetGroup.AddMember(this.transform, 1, 2);
+        targetGroup.AddMember(target.transform, 1, 2);
+
+        dynamicCameraFloatingTarget.SetActive(true);
+
+    }
+
+    public void DisengageDynamicCameraTargetFloating()
+    {
+        dynamicCameraFloatingTarget.SetActive(false);
+        freeLookCamera.SetActive(true);
+        lockOnCamera.SetActive(false);
+        
+
     }
     
 }
