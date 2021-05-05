@@ -27,6 +27,8 @@ public class Bladeclubber : MonoBehaviour
 
     public HealthBar healthBar;
     public PoiseMeter poiseMeter;
+
+    private bool _floatState = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -45,21 +47,21 @@ public class Bladeclubber : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(target == null)
+        if(!_floatState)
         {
-            AssignTarget();
-        }
+            if(target == null)
+            {
+                AssignTarget();
+            }
 
-        if(!this.animator.GetBool("Attacking"))
-        {
-            SeekPlayer();   
-        }
-        
+            if(!this.animator.GetBool("Attacking"))
+            {
+                SeekPlayer();   
+            }
+            
 
-        EngageCombat();
-
-
-        
+            EngageCombat();
+        } 
     }
 
     void SeekPlayer()
@@ -304,4 +306,71 @@ public class Bladeclubber : MonoBehaviour
 
 
     }
+
+    public void HandleFloatState()
+    {
+        Debug.Log("Combat: Floating Target");
+ 
+        transform.GetComponent<NavMeshAgent>().enabled = false;
+        //throwing in if block to limit accidental triggers
+        if(!_floatState)
+        {
+            StartCoroutine(FloatStateEnumerator(7));
+        }
+    }
+
+    IEnumerator FloatStateEnumerator (float time) 
+    {
+        _floatState = true;
+
+        Vector3 startingPos  = transform.position + (Vector3.up * 5);
+        Vector3 finalPos = transform.position + (Vector3.up * 15);
+        float elapsedTime = 0;
+        
+        Debug.Log("Combat: Floating Target");
+
+        //knock the target up.
+        Debug.Log("Combat: Float Force " + 300);
+        transform.GetComponent<Rigidbody>().useGravity = false;
+        transform.GetComponent<Rigidbody>().isKinematic = true;
+        //transform.GetComponentInParent<Rigidbody>().AddForce((Vector3.up) * 200);
+        transform.rotation = Quaternion.Euler(0,0,90);
+
+
+        Vector3 startingRotation = new Vector3(0,0,0);
+        Vector3 endingRotation = new Vector3(0,30,0);
+        
+        //Rise
+        while (elapsedTime < time)
+        {
+            transform.position = Vector3.Lerp(startingPos, finalPos, (elapsedTime / time));
+
+            //Sping the target as its being knocked up
+            transform.Rotate(Vector3.Lerp(endingRotation, startingRotation, (elapsedTime / time))); 
+            //transform.Rotate(endingRotation); 
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        //Fall
+        elapsedTime = 0;
+        time = 2;
+        finalPos = transform.position;
+        while (elapsedTime < time)
+        {
+            transform.position = Vector3.Lerp(finalPos, startingPos, (elapsedTime / time));
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        //tilt the target so it looks like its spinning.
+        transform.GetComponentInParent<Rigidbody>().useGravity = true;
+        transform.GetComponent<Rigidbody>().isKinematic = false;
+        
+        transform.GetComponent<NavMeshAgent>().enabled = true;
+        _floatState = false;
+
+
+    }
+    
 }

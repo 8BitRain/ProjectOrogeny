@@ -44,8 +44,8 @@ public class CombatAction : MonoBehaviour
             {
                 DealDamage(this.damage, this.target);
                 DealPoiseDamage(this.damage, this.target);
-                //TODO: Debugging objectShake disabling force for testing
-                AddImpact(this.impactForce, this.target);
+                //AddImpact(this.impactForce, this.target);
+                FloatTarget(this.impactForce, this.target);
                 currentHitCount++;
                 return;
             }
@@ -76,8 +76,7 @@ public class CombatAction : MonoBehaviour
         targetHealthReference.SetHealth(targetHealthReference.GetHealth() - damage);
         Debug.Log("Combat: " + target.name + " dealt " + damage + " damage"); 
 
-        //shake the target
-        target.GetComponentInParent<Bladeclubber>().HandleHitStun();    
+  
     }
 
     void DealPoiseDamage(float damage, GameObject target)
@@ -85,6 +84,13 @@ public class CombatAction : MonoBehaviour
         PoiseMeter targetPoiseReference = target.GetComponentInParent<Bladeclubber>().poiseMeter;
         targetPoiseReference.SetPoise(targetPoiseReference.GetPoise() - damage);
         Debug.Log("Combat: " + target.name + " dealt " + damage + " poise damage");
+
+        //shake the target if it has poise
+        if(targetPoiseReference.GetPoise() > 0)
+        {
+            target.GetComponentInParent<Bladeclubber>().HandleHitStun();  
+        }
+        
     }
 
     void AddImpact(float force, GameObject target)
@@ -104,6 +110,16 @@ public class CombatAction : MonoBehaviour
 
              //A stun timer method would work well. 
             target.GetComponentInParent<NavMeshAgent>().enabled = false;
+        }
+    }
+
+    void FloatTarget(float force, GameObject target)
+    {
+        PoiseMeter targetPoiseReference = target.GetComponentInParent<Bladeclubber>().poiseMeter;
+        if(targetPoiseReference.GetPoise() <= 0)
+        {
+            Debug.Log("Combat: Floating Target");
+            target.GetComponentInParent<Bladeclubber>().HandleFloatState();
         }
     }
 

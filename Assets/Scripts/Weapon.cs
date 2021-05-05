@@ -85,7 +85,7 @@ public class Weapon : MonoBehaviour
             {
                 if(!playerCharacter.GetIframe())
                 {
-                    playerCharacter.AddImpact(Wielder.transform.forward, force);    
+                    playerCharacter.AddImpact(Vector3.up, force);    
                     print("Knockback 10");
                     hitCounter2++;
                     print("Hit Counter Attack String II: " + hitCounter2);
