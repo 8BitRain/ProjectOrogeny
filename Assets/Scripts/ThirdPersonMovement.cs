@@ -40,7 +40,7 @@ public class ThirdPersonMovement : MonoBehaviour
     public float JumpHeight = 2f;
     private Vector3 _velocity;
     private bool _isGrounded = true;
-    private bool jumpPressed = false;
+    private bool jumpInput = false;
 
     public GameObject _jumpVFX;
 
@@ -105,6 +105,8 @@ public class ThirdPersonMovement : MonoBehaviour
     public Transform _specialAttackSpawnLocation;
     public GameObject specialAttack;
     private GameObject instancedSpecialAttack;
+    private bool displaySpecialAttackWindowInput = false;
+    public GameObject specialAttackWindow;
 
     [Header("VFX Management")]
     public GameObject combatVFXManager;
@@ -571,7 +573,7 @@ public class ThirdPersonMovement : MonoBehaviour
             */
 
             //if (Input.GetButton("PlayerJump")){
-            if (jumpPressed){
+            if (jumpInput && !displaySpecialAttackWindowInput){
                 if(_isGrounded && !_isWallRunning){
                     print("JUMP");
                     //reset y_velocity to prevent super bouncing
@@ -614,6 +616,16 @@ public class ThirdPersonMovement : MonoBehaviour
                 //_velocity.y += Mathf.Sqrt(JumpHeight * -2f * gravity);
             }
 
+            //Display Special Attack Input Window
+            if(displaySpecialAttackWindowInput)
+            {
+                ToggleSpecialAttackWindow(true);
+            } 
+            else
+            {
+                ToggleSpecialAttackWindow(false);
+            }
+
             //Action Timer
             if(startTimer)
             {
@@ -621,7 +633,7 @@ public class ThirdPersonMovement : MonoBehaviour
             }
 
             //Special Attack
-            if(specialAttackInput){
+            if(specialAttackInput && !displaySpecialAttackWindowInput){
                 //If 10 seconds have passed we can do this action
                 print("Skill Duration: " + specialAttack.GetComponent<SpecialAttack>().GetSkillDuration());
                 if(_actionTimer >= specialAttack.GetComponent<SpecialAttack>().GetSkillDuration())
@@ -668,7 +680,7 @@ public class ThirdPersonMovement : MonoBehaviour
             }
 
             //GroundMeleeAttack1
-            if(groundMeleeAttack1Input)
+            if(groundMeleeAttack1Input && !displaySpecialAttackWindowInput)
             {
                 
                 if(combatStateIndex == 0)
@@ -715,7 +727,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
 
             //This could be a general melee skill that transforms!
-            if(kickThrownSpecialAttackInput)
+            if(kickThrownSpecialAttackInput && !displaySpecialAttackWindowInput)
             {
                 
                 if(instancedSpecialAttack != null)
@@ -1276,7 +1288,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
     //New Unity Input Management.
     public void OnMove(InputAction.CallbackContext ctx) => movementInput = ctx.ReadValue<Vector2>();
-    public void OnJump(InputAction.CallbackContext ctx) => jumpPressed = ctx.ReadValueAsButton();
+    public void OnJump(InputAction.CallbackContext ctx) => jumpInput = ctx.ReadValueAsButton();
     public void OnSpecialAttack(InputAction.CallbackContext ctx) => specialAttackInput = ctx.ReadValueAsButton();
     public void OnDash(InputAction.CallbackContext ctx) => dashInput = ctx.ReadValueAsButton();
     public void OnLockOn(InputAction.CallbackContext ctx) => lockOnInput = ctx.ReadValueAsButton();
@@ -1285,6 +1297,7 @@ public class ThirdPersonMovement : MonoBehaviour
     public void OnEnviromentInteraction(InputAction.CallbackContext ctx) => enviromentActionInput = ctx.ReadValueAsButton();
     public void OnKickThrownSpecialAttack(InputAction.CallbackContext ctx) => kickThrownSpecialAttackInput = ctx.ReadValueAsButton();
     public void OnGroundMeleeAttack1(InputAction.CallbackContext ctx) => groundMeleeAttack1Input = ctx.ReadValueAsButton();
+    public void OnDisplaySpecialAttackInputWindow(InputAction.CallbackContext ctx) => displaySpecialAttackWindowInput = ctx.ReadValueAsButton();
 
     //https://answers.unity.com/questions/242648/force-on-character-controller-knockback.html?_ga=2.213933971.521934289.1611610771-608714207.1587856867
     public void AddImpact(Vector3 direction, float force)
@@ -1721,8 +1734,11 @@ public class ThirdPersonMovement : MonoBehaviour
         dynamicCameraFloatingTarget.SetActive(false);
         freeLookCamera.SetActive(true);
         lockOnCamera.SetActive(false);
-        
+    }
 
+    public void ToggleSpecialAttackWindow(bool value)
+    {
+        this.specialAttackWindow.SetActive(value);
     }
     
 }

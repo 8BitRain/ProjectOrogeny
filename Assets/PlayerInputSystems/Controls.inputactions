@@ -100,6 +100,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "DisplaySpecialAttackInputWindow",
+                    "type": "Button",
+                    "id": "d2ba3beb-a7f4-4914-8341-8c13dff3c806",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -139,7 +147,7 @@
                 {
                     "name": "",
                     "id": "7aee8ef2-a3c8-4bbf-ab81-8f4b856eeae5",
-                    "path": "<Gamepad>/rightTrigger",
+                    "path": "<Gamepad>/leftTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -161,7 +169,7 @@
                 {
                     "name": "",
                     "id": "474b6197-3227-42ed-8c7d-4889dff59458",
-                    "path": "<Gamepad>/rightShoulder",
+                    "path": "<Gamepad>/rightTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -232,6 +240,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "GroundMeleeAttack1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d451c103-759f-4cab-8da5-26702efa9b53",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DisplaySpecialAttackInputWindow",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
