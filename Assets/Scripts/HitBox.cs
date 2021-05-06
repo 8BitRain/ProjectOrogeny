@@ -68,8 +68,6 @@ public class HitBox : MonoBehaviour
         {
             Gizmos.DrawWireCube(this.GetComponent<BoxCollider>().center, this.GetComponent<BoxCollider>().size);
         }
-        
-        //Gizmos.DrawWireCube(this.transform.position, new Vector3(2,2,2));
     }
 
     IEnumerator RumbleCountdown (float seconds) 
@@ -81,7 +79,5 @@ public class HitBox : MonoBehaviour
         }
         Gamepad.current.SetMotorSpeeds(0,0);
         rumble = true;
-        //Gamepad.current.PauseHaptics();
-        //Gamepad.current.ResetHaptics();
     }
 }

@@ -1436,9 +1436,11 @@ public class ThirdPersonMovement : MonoBehaviour
 
     void MeleeCombo1()
     {
-        //moveCharacter = false;
-        //Face direction player is aiming.
-        transform.LookAt(transform.position + cam.transform.forward);
+        //Melee in direction player is aiming.
+        //transform.LookAt(transform.position + cam.transform.forward);
+
+        //Melee in direction player is facing.
+        
 
         EngageCombatSlide();
         InitiateForwardMomentum();
@@ -1457,8 +1459,9 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             if(animatorStateInfo.normalizedTime >= .56 && animationWindow == 0)
             {
-                //Animation window exists for 1.5 seconds
-                animationWindow = 1f;
+                //the player's movement is locked for the duration of this animation window set
+                animationWindow = 1 - animatorStateInfo.normalizedTime;
+                //animationWindow = 1f;
                 startAnimationWindow = true;
             }
             
@@ -1482,8 +1485,8 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             if(animatorStateInfo.normalizedTime >= .85 && animationWindow == 0)
             {
-                //Animation window exists for 1.5 seconds
-                animationWindow = .5f;
+                //the player's movement is locked for the duration of this animation window set
+                animationWindow = 1 - animatorStateInfo.normalizedTime;
                 startAnimationWindow = true;
             }
             
@@ -1507,8 +1510,8 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             if(animatorStateInfo.normalizedTime >= .56 && animationWindow == 0)
             {
-                //Animation window exists for 1.5 seconds
-                animationWindow = .5f;
+                //the player's movement is locked for the duration of this animation window set
+                animationWindow = 1 - animatorStateInfo.normalizedTime;
                 startAnimationWindow = true;
             }
             
