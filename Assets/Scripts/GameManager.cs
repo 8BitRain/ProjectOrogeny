@@ -53,7 +53,6 @@ public class GameManager : MonoBehaviour
             //Loading Player 1
             if(InputUser.all.Count == 1 && spawnedPlayers[0] == null)
             {
-                //Debug.Log("Player 1 Value " + InputUser.all[0].index);
                 spawnedPlayers[0] = GameObject.FindGameObjectWithTag("Player").transform;
                 spawnedPlayers[0].tag = "P1";   
                 //TODO change this function to grab the correct character name.

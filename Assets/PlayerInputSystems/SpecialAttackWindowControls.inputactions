@@ -1,0 +1,90 @@
+{
+    "name": "SpecialAttackWindowControls",
+    "maps": [
+        {
+            "name": "Gameplay",
+            "id": "e1397a17-c9a5-41ec-ab79-aa5493f8b781",
+            "actions": [
+                {
+                    "name": "SouthButtonPress",
+                    "type": "Button",
+                    "id": "f32faa8f-4430-45a7-8f5a-01d5e802236e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "NorthButtonPress",
+                    "type": "Button",
+                    "id": "847d78e1-1128-47cd-957c-00452ce6cf0b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "EastButtonPress",
+                    "type": "Button",
+                    "id": "eca24c14-8288-4c38-aa18-f6390d65fc71",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "WestButtonPressed",
+                    "type": "Button",
+                    "id": "4eee0955-9456-4fa5-9070-7ab3b927dcc9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "1db7b7a1-7cba-4d65-9d7b-fa03875932fe",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SouthButtonPress",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "df354d4d-2962-4ab7-9148-80c5a988a6ab",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "NorthButtonPress",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a8608e27-6fb4-40dd-b58d-64eefa9df829",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "EastButtonPress",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3b8fb31b-5618-4609-86c8-8398c042918f",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "WestButtonPressed",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
