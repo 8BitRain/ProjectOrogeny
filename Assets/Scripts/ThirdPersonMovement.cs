@@ -811,8 +811,7 @@ public class ThirdPersonMovement : MonoBehaviour
             gameManager.disableTargetArrow(this.GetPlayerID());
 
             lockedOn = false;
-            lockOnCamera.SetActive(false);
-            freeLookCamera.SetActive(true);
+            DisengageDynamicTargetLock();
             lockOnInput = false;
 
         }
@@ -826,17 +825,19 @@ public class ThirdPersonMovement : MonoBehaviour
             {
                 //Experimental Add widescreen bars
                 GameManager gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
-                if(gameManager.canDisplayWidescreenUI)
+                /*if(gameManager.canDisplayWidescreenUI)
                 {
                     gameManager.enableWidescreenBars(this.GetPlayerID());
-                }                
+                }*/
+
                 print("found targets, locking on");
-                freeLookCamera.SetActive(false);
-                lockOnCamera.SetActive(true);
+                
+
                 //targetToLock = GameObject.FindGameObjectWithTag("TargetLock").transform;
                 //reset currentTarget 
                 currentTarget = 0;
                 targetToLock = foes[currentTarget];
+
                 //Need a better way to determine enemy
                 Transform targetToLockHead = targetToLock.GetComponent<Bladeclubber>().Head;
                 if(targetToLockHead == null)
@@ -846,7 +847,8 @@ public class ThirdPersonMovement : MonoBehaviour
                 }
 
                 //Third object should be the "Head Game Object"
-                lockOnCamera.GetComponent<CinemachineVirtualCamera>().m_LookAt = targetToLockHead;
+                //lockOnCamera.GetComponent<CinemachineVirtualCamera>().m_LookAt = targetToLockHead;
+                EngageDynamicTargetLock(targetToLockHead);
 
                 //Adjust camera offset to look up at monster
                 //lockOnCamera.GetComponent<CinemachineCameraOffset>().m_Offset.x
@@ -916,7 +918,10 @@ public class ThirdPersonMovement : MonoBehaviour
             {
                 targetToLockHead = targetToLock.GetComponent<Foe>().Head;
             }
-            lockOnCamera.GetComponent<CinemachineVirtualCamera>().m_LookAt = targetToLockHead;
+
+            //Update target to lock
+            //lockOnCamera.GetComponent<CinemachineVirtualCamera>().m_LookAt = targetToLockHead;
+            UpdateDynamicTargetLock(targetToLockHead);
             GameManager gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
             gameManager.updateTargetPosition(this.GetPlayerID(), targetToLockHead.gameObject);
         }
@@ -1367,7 +1372,8 @@ public class ThirdPersonMovement : MonoBehaviour
     public GameObject GetCurrentTarget()
     {
         print("Current Target" + foes[currentTarget].name);
-        return targetToLock.GetComponent<Foe>().Head.gameObject;
+        //return targetToLock.GetComponent<Foe>().Head.gameObject;
+        return targetToLock.GetComponent<Bladeclubber>().Head.gameObject;
     }
 
     public int GetPlayerID()
@@ -1725,10 +1731,11 @@ public class ThirdPersonMovement : MonoBehaviour
     {
         freeLookCamera.SetActive(false);
         lockOnCamera.SetActive(false);
+        //DisengageDynamicTargetLock();
 
         CinemachineTargetGroup targetGroup = dynamicCameraFloatingTarget.GetComponentInChildren<CinemachineTargetGroup>();
         targetGroup.AddMember(this.transform, 1, 2);
-        targetGroup.AddMember(target.transform, 1, 2);
+        targetGroup.AddMember(target.transform, 1, 6);
 
         dynamicCameraFloatingTarget.SetActive(true);
 
@@ -1739,6 +1746,34 @@ public class ThirdPersonMovement : MonoBehaviour
         dynamicCameraFloatingTarget.SetActive(false);
         freeLookCamera.SetActive(true);
         lockOnCamera.SetActive(false);
+    }
+
+    public void EngageDynamicTargetLock(Transform target)
+    {
+        freeLookCamera.SetActive(false);
+        dynamicCameraFloatingTarget.SetActive(false);
+
+        CinemachineTargetGroup targetGroup = lockOnCamera.GetComponentInChildren<CinemachineTargetGroup>();
+        targetGroup.AddMember(this.transform, 1, 2);
+        targetGroup.AddMember(target.transform, 1, 6);
+
+        lockOnCamera.SetActive(true);
+    }
+
+    public void DisengageDynamicTargetLock()
+    {
+        dynamicCameraFloatingTarget.SetActive(false);
+        lockOnCamera.SetActive(false);
+        freeLookCamera.SetActive(true);
+    }
+
+    public void UpdateDynamicTargetLock(Transform target)
+    {
+        CinemachineTargetGroup targetGroup = lockOnCamera.GetComponentInChildren<CinemachineTargetGroup>();
+        
+        //Update target at index 1 to the new target
+        targetGroup.m_Targets[1].target = target.transform;
+
     }
 
     public void ToggleSpecialAttackWindow(bool value)
