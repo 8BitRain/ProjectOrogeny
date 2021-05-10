@@ -911,8 +911,8 @@ public class ThirdPersonMovement : MonoBehaviour
             Transform targetToLockHead;
             if(targetToLock.GetComponent<Foe>() == null)
             {
-                
-                targetToLockHead = targetToLock.GetComponent<Bladeclubber>().Head;
+                //Anatomy of a Bladeclubber. parent game object contains script. Box collider contained on body of bladeclubber
+                targetToLockHead = targetToLock.GetComponentInParent<Bladeclubber>().Head;
             }
             else
             {
@@ -921,9 +921,12 @@ public class ThirdPersonMovement : MonoBehaviour
 
             //Update target to lock
             //lockOnCamera.GetComponent<CinemachineVirtualCamera>().m_LookAt = targetToLockHead;
-            UpdateDynamicTargetLock(targetToLockHead);
-            GameManager gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
-            gameManager.updateTargetPosition(this.GetPlayerID(), targetToLockHead.gameObject);
+            if(targetToLockHead != null)
+            {
+                UpdateDynamicTargetLock(targetToLockHead);
+                GameManager gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+                gameManager.updateTargetPosition(this.GetPlayerID(), targetToLockHead.gameObject);
+            }
         }
 
         //Movement that should be applied due to other techniques.
@@ -1755,7 +1758,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
         CinemachineTargetGroup targetGroup = lockOnCamera.GetComponentInChildren<CinemachineTargetGroup>();
         targetGroup.AddMember(this.transform, 1, 2);
-        targetGroup.AddMember(target.transform, 1, 6);
+        targetGroup.AddMember(target.transform, 1.5f, 4);
 
         lockOnCamera.SetActive(true);
     }
