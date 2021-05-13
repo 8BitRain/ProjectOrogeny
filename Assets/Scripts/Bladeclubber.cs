@@ -12,8 +12,8 @@ public class Bladeclubber : MonoBehaviour
     
     public BoxCollider hitBox;
 
-    private NavMeshAgent navMeshAgent;
-    private Transform target;
+    protected NavMeshAgent navMeshAgent;
+    protected Transform target;
 
     public float attackCombo = 1;
 
@@ -28,7 +28,7 @@ public class Bladeclubber : MonoBehaviour
     public HealthBar healthBar;
     public PoiseMeter poiseMeter;
 
-    private bool _floatState = false;
+    protected bool _floatState = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -64,7 +64,7 @@ public class Bladeclubber : MonoBehaviour
         } 
     }
 
-    void SeekPlayer()
+    public void SeekPlayer()
     {
         if(this.navMeshAgent != null && target != null)
         {
@@ -93,7 +93,7 @@ public class Bladeclubber : MonoBehaviour
         }
     }
 
-    void AssignTarget()
+    public void AssignTarget()
     {
         foreach(GameObject obj in GameObject.FindGameObjectsWithTag("P1"))
         {
@@ -105,13 +105,13 @@ public class Bladeclubber : MonoBehaviour
         }
     }
 
-    void OrbitTarget()
+    public void OrbitTarget()
     {
         transform.RotateAround(target.transform.position, Vector3.up, 60 * Time.deltaTime);
         //print("Orbiting Target: " + target.transform.position);
     }
 
-    void OnDrawGizmosSelected()
+    public void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
         Vector3 position = transform.position + this.hitBox.center;
@@ -119,7 +119,7 @@ public class Bladeclubber : MonoBehaviour
 
     }
 
-    void EngageCombat()
+    public void EngageCombat()
     {
         //sentinel value
         float targetDistance = -1;
@@ -257,20 +257,20 @@ public class Bladeclubber : MonoBehaviour
         //Play the animation
     }
 
-    void DisengageCombat()
+    public void DisengageCombat()
     {
         animator.SetBool("Attacking", false);
         //weaponsL[0].GetComponent<Weapon>().DisableWeaponTrail();
         //weaponsR[0].GetComponent<Weapon>().DisableWeaponTrail();
     }
 
-    void EnableHitBoxes()
+    public void EnableHitBoxes()
     {
         Debug.Log("HitBoxEnabled");
         hitBoxEnabled = true;
     }
 
-    void DisableHitBoxes()
+    public void DisableHitBoxes()
     {
         Debug.Log("HitBoxDisabled");
         hitBoxEnabled = false;

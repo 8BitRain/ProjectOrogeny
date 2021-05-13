@@ -165,6 +165,7 @@ public class SpecialAttack : MonoBehaviour
     }
 
     /*BEAM SKILL DEFINITIONS*/
+    //TODO: Create an override for Initialize for special ability. This way Initialize can be reused for Beam and Throw
     public void InitializeBeam()
     {
         //Start special attack timer
@@ -178,6 +179,7 @@ public class SpecialAttack : MonoBehaviour
         }
     }
 
+    //TODO: This can be made overridable so a child class can implement its own update function. A good word for this interaction is that the attack is channeled. 
     public void UpdateBeam()
     {
         //The beam updating depends upon the animation state CosmicPalmAttack. For now this move is animation locked.
@@ -231,12 +233,14 @@ public class SpecialAttack : MonoBehaviour
         
     }
 
+    //TODO: Write an override for this class in a child class. Throw Ability
     public void InitializeThrow()
     {
         this.transform.rotation = Quaternion.Euler(270,0,0);
         ps = kickbackSpecialHintVFX.GetComponent<ParticleSystem>();
     }
 
+    //TODO: Write an override for this class in a child class. Throw Ability
     public void UpdateThrow()
     {
         float currThrowDistance = (this.transform.position - skillUser.transform.position).magnitude;
@@ -345,6 +349,7 @@ public class SpecialAttack : MonoBehaviour
         Destroy(this.gameObject);
     }
 
+    //TODO: This could be broken out into its own class. TO assist with interactable elements in game
     public void ToggleHintVFX(bool vfx)
     {
         if(vfx)
