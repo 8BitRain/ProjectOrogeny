@@ -7,18 +7,33 @@ using UnityEngine;
 
 public class SpecialAttackInputWindowController : MonoBehaviour
 {
-    public GameObject specialAttackInputWindow;
+    public Transform Agent;
     public GameObject selector;
     public enum SelectedButton {North, South, East, West};
     public SelectedButton selectedButton;
 
-    private bool southButtonInput = false;
-    private bool northButtonInput = false;
-    private bool eastButtonInput = false;
-    private bool westButtonInput = false;
+    public SpecialAbility specialAbilitySouth;
+    public SpecialAbility specialAbilityNorth;
+    public SpecialAbility specialAbilityEast;
+    public SpecialAbility specialAbilityWest;
+
+    /// <summary>Vector2 action for pressing a face button </summary>
+    [Tooltip("Vector2 action for South Button ")]
+    public InputActionReference SouthButtonPressed;
+
+    /// <summary>Vector2 action for pressing a face button </summary>
+    [Tooltip("Vector2 action for North Button ")]
+    public InputActionReference NorthButtonPressed;
+
+    /// <summary>Vector2 action for pressing a face button </summary>
+    [Tooltip("Vector2 action for West Button ")]
+    public InputActionReference WestButtonPressed;
+
+    /// <summary>Vector2 action for pressing a face button </summary>
+    [Tooltip("Vector2 action for East Button ")]
+    public InputActionReference EastButtonPressed;
     
-
-
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -28,50 +43,64 @@ public class SpecialAttackInputWindowController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(northButtonInput)
+        if(NorthButtonPressed.action.triggered)
         {
             selectedButton = SelectedButton.North;
+            Debug.Log("UI: North Button pressed");
+            SelectSpecialAttack();
         }
         
-        if(southButtonInput)
+        if(SouthButtonPressed.action.triggered)
         {
             selectedButton = SelectedButton.South;
+            Debug.Log("UI: South Button pressed");
+            SelectSpecialAttack();
         }
 
-        if(eastButtonInput)
+        if(EastButtonPressed.action.triggered)
         {
             selectedButton = SelectedButton.East;
+            Debug.Log("UI: East Button pressed");
+            SelectSpecialAttack();
         }
 
-        if(westButtonInput)
+        if(WestButtonPressed.action.triggered)
         {
             selectedButton = SelectedButton.West;
+            Debug.Log("UI: West Button pressed");
+            SelectSpecialAttack();
         }
-    }
 
-    public void OnSouthButtonPressed(InputAction.CallbackContext ctx) => southButtonInput = ctx.ReadValueAsButton();
-    public void OnNorthButtonPressed(InputAction.CallbackContext ctx) => northButtonInput = ctx.ReadValueAsButton();
-    public void OnWestButtonPressed(InputAction.CallbackContext ctx) => westButtonInput = ctx.ReadValueAsButton();
-    public void OnEastButtonPressed(InputAction.CallbackContext ctx) => eastButtonInput = ctx.ReadValueAsButton();
+        
+    }
 
     public void SelectSpecialAttack()
     {
         switch (selectedButton)
         {
             case SelectedButton.North:
-                Debug.Log("UI: North Button pressed");
+                SpecialAbility abilityNorth = Instantiate(specialAbilityNorth);
+                abilityNorth.CreateAbility(Agent, Agent, Agent.GetComponent<Animator>());
                 return;
             case SelectedButton.South:
-                Debug.Log("UI: South Button pressed");
+                SpecialAbility abilitySouth = Instantiate(specialAbilitySouth);
+                abilitySouth.CreateAbility(Agent, Agent, Agent.GetComponent<Animator>());
                 return;
             case SelectedButton.East:
-                Debug.Log("UI: East Button pressed");
+                SpecialAbility abilityEast = Instantiate(specialAbilityEast);
+                abilityEast.CreateAbility(Agent, Agent, Agent.GetComponent<Animator>());
                 return;
             case SelectedButton.West:
-                Debug.Log("UI: West Button pressed");
+                SpecialAbility abilityWest = Instantiate(specialAbilityWest);
+                abilityWest.CreateAbility(Agent, Agent, Agent.GetComponent<Animator>());
                 return;
             default:
                 return;
         }
+    }
+
+    public void SetAgentProperties(Transform agent)
+    {
+        this.Agent = agent;
     }
 }

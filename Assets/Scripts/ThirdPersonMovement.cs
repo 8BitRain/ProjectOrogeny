@@ -1782,6 +1782,7 @@ public class ThirdPersonMovement : MonoBehaviour
     public void ToggleSpecialAttackWindow(bool value)
     {
         this.specialAttackWindow.SetActive(value);
+        this.specialAttackWindow.GetComponent<SpecialAttackInputWindowController>().SetAgentProperties(this.transform);
     }
     
 }

@@ -108,6 +108,38 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "SpecialAbilityNorth",
+                    "type": "Button",
+                    "id": "22cf652b-3a2d-42df-bab5-8bb6a9efc231",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "SpecialAbilitySouth",
+                    "type": "Button",
+                    "id": "c48831c4-7c99-49aa-9c5e-8bb59d2eb499",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "SpecialAbilityEast",
+                    "type": "Button",
+                    "id": "4aaa9272-f5d8-4317-b100-5db735497aef",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "SpecialAbilityWest",
+                    "type": "Button",
+                    "id": "3970f51c-e740-46d1-927c-007b0132202b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -251,6 +283,50 @@
                     "processors": "",
                     "groups": "",
                     "action": "DisplaySpecialAttackInputWindow",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "affa4f8f-7ad1-49eb-95a3-78034642519b",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SpecialAbilityNorth",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "36e44ae0-30cf-4131-860c-ebd4a603a8ca",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SpecialAbilitySouth",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bbc97a14-bcd5-4ec1-8822-a33aaccdbd1f",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SpecialAbilityEast",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cc8baa72-bb15-4a62-9118-2bb92ede5856",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SpecialAbilityWest",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

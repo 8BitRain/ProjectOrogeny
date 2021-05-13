@@ -2701,7 +2701,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 991437342543889560}
-  m_LocalRotation: {x: 0.05154675, y: 0.000000002147939, z: -1.10866656e-10, w: 0.9986706}
+  m_LocalRotation: {x: 0.051546745, y: -0.000000002147938, z: 1.108666e-10, w: 0.9986706}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -3341,7 +3341,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1448917037139426817}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.088, y: 7.5439997, z: -9.02}
+  m_LocalPosition: {x: 1.088, y: 8.794, z: -11.52}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4495686138785549297}
@@ -3411,8 +3411,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1513510514445309743}
-  m_LocalRotation: {x: 0.035190895, y: -0.000000030763285, z: 0.0000000010832585,
-    w: 0.99938065}
+  m_LocalRotation: {x: 0.035190895, y: -0.00000003162307, z: 0.0000000011135339, w: 0.99938065}
   m_LocalPosition: {x: 1.056, y: 4.306695, z: -8.953012}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -17680,6 +17679,12 @@ PrefabInstance:
       objectReference: {fileID: 3697220149502421911}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 10cf11ed3527e4d47be6bc24b3cd57be, type: 3}
+--- !u!4 &3152765040458349102 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2663400724676279312, guid: 10cf11ed3527e4d47be6bc24b3cd57be,
+    type: 3}
+  m_PrefabInstance: {fileID: 1096226014839883326}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &6008848581239587529 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6653263823454569719, guid: 10cf11ed3527e4d47be6bc24b3cd57be,
@@ -17692,12 +17697,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6f67f915d3864db2872d3c8be2907b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &3152765040458349102 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2663400724676279312, guid: 10cf11ed3527e4d47be6bc24b3cd57be,
-    type: 3}
-  m_PrefabInstance: {fileID: 1096226014839883326}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2865573236679244252
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17948,26 +17947,46 @@ PrefabInstance:
     - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
         type: 3}
       propertyPath: m_ActionEvents.Array.size
-      value: 4
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
         type: 3}
       propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
         type: 3}
       propertyPath: m_ActionEvents.Array.data[1].m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
         type: 3}
       propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
         type: 3}
       propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[13].m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[14].m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[15].m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[16].m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
@@ -17983,42 +18002,42 @@ PrefabInstance:
     - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
         type: 3}
       propertyPath: m_ActionEvents.Array.data[0].m_ActionId
-      value: f32faa8f-4430-45a7-8f5a-01d5e802236e
+      value: d6c112dc-bab3-414e-b7f4-06eac7926ec6
       objectReference: {fileID: 0}
     - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
         type: 3}
       propertyPath: m_ActionEvents.Array.data[0].m_ActionName
-      value: Gameplay/SouthButtonPress[/DualShock4GamepadHID/buttonSouth]
+      value: Gameplay/Move[/DualShock4GamepadHID/leftStick]
       objectReference: {fileID: 0}
     - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
         type: 3}
       propertyPath: m_ActionEvents.Array.data[1].m_ActionId
-      value: 847d78e1-1128-47cd-957c-00452ce6cf0b
+      value: 469e4df0-5099-42c6-a75e-2aa644dca28f
       objectReference: {fileID: 0}
     - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
         type: 3}
       propertyPath: m_ActionEvents.Array.data[1].m_ActionName
-      value: Gameplay/NorthButtonPress[/DualShock4GamepadHID/buttonNorth]
+      value: Gameplay/Jump[/DualShock4GamepadHID/buttonSouth]
       objectReference: {fileID: 0}
     - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
         type: 3}
       propertyPath: m_ActionEvents.Array.data[2].m_ActionId
-      value: eca24c14-8288-4c38-aa18-f6390d65fc71
+      value: 6632f319-c955-43b8-8d3a-7c95782269dd
       objectReference: {fileID: 0}
     - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
         type: 3}
       propertyPath: m_ActionEvents.Array.data[2].m_ActionName
-      value: Gameplay/EastButtonPress[/DualShock4GamepadHID/buttonEast]
+      value: Gameplay/Aim[/DualShock4GamepadHID/leftTrigger]
       objectReference: {fileID: 0}
     - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
         type: 3}
       propertyPath: m_ActionEvents.Array.data[3].m_ActionId
-      value: 4eee0955-9456-4fa5-9070-7ab3b927dcc9
+      value: 0660f4f5-754c-45ae-98bc-f58d1beac060
       objectReference: {fileID: 0}
     - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
         type: 3}
       propertyPath: m_ActionEvents.Array.data[3].m_ActionName
-      value: Gameplay/WestButtonPressed[/DualShock4GamepadHID/buttonWest]
+      value: Gameplay/CosmicPalm[/DualShock4GamepadHID/leftTrigger]
       objectReference: {fileID: 0}
     - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
         type: 3}
@@ -18118,6 +18137,247 @@ PrefabInstance:
     - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
         type: 3}
       propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: m_Actions
+      value: 
+      objectReference: {fileID: -944628639613478452, guid: 0af20018adea947299606934573dfb0b,
+        type: 3}
+    - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[4].m_ActionId
+      value: 73de7740-4961-4384-9349-19aff762e678
+      objectReference: {fileID: 0}
+    - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[4].m_ActionName
+      value: Gameplay/Look[/DualShock4GamepadHID/rightStick]
+      objectReference: {fileID: 0}
+    - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[5].m_ActionId
+      value: e3e2c790-84d4-48f6-be9a-e3e09449d91e
+      objectReference: {fileID: 0}
+    - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[5].m_ActionName
+      value: Gameplay/Dash[/DualShock4GamepadHID/rightTrigger]
+      objectReference: {fileID: 0}
+    - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[6].m_ActionId
+      value: 3d9954d6-a686-4db4-89a0-7a8b142ead93
+      objectReference: {fileID: 0}
+    - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[6].m_ActionName
+      value: Gameplay/LockOn[/DualShock4GamepadHID/rightStickPress]
+      objectReference: {fileID: 0}
+    - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[7].m_ActionId
+      value: 1f3595a9-a82c-49f2-b67e-2cd1e0e1aebc
+      objectReference: {fileID: 0}
+    - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[7].m_ActionName
+      value: Gameplay/LockOnSwitchTargetRight[/DualShock4GamepadHID/rightStick/right]
+      objectReference: {fileID: 0}
+    - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[8].m_ActionId
+      value: 989e8fdd-8099-4641-8007-960d8f51506d
+      objectReference: {fileID: 0}
+    - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[8].m_ActionName
+      value: Gameplay/LockOnSwitchTargetLeft[/DualShock4GamepadHID/rightStick/left]
+      objectReference: {fileID: 0}
+    - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[9].m_ActionId
+      value: cc7b3584-22fd-4f5b-a537-d7b533f4d7ca
+      objectReference: {fileID: 0}
+    - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[9].m_ActionName
+      value: Gameplay/EnviromentAction[/DualShock4GamepadHID/leftShoulder]
+      objectReference: {fileID: 0}
+    - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[10].m_ActionId
+      value: 3206872d-8fdf-49da-82c2-bef6b9159e02
+      objectReference: {fileID: 0}
+    - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[10].m_ActionName
+      value: Gameplay/KickThrownSpecialAttack[/DualShock4GamepadHID/buttonEast]
+      objectReference: {fileID: 0}
+    - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[11].m_ActionId
+      value: 6004e7c3-9568-4c07-b54e-3f53370eab98
+      objectReference: {fileID: 0}
+    - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[11].m_ActionName
+      value: Gameplay/GroundMeleeAttack1[/DualShock4GamepadHID/buttonWest]
+      objectReference: {fileID: 0}
+    - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[12].m_ActionId
+      value: d2ba3beb-a7f4-4914-8341-8c13dff3c806
+      objectReference: {fileID: 0}
+    - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[12].m_ActionName
+      value: Gameplay/DisplaySpecialAttackInputWindow[/DualShock4GamepadHID/rightShoulder]
+      objectReference: {fileID: 0}
+    - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[13].m_ActionId
+      value: c4921707-0d5a-40a9-940d-7a829747f164
+      objectReference: {fileID: 0}
+    - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[13].m_ActionName
+      value: SpecialAbilityWindow/ButtonSouthInput[/DualShock4GamepadHID/buttonSouth]
+      objectReference: {fileID: 0}
+    - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[14].m_ActionId
+      value: a6e138d1-57e6-441b-9e8e-60e7f98daf98
+      objectReference: {fileID: 0}
+    - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[14].m_ActionName
+      value: SpecialAbilityWindow/ButtonNorthInput[/DualShock4GamepadHID/buttonNorth]
+      objectReference: {fileID: 0}
+    - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[15].m_ActionId
+      value: 2d17acc6-6d3f-47ef-be28-ef5d5ccd57bd
+      objectReference: {fileID: 0}
+    - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[15].m_ActionName
+      value: SpecialAbilityWindow/ButtonEastInput[/DualShock4GamepadHID/buttonEast]
+      objectReference: {fileID: 0}
+    - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[16].m_ActionId
+      value: 71425d39-6660-4345-badc-4ee44cae5025
+      objectReference: {fileID: 0}
+    - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[16].m_ActionName
+      value: SpecialAbilityWindow/ButtonWestInput[/DualShock4GamepadHID/buttonWest]
+      objectReference: {fileID: 0}
+    - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: m_DefaultActionMap
+      value: f1a6c83c-a574-48c7-baee-ea61fcdcf897
+      objectReference: {fileID: 0}
+    - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[13].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[13].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[13].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 9217521963159796184}
+    - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[13].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnSouthButtonPressed
+      objectReference: {fileID: 0}
+    - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[13].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[14].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[14].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[14].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 9217521963159796184}
+    - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[14].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnNorthButtonPressed
+      objectReference: {fileID: 0}
+    - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[14].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[15].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[15].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[15].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 9217521963159796184}
+    - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[15].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnEastButtonPressed
+      objectReference: {fileID: 0}
+    - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[15].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[16].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[16].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[16].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 9217521963159796184}
+    - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[16].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnWestButtonPressed
+      objectReference: {fileID: 0}
+    - target: {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[16].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 841677757649345840, guid: 516b4f742d8264f57ab855337a8e9915,
@@ -18235,9 +18495,137 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3625205387263535390, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: southButtonPressed
+      value: 
+      objectReference: {fileID: 194159356410841507, guid: 0af20018adea947299606934573dfb0b,
+        type: 3}
+    - target: {fileID: 3625205387263535390, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: northButtonPressed
+      value: 
+      objectReference: {fileID: -9176172011820350119, guid: 0af20018adea947299606934573dfb0b,
+        type: 3}
+    - target: {fileID: 3625205387263535390, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: westButtonPressed
+      value: 
+      objectReference: {fileID: -1229299112949727460, guid: 0af20018adea947299606934573dfb0b,
+        type: 3}
+    - target: {fileID: 3625205387263535390, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: eastButtonPressed
+      value: 
+      objectReference: {fileID: -8317276486556412373, guid: 0af20018adea947299606934573dfb0b,
+        type: 3}
+    - target: {fileID: 3625205387263535390, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: southButtonPressed.m_Id
+      value: 1cf7813e-f3a9-4560-9830-290a63878258
+      objectReference: {fileID: 0}
+    - target: {fileID: 3625205387263535390, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: northButtonPressed.m_Id
+      value: 6a710952-51f9-47a0-8f09-21c42e71dafe
+      objectReference: {fileID: 0}
+    - target: {fileID: 3625205387263535390, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: westButtonPressed.m_Id
+      value: ebfb2b86-796a-4958-ab47-01ff6d513d9e
+      objectReference: {fileID: 0}
+    - target: {fileID: 3625205387263535390, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: eastButtonPressed.m_Id
+      value: c158cff8-0093-4783-96d0-ef41ef521e4f
+      objectReference: {fileID: 0}
+    - target: {fileID: 3625205387263535390, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: southButtonPressed.m_Name
+      value: South Button Pressed
+      objectReference: {fileID: 0}
+    - target: {fileID: 3625205387263535390, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: northButtonPressed.m_Name
+      value: North Button Pressed
+      objectReference: {fileID: 0}
+    - target: {fileID: 3625205387263535390, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: westButtonPressed.m_Name
+      value: West Button Pressed
+      objectReference: {fileID: 0}
+    - target: {fileID: 3625205387263535390, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: eastButtonPressed.m_Name
+      value: East Button Pressed
+      objectReference: {fileID: 0}
+    - target: {fileID: 3625205387263535390, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: SouthButtonPressed
+      value: 
+      objectReference: {fileID: -5650732246468857751, guid: 0af20018adea947299606934573dfb0b,
+        type: 3}
+    - target: {fileID: 3625205387263535390, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: NorthButtonPressed
+      value: 
+      objectReference: {fileID: -1403546894084746782, guid: 0af20018adea947299606934573dfb0b,
+        type: 3}
+    - target: {fileID: 3625205387263535390, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: WestButtonPressed
+      value: 
+      objectReference: {fileID: -2236351173558739558, guid: 0af20018adea947299606934573dfb0b,
+        type: 3}
+    - target: {fileID: 3625205387263535390, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: EastButtonPressed
+      value: 
+      objectReference: {fileID: 8907230514790044317, guid: 0af20018adea947299606934573dfb0b,
+        type: 3}
+    - target: {fileID: 3625205387263535390, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: specialAbilitySouth
+      value: 
+      objectReference: {fileID: 3493229685245857955, guid: 71eca6253d79c4cde91bc8d9842e4838,
+        type: 3}
+    - target: {fileID: 3625205387263535390, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: specialAbilityNorth
+      value: 
+      objectReference: {fileID: 3493229685245857955, guid: 71eca6253d79c4cde91bc8d9842e4838,
+        type: 3}
+    - target: {fileID: 3625205387263535390, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: specialAbilityEast
+      value: 
+      objectReference: {fileID: 3493229685245857955, guid: 71eca6253d79c4cde91bc8d9842e4838,
+        type: 3}
+    - target: {fileID: 3625205387263535390, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: specialAbilityWest
+      value: 
+      objectReference: {fileID: 3493229685245857955, guid: 71eca6253d79c4cde91bc8d9842e4838,
+        type: 3}
+    - target: {fileID: 3625205387263535390, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: selector
+      value: 
+      objectReference: {fileID: 5046946397694371968}
+    - target: {fileID: 3625205387263535390, guid: 516b4f742d8264f57ab855337a8e9915,
+        type: 3}
+      propertyPath: Agent
+      value: 
+      objectReference: {fileID: 3697220149502421911}
     m_RemovedComponents:
     - {fileID: -1774830276985448215, guid: 516b4f742d8264f57ab855337a8e9915, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 516b4f742d8264f57ab855337a8e9915, type: 3}
+--- !u!1 &5046946397694371968 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 841677759010732102, guid: 516b4f742d8264f57ab855337a8e9915,
+    type: 3}
+  m_PrefabInstance: {fileID: 5594709286076600518}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &9217521963159796184 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3625205387263535390, guid: 516b4f742d8264f57ab855337a8e9915,
