@@ -12,25 +12,30 @@ public class ReflectorAbility : SpecialAbility
     public override void UpdateAbility()
     {
         //Listener that polls for a switch in the current animation name.  
-        /*switch (GetAnimationStateSuffix())
+        switch (GetAnimationStateSuffix())
         {
             case "cast":
                 this.abilityState = AbilityState.Cast;
-                return;
+                Debug.Log("Casting");
+                break;
             case "channel":
                 this.abilityState = AbilityState.Channeling;
-                return;
+                Debug.Log("Channeling");
+                break;
             case "effect":
                 this.abilityState = AbilityState.Action;
-                return;
-            default:
-                //Destroy(this.gameObject);
+                Debug.Log("Effect");
                 break;
-        }*/
+            default:
+                Debug.Log("No longer using ability destroy this object");
+                Destroy(this.gameObject);
+                break;
+        }
 
         switch (this.GetAbilityState())
         {
             case AbilityState.Cast:
+                Debug.Log("Timer Value: " + GetTimer());
                 if(GetTimer() == 0)
                 {
                     Cast();
@@ -57,6 +62,7 @@ public class ReflectorAbility : SpecialAbility
 
     public void Cast()
     {
+        Debug.Log("Cast is called");
         //Set the timer
         if(GetTimer() == 0)
         {
@@ -64,7 +70,7 @@ public class ReflectorAbility : SpecialAbility
         }
 
         //Play the animation
-        this.agentAnimator.Play(GetAnimationStateName());
+        //this.agentAnimator.Play(GetAnimationStateName());
 
 
         //Wait a certain number of seconds

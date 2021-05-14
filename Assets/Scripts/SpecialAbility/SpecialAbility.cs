@@ -71,7 +71,7 @@ public abstract class SpecialAbility : MonoBehaviour
     {
         if(castTime > 0)
         {
-            
+            //could create a method here that plays the cast animation first
         }
     }
 
@@ -107,6 +107,9 @@ public abstract class SpecialAbility : MonoBehaviour
         {
             this._initialized = true;
         }
+
+        //The ability always starts off in a cast state unless the animation state is set to another value.
+        this.agentAnimator.Play(GetAnimationStateName());
     }
 
     public virtual void ReadAbilityInfo()
@@ -138,11 +141,20 @@ public abstract class SpecialAbility : MonoBehaviour
         return "Grounded." + char.ToUpper(this.abilityName[0]) + this.abilityName.Substring(1) + "." + this.agent.name.ToLower() + "_" + this.abilityName.ToLower() + "_" + this.abilityState.ToString().ToLower();
     }
 
-    //Example Grounded.Reflector.eston_reflector_cast should return TODO: Write a test for this
+    //Get's the current animation name from the animator
+    public string GetCurrentAnimationStateName()
+    {
+        //Debug.Log(this.agentAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name);
+        return this.agentAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name;
+    }
+
+    //Example Grounded.Reflector.eston_reflector_cast should return cast TODO: Write a test for this
+    //Example eston_rig|eston_reflector_cast should return cast
     public string GetAnimationStateSuffix()
     {
-        Debug.Log("Animation State Suffix" + GetAnimationStateName().Split('_')[2]);
-        return GetAnimationStateName().Split('_')[2];
+        //We want the last value in the animation name
+        int suffixPosition = GetCurrentAnimationStateName().Split('_').Length - 1;
+        return GetCurrentAnimationStateName().Split('_')[suffixPosition];
     }
 
     public Transform GetAgent()
@@ -168,6 +180,11 @@ public abstract class SpecialAbility : MonoBehaviour
     public void SetTimer(float time)
     {
         this._timer = time;
+    }
+
+    public void ResetTimer()
+    {
+        this._timer = 0;
     }
 
 }
