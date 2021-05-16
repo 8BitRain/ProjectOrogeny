@@ -4769,9 +4769,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isGlobal: 0
+  isGlobal: 1
   priority: 0
-  blendDistance: 0
+  blendDistance: 0.9
   weight: 1
   sharedProfile: {fileID: 11400000, guid: 3c6f52d06cc9340c1a9b8ef3cbaeea17, type: 2}
 --- !u!65 &9157800875968503842
@@ -4800,7 +4800,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   entityName: Reflector VFX
-  duration: 10
+  duration: 3
   hitBox: {fileID: 0}
   path:
   - {fileID: 0}
@@ -4816,3 +4816,4 @@ MonoBehaviour:
   - {x: -1, y: 3, z: 0}
   - {x: 0, y: 4, z: 1}
   - {x: 1, y: 5, z: 0}
+  Agent: {fileID: 0}

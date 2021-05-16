@@ -23,15 +23,15 @@ public class ReflectorVFXEntity : AbilityEntity
 
     public override void UpdateAbilityEntity()
     {
-        //Tested the below moveTo value with Vector3.forward. This provides the movement interaction we want. (movement follows parent)
-        //iTween.MoveTo(this.gameObject, iTween.Hash("position", Vector3.forward*3, "time", 3, "easetype", iTween.EaseType.easeInCubic, "isLocal", true));
         
-        iTween.MoveTo(this.gameObject, iTween.Hash("path", path2, "time", 3, "easetype", iTween.EaseType.easeInCubic, "isLocal", true));
     }
 
     public override void InitializeAbilityEntity()
     {
+        //Tested the below moveTo value with Vector3.forward. This provides the movement interaction we want. (movement follows parent)
+        //iTween.MoveTo(this.gameObject, iTween.Hash("position", Vector3.forward*3, "time", 3, "easetype", iTween.EaseType.easeInCubic, "isLocal", true));
         
+        iTween.MoveTo(this.gameObject, iTween.Hash("path", path2, "time", 3, "easetype", iTween.EaseType.easeInCubic, "isLocal", true, "looptype", iTween.LoopType.none));
     }
 
     void OnDrawGizmos()
