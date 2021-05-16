@@ -64,9 +64,12 @@ public class HitBox : MonoBehaviour
     {
         Gizmos.color = new Color(1, 0, 0, 1f);
         Gizmos.matrix = transform.localToWorldMatrix;
-        if(this.GetComponent<BoxCollider>().enabled)
+        if(this.GetComponent<BoxCollider>() != null)
         {
-            Gizmos.DrawWireCube(this.GetComponent<BoxCollider>().center, this.GetComponent<BoxCollider>().size);
+            if(this.GetComponent<BoxCollider>().enabled)
+            {
+                Gizmos.DrawWireCube(this.GetComponent<BoxCollider>().center, this.GetComponent<BoxCollider>().size);
+            }
         }
     }
 

@@ -60,7 +60,7 @@ public class ReflectorAbility : SpecialAbility
         base.ReadAbilityInfo();
     }
 
-    public void Cast()
+    public override void Cast()
     {
         Debug.Log("Cast is called");
         //Set the timer
@@ -74,29 +74,53 @@ public class ReflectorAbility : SpecialAbility
 
 
         //Wait a certain number of seconds
-        //Proceed to the next state of the ability 
+        //Proceed to the next state of the ability
+        
+        //Generate left and right orb
+        AbilityEntity entityOrbL =  Instantiate(this.abilityEntitites[1], agent.transform.position, Quaternion.Euler(0,0,0));
+        AbilityEntity entityOrbR =  Instantiate(this.abilityEntitites[2], agent.transform.position, Quaternion.Euler(0,0,0));
+
+        //Attach the orbs to the player so that it moves with the player
+        entityOrbL.transform.parent = agent;
+        entityOrbR.transform.parent = agent;
 
         //LOG Cast
-        Debug.Log("SpecialAbility: " + this.GetAnimationStateName() + " is casting");
+        Debug.Log("SpecialAbility: " + this.GetAnimationStateName() + " is in casting state");
     }
 
-    public void Channeling()
+    public override void Channeling()
     {
-        Debug.Log("SpecialAbility: " + this.GetAnimationStateName() + " is channeling");
-        //Play the animation
-        //Generate the dome that will surround Eston is this an abilityEntity? Something that spawns and has a hitbox?
+        if(!triggerChannelingStateOnce)
+        {
+            Debug.Log("SpecialAbility: " + this.GetAnimationStateName() + " is in channeling state");
+            //Play the animation
+            
+            //AddSpawnedAbilityEntity(entity);
 
+
+            ActivateChannelingStateOnce();
+        }
     }
 
-    public void Action()
+    public override void Action()
     {
-        Debug.Log("SpecialAbility: " + this.GetAnimationStateName() + " is in action state");
-        //Play the animation
-        //Deal damage to a target that is hit
-        //Proceed to the next animation
+        if(!triggerActionStateOnce)
+        {
+            Debug.Log("SpecialAbility: " + this.GetAnimationStateName() + " is in action state");
+            //Play the animation
+
+            //Generate the dome that will surround Eston is this an abilityEntity? Something that spawns and has a hitbox?
+            AbilityEntity entity =  Instantiate(this.abilityEntitites[0], agent.transform.position, Quaternion.Euler(-90,0,0));
+
+            //Attach the dome to the player so that it moves with the player
+            entity.transform.parent = agent;
+
+            //Proceed to the next animation
+            ActivateActionStateOnce();
+        }
     }
 
-    public void Recoil()
+    public override void Recoil()
     {
         Debug.Log("SpecialAbility: " + this.GetAnimationStateName() + " is in action recoiling");
     }

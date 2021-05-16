@@ -52,6 +52,9 @@ MonoBehaviour:
   actionTime: 0
   recoilTime: 0
   cooldownTime: 0
-  abilityType: 0
-  abilityEntities: []
+  abilityType: 3
+  abilityEntitites:
+  - {fileID: 3511284968023359152, guid: 39a356f6b5ba843779825b7d5968791e, type: 3}
+  - {fileID: 6101981132402809354, guid: 058c0ff8dbbb04677920a67aad21ddd8, type: 3}
+  - {fileID: 9157800875968503840, guid: 23a6fab3a4b8c49978516a2585a771be, type: 3}
   toggleDebug: 0

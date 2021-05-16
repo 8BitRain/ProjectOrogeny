@@ -965,15 +965,15 @@ AnimatorStateMachine:
   - {fileID: 8234256800479681521}
   m_EntryTransitions: []
   m_StateMachineTransitions:
-  - first: {fileID: 7301144703665044992}
-    second:
-    - {fileID: 7709893094815652716}
   - first: {fileID: -2691575954552400470}
     second:
     - {fileID: 7395151761840687573}
     - {fileID: -3918229980930804404}
     - {fileID: 1307314891604480243}
     - {fileID: 2567303536561976509}
+  - first: {fileID: 7301144703665044992}
+    second:
+    - {fileID: 7709893094815652716}
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 700, y: -110, z: 0}
   m_EntryPosition: {x: -250, y: -20, z: 0}
@@ -1010,7 +1010,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: eston_reflector_channel
-  m_Speed: 1
+  m_Speed: 1.5
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 2523117949244091968}
@@ -1108,7 +1108,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: eston_reflector_cast
-  m_Speed: 1
+  m_Speed: 1.5
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -1455125768961568277}

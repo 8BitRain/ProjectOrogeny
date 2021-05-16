@@ -35,6 +35,18 @@ public abstract class SpecialAbility : MonoBehaviour
     /* cooldownTime: The time it takes to cast the ability Useful for animation/movement lock */
     public float cooldownTime = 0;
 
+    /* triggerCastStateOnce: Locks the State method (Channeling, Action, etc) to firing only once */
+    protected bool triggerCastStateOnce = false;
+
+    /* triggerCastStateOnce: Locks the State method (Channeling, Action, etc) to firing only once */
+    protected bool triggerChannelingStateOnce = false;
+
+    /* triggerCastStateOnce: Locks the State method (Channeling, Action, etc) to firing only once */
+    protected bool triggerActionStateOnce = false;
+
+    /* triggerCastStateOnce: Locks the State method (Channeling, Action, etc) to firing only once */
+    protected bool triggerRecoilStateOnce = false;
+
     /* cooldownTimer: timer until cooldown is complete */
     protected float cooldownTimer = 0;
 
@@ -48,13 +60,17 @@ public abstract class SpecialAbility : MonoBehaviour
     protected bool _initialized = false;
 
 
+
+
     //Special Attack Spawn Settings
     [Header("Special Ability Type Settings")]
     public AbilityType abilityType;
     public enum AbilityType {Beam, Throw, Physical, Emission};
 
     //Attached AbilityEntitity(s)
-    public AbilityEntity[] abilityEntities;
+    public AbilityEntity[] abilityEntitites;
+
+    protected List<AbilityEntity> spawnedAbilityEntities;
     
     //Information about the skillUser
     /* Animator: The spawn Location of this ability*/
@@ -118,6 +134,18 @@ public abstract class SpecialAbility : MonoBehaviour
     }
 
     public virtual void UpdateAbility(){}
+
+    public virtual void Cast(){}
+    public void ActivateCastStateOnce(){this.triggerActionStateOnce = true;}
+
+    public virtual void Channeling(){}
+    public void ActivateChannelingStateOnce(){this.triggerChannelingStateOnce = true;}
+
+    public virtual void Action(){}
+    public void ActivateActionStateOnce(){this.triggerActionStateOnce = true;}
+
+    public virtual void Recoil(){}
+    public void ActivateRecoilStateOnce(){this.triggerRecoilStateOnce = true;}
 
     public void DestroyAbility()
     {
@@ -185,6 +213,11 @@ public abstract class SpecialAbility : MonoBehaviour
     public void ResetTimer()
     {
         this._timer = 0;
+    }
+
+    public void AddSpawnedAbilityEntity(AbilityEntity abilityEntity)
+    {
+        this.spawnedAbilityEntities.Add(abilityEntity);
     }
 
 }

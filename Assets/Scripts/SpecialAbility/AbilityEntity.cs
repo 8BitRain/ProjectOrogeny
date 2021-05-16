@@ -8,21 +8,53 @@ using Cinemachine;
 public abstract class AbilityEntity : MonoBehaviour
 {
     [Header("Ability Entity")]
-    /* name: The name of the ability entity*/ 
+    /* entityName: The name of the ability entity*/ 
     public System.String entityName;
 
-    /* name: The hitbox attached to the entity*/
+    /* entityName: The duration of the ability entity*/ 
+    public float duration;
+
+    /* hitBox: The hitbox attached to the entity*/
     public HitBox hitBox;
+
+    protected float _timer;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        SetTimer(duration);
+        InitializeAbilityEntity();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(_timer > 0)
+        {
+            _timer -= Time.deltaTime;
+            Debug.Log("Timer running");
+        }
+
+        //Ability Entity is completed. Delete it
+        if(_timer <= 0)
+        {
+            Destroy(this.gameObject);
+        }
+
+        UpdateAbilityEntity();
+    }
+
+    public virtual void UpdateAbilityEntity(){}
+
+    public virtual void InitializeAbilityEntity(){}
+
+    public void SetDuration(float time)
+    {
+        this.duration = time;
+    }
+
+    public void SetTimer(float time)
+    {
+        this._timer = time;
     }
 }

@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Scenes/LAB/CombatLab.unity
+    guid: d2db4ef6a05e744e7bc647af4fff99cb
   m_configObjects: {}
