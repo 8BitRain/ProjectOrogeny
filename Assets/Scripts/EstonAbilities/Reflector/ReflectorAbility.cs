@@ -72,6 +72,11 @@ public class ReflectorAbility : SpecialAbility
         //Play the animation
         //this.agentAnimator.Play(GetAnimationStateName());
 
+        //Make the player float. 
+        agent.GetComponent<ThirdPersonMovement>().SetPlayerGravity(false);
+        //agent.GetComponent<ThirdPersonMovement>()._controller.Move(Vector3.up * 50 * Time.deltaTime);
+        StartCoroutine(FloatPlayer(3, agent.GetComponent<ThirdPersonMovement>()._controller));
+
 
         //Wait a certain number of seconds
         //Proceed to the next state of the ability
@@ -115,6 +120,9 @@ public class ReflectorAbility : SpecialAbility
             //Attach the dome to the player so that it moves with the player
             entity.transform.parent = agent;
 
+            //Have the player affected by gravity again.
+            agent.GetComponent<ThirdPersonMovement>().SetPlayerGravity(true);
+
             //Proceed to the next animation
             ActivateActionStateOnce();
         }
@@ -123,5 +131,19 @@ public class ReflectorAbility : SpecialAbility
     public override void Recoil()
     {
         Debug.Log("SpecialAbility: " + this.GetAnimationStateName() + " is in action recoiling");
+    }
+
+    IEnumerator FloatPlayer (float time, CharacterController controller) 
+    {
+        float elapsedTime = 0;
+
+        
+        //Rise
+        while (elapsedTime < time)
+        {
+            controller.Move(Vector3.up * 2 * Time.deltaTime);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
     }
 }

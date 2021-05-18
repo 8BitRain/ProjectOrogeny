@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: additive_particle
-  m_Shader: {fileID: -6465566751694194690, guid: 3fe6c0cfc387c4094b1941b873b9c08a,
+  m_Name: vfx_GoldenOrbisAura 1
+  m_Shader: {fileID: -6465566751694194690, guid: 3b1150a30dcc44f6b929d6a383db9bbb,
     type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -20,10 +20,16 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - Texture2D_CADCF71B:
-        m_Texture: {fileID: 10300, guid: 0000000000000000f000000000000000, type: 0}
+    - Texture2D_DF2EA108:
+        m_Texture: {fileID: 2800000, guid: 04569ccfcf2da48d29d3a9f27430c896, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    m_Floats: []
+    m_Floats:
+    - Vector1_5A2239FA: 1.27
+    - Vector1_75D09F7B: 2
+    - Vector1_E8D508C3: 5
+    - Vector1_F8FE299D: 0.1
     m_Colors:
-    - Color_5D392A5: {r: 0.10471931, g: 1.7077296, b: 1.334592, a: 1}
+    - Color_313139D2: {r: 2.6082377, g: 1.338258, b: 0.35504806, a: 0}
+    - Vector2_35F5D10B: {r: 0, g: -0.3, b: 0, a: 0}
+    - Vector2_96A799DC: {r: -0.1, g: -0.5, b: 0, a: 0}

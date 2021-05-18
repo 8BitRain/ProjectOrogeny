@@ -13,6 +13,7 @@ public class ThirdPersonMovement : MonoBehaviour
     public float acceleration = .1f;
     public float friction = .025f;
     public float gravity = -9.81f;
+    public bool applyGravity = true;
     private bool dashInput = false;
     private Vector3 axis;
     private bool _isTilting = false;
@@ -766,9 +767,12 @@ public class ThirdPersonMovement : MonoBehaviour
             {
                 animator.SetBool("Falling", true);
             }
-            _velocity.y += gravity * Time.deltaTime;
-            //Getting a better jumping arc will probably be factored here
-            _controller.Move(_velocity * Time.deltaTime);
+            if(applyGravity)
+            {
+                _velocity.y += gravity * Time.deltaTime;
+                //Getting a better jumping arc will probably be factored here
+                _controller.Move(_velocity * Time.deltaTime);
+            }
 
             //Special Attack Aiming Logic (Aims to Center of Screen)
             Ray ray = cam.gameObject.GetComponent<Camera>().ScreenPointToRay(new Vector3(cam.gameObject.GetComponent<Camera>().pixelWidth/2, cam.gameObject.GetComponent<Camera>().pixelHeight/2, 0));
@@ -990,6 +994,10 @@ public class ThirdPersonMovement : MonoBehaviour
         
     }
 
+    public void SetPlayerGravity(bool toggle)
+    {
+        this.applyGravity = toggle;
+    }
 
     void Dash()
     {
