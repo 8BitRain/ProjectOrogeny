@@ -117,14 +117,27 @@ public abstract class SpecialAbility : MonoBehaviour
 
         if(spawn == null || agent == null || agentAnimator == null)
         {
+            Debug.Log("SpecialAbility: CreateAbility should fail " + this.gameObject.name);
             this._initialized = false;
         }
         else
         {
             this._initialized = true;
+
+            //Set Ability Entities Agent param
+            /*if(abilityEntitites.Length != 0)
+            {
+                foreach (AbilityEntity entity in abilityEntitites)
+                {
+                    Debug.Log("SpecialAbility.cs: Assigning agent of " + entity.name);
+                    entity.SetAgent(agent);
+                }
+            }*/
         }
 
         //The ability always starts off in a cast state unless the animation state is set to another value.
+        print(GetAnimationStateName());
+        //TODO: Add a test for this function
         this.agentAnimator.Play(GetAnimationStateName());
     }
 
@@ -167,6 +180,7 @@ public abstract class SpecialAbility : MonoBehaviour
     {
         //Example Grounded.Reflector.eston_reflector_cast
         return "Grounded." + char.ToUpper(this.abilityName[0]) + this.abilityName.Substring(1) + "." + this.agent.name.ToLower() + "_" + this.abilityName.ToLower() + "_" + this.abilityState.ToString().ToLower();
+    
     }
 
     //Get's the current animation name from the animator

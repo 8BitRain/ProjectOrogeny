@@ -1,0 +1,395 @@
+fileFormatVersion: 2
+guid: fa38375c2671c4ead83be82d06f604a0
+ModelImporter:
+  serializedVersion: 19300
+  internalIDToNameTable:
+  - first:
+      74: -2639861551179211202
+    second: eston_rig|ability_reflector_cast
+  - first:
+      74: -7150419346988395592
+    second: eston_rig|ability_reflector_cast.001
+  - first:
+      74: -2326530363683430632
+    second: eston_rig|ability_reflector_channel
+  - first:
+      74: 2456745458095455451
+    second: eston_rig|ability_reflector_channel.001
+  - first:
+      74: 2287914358745745316
+    second: eston_rig|ability_reflector_effect
+  - first:
+      74: -2941614041354890823
+    second: eston_rig|ability_reflector_effect.001
+  - first:
+      74: 2729916137779268967
+    second: eston_rig|backflip
+  - first:
+      74: 7063750052547296857
+    second: eston_rig|backflip.001
+  - first:
+      74: -6684839888101049477
+    second: eston_rig|combat_0_rightStraightPunch
+  - first:
+      74: -1337017778678756631
+    second: eston_rig|combat_0_rightStraightPunch.001
+  - first:
+      74: 7090853510475946735
+    second: eston_rig|combat_1_leftHook
+  - first:
+      74: -1053359716123008151
+    second: eston_rig|combat_1_leftHook.001
+  - first:
+      74: -9168931373570311453
+    second: eston_rig|combat_1_leftHook.002
+  - first:
+      74: 2718005165006954958
+    second: eston_rig|combat_1_leftHook.002_legLiftExperiment
+  - first:
+      74: -7454912123084500352
+    second: eston_rig|combat_1_leftHook.002_legLiftExperiment.001
+  - first:
+      74: -1371476859849812348
+    second: eston_rig|combat_1_leftHook.002_legLiftExperiment.002
+  - first:
+      74: -7177183551892909077
+    second: eston_rig|combat_1_leftHook.003
+  - first:
+      74: -7787434496600602468
+    second: eston_rig|combat_2_jumpingMeiaLua
+  - first:
+      74: 8407957344488900584
+    second: eston_rig|combat_2_jumpingMeiaLua.001
+  - first:
+      74: -2911302440251711092
+    second: eston_rig|combat_2_jumpingMeiaLua.002
+  - first:
+      74: 5615522873010877119
+    second: eston_rig|combat_2_jumpingMeiaLua.003
+  - first:
+      74: -5874491249689332878
+    second: eston_rig|combat_2_jumpingMeiaLua.004
+  - first:
+      74: -345316435789450538
+    second: eston_rig|combat_3_shieldBash
+  - first:
+      74: 736754234888724559
+    second: eston_rig|combat_groundCombo1
+  - first:
+      74: 4094870326983060388
+    second: eston_rig|combat_groundCombo2
+  - first:
+      74: -5975053714645437001
+    second: eston_rig|combat_groundCombo2.001
+  - first:
+      74: 6386556879740190596
+    second: eston_rig|combat_hookPunchRight
+  - first:
+      74: -5304613623134362205
+    second: eston_rig|combat_hookPunchRight.001
+  - first:
+      74: -752653771032695824
+    second: eston_rig|combat_jabRight
+  - first:
+      74: -4427181248487029625
+    second: eston_rig|combat_jabRight.001
+  - first:
+      74: -7888320342414552889
+    second: eston_rig|combat_parry
+  - first:
+      74: -8571687045627621810
+    second: eston_rig|combat_parry.001
+  - first:
+      74: 6726348013396578973
+    second: eston_rig|combat_shieldBash
+  - first:
+      74: -8748982614358305325
+    second: eston_rig|combat_shieldBash.001
+  - first:
+      74: -586044569432148642
+    second: eston_rig|combat_shieldGaurd
+  - first:
+      74: -5101673776621147762
+    second: eston_rig|combat_shieldHookLeft
+  - first:
+      74: -9200968973228944347
+    second: eston_rig|combat_shieldThrow
+  - first:
+      74: 7204929316841427875
+    second: eston_rig|combat_shieldThrow.001
+  - first:
+      74: -3205466676804069141
+    second: eston_rig|combat_straightPunchRight
+  - first:
+      74: 2830454546834144636
+    second: eston_rig|combat_straightPunchRight.001
+  - first:
+      74: -7760121358998745121
+    second: eston_rig|combat_temp_spinkick
+  - first:
+      74: -8829027688999028496
+    second: eston_rig|falling
+  - first:
+      74: -5649991619822916180
+    second: eston_rig|idle
+  - first:
+      74: 481700584426639545
+    second: eston_rig|idle.001
+  - first:
+      74: -5786856996621874915
+    second: eston_rig|Run
+  - first:
+      74: 5590089517128130185
+    second: eston_rig|Run.001
+  - first:
+      74: -1294322685268714251
+    second: eston_rig|shieldKick
+  - first:
+      74: -8100485318708256054
+    second: eston_rig|shieldKick.001
+  - first:
+      74: 377512178569031355
+    second: eston_rig|shieldKickSpinComcept
+  - first:
+      74: -6990612372859933888
+    second: eston_rig|shieldSpinningKick
+  - first:
+      74: -2804849281104750770
+    second: eston_rig|sideDodgeLeft
+  - first:
+      74: -1362074510103545521
+    second: eston_rig|sideDodgeLeft.001
+  - first:
+      74: 209590373292755676
+    second: eston_rig|sideDodgeRight
+  - first:
+      74: -3306720706957531895
+    second: eston_rig|sideDodgeRight.001
+  - first:
+      74: -5971053573480235257
+    second: eston_rig|WallRunLeft
+  - first:
+      74: 1332121575580722631
+    second: eston_rig|WallRunLeft.001
+  - first:
+      74: -3812084724311684749
+    second: eston_rig|WallRunRight
+  - first:
+      74: 3592280738028823640
+    second: eston_rig|Stance
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Faceplate
+    second: {fileID: 2100000, guid: dc4fe04b7e7d04e84bebf0769d49b0cb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Faceplate.001
+    second: {fileID: 2100000, guid: 381ca1877a8ea40218ebcee689e70118, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Gorget_Neck
+    second: {fileID: 2100000, guid: 157aaf7dbe22145f793a9d7485496c15, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Gorget_Neck.001
+    second: {fileID: 2100000, guid: 381ca1877a8ea40218ebcee689e70118, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: eston_body
+    second: {fileID: 2100000, guid: d297f2376e4bc4c3e9192c783bfb2287, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: eston_body.001
+    second: {fileID: 2100000, guid: 381ca1877a8ea40218ebcee689e70118, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: eston_face_brown
+    second: {fileID: 2100000, guid: 432c70cc9190d4dffb6a2c3e18770ff3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: eston_face_brown.001
+    second: {fileID: 2100000, guid: 381ca1877a8ea40218ebcee689e70118, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: eston_hairline.001
+    second: {fileID: 2100000, guid: 381ca1877a8ea40218ebcee689e70118, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: eston_underarmor_legs_black
+    second: {fileID: 2100000, guid: 34129c64bc9ba40efa8e6915ccafb1cf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: eston_underarmor_legs_black.001
+    second: {fileID: 2100000, guid: 381ca1877a8ea40218ebcee689e70118, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: eston_underarmor_torso_imperial
+    second: {fileID: 2100000, guid: 34129c64bc9ba40efa8e6915ccafb1cf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: eston_underarmor_torso_imperial.001
+    second: {fileID: 2100000, guid: 381ca1877a8ea40218ebcee689e70118, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: hair_black
+    second: {fileID: 2100000, guid: b9d3f9e6a62184978a8a364aef5a72e6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: hair_black.001
+    second: {fileID: 2100000, guid: 381ca1877a8ea40218ebcee689e70118, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: mask_imperial
+    second: {fileID: 2100000, guid: 34129c64bc9ba40efa8e6915ccafb1cf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: mask_imperial.001
+    second: {fileID: 2100000, guid: 381ca1877a8ea40218ebcee689e70118, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sash
+    second: {fileID: 2100000, guid: dc4fe04b7e7d04e84bebf0769d49b0cb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sash.001
+    second: {fileID: 2100000, guid: 381ca1877a8ea40218ebcee689e70118, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: steel
+    second: {fileID: 2100000, guid: 157aaf7dbe22145f793a9d7485496c15, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: steel.001
+    second: {fileID: 2100000, guid: 381ca1877a8ea40218ebcee689e70118, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: steel.002
+    second: {fileID: 2100000, guid: 157aaf7dbe22145f793a9d7485496c15, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: steel.003
+    second: {fileID: 2100000, guid: 381ca1877a8ea40218ebcee689e70118, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: trousers_imperial
+    second: {fileID: 2100000, guid: 34129c64bc9ba40efa8e6915ccafb1cf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: trousers_imperial.001
+    second: {fileID: 2100000, guid: 381ca1877a8ea40218ebcee689e70118, type: 2}
+  materials:
+    materialImportMode: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

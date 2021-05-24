@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1235534763280769269
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2654873064302651242}
+  - component: {fileID: 6672395214841735158}
+  m_Layer: 0
+  m_Name: GoldenOrbisAbility
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2654873064302651242
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1235534763280769269}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6672395214841735158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1235534763280769269}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32101640e658749d68bbb52bff82865d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  abilityName: GoldenOrbis
+  abilitySpeed: 5
+  duration: 15
+  abilityState: 0
+  castTime: 0
+  channelingTime: 0
+  actionTime: 0
+  recoilTime: 0
+  cooldownTime: 0
+  abilityType: 0
+  abilityEntitites:
+  - {fileID: 8666265757920337330, guid: a71501b90eded4ba292317f1c29e97aa, type: 3}
+  - {fileID: 6101981132402809354, guid: 058c0ff8dbbb04677920a67aad21ddd8, type: 3}
+  - {fileID: 9157800875968503840, guid: 23a6fab3a4b8c49978516a2585a771be, type: 3}
+  toggleDebug: 0

@@ -4,14 +4,22 @@ using UnityEngine;
 
 public class GoldenOrbisAbilityEntity : AbilityEntity
 {
-    public Transform Agent;
     public override void UpdateAbilityEntity()
     {
-        if(Agent.GetComponent<Animator>() != null)
+        try
         {
-            //GetCurrentAnimationStateName();
-            //this.GetComponent<Animator>().Play(GetCurrentAnimationStateName());
-            PlayCloneAnimation();
+            print("AGENT: " + this.GetAgent());
+            if(this.GetAgent().GetComponent<Animator>() != null)
+            {
+                //GetCurrentAnimationStateName();
+                //this.GetComponent<Animator>().Play(GetCurrentAnimationStateName());
+                PlayCloneAnimation();
+            }   
+        }
+        catch (System.Exception)
+        {
+            Debug.Log("Golden Orbis Ability has no attached agent");
+            throw;
         }
     }
 
@@ -23,8 +31,8 @@ public class GoldenOrbisAbilityEntity : AbilityEntity
     //Get's the current animation name from the animator
     public string GetCurrentAnimationStateName()
     {
-        Debug.Log(this.Agent.GetComponent<Animator>().GetCurrentAnimatorClipInfo(0)[0].clip.name);
-        return this.Agent.GetComponent<Animator>().GetCurrentAnimatorClipInfo(0)[0].clip.name;
+        Debug.Log(this.agent.GetComponent<Animator>().GetCurrentAnimatorClipInfo(0)[0].clip.name);
+        return this.agent.GetComponent<Animator>().GetCurrentAnimatorClipInfo(0)[0].clip.name;
     }
 
     public void PlayCloneAnimation()

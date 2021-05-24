@@ -19,6 +19,13 @@ public abstract class AbilityEntity : MonoBehaviour
 
     protected float _timer;
 
+    protected bool _initialized;
+
+    //Information about the skillUser
+    /* Agent: The skill userr*/ 
+    [HideInInspector]protected Transform agent;
+    /* Animator: The animator to be used for this ability*/ 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -56,5 +63,16 @@ public abstract class AbilityEntity : MonoBehaviour
     public void SetTimer(float time)
     {
         this._timer = time;
+    }
+
+    public void SetAgent(Transform agent)
+    {
+        print("Agent to pass: " + agent.name);
+        this.agent = agent; 
+    }
+
+    public Transform GetAgent()
+    {
+        return this.agent;
     }
 }

@@ -6,7 +6,6 @@ public class ReflectorVFXEntity : AbilityEntity
 {
     public Transform[] path; 
     public Vector3[] path2;
-    public Transform Agent;
     // Start is called before the first frame update
     /*void Start()
     {
