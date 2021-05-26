@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
 {
     [Header("Players")]
     public Transform[] spawnedPlayers;
+    public bool choosePlayerSpawn;
+    public Transform[] spawnedPlayerPosition;
 
     [Header("Antagonists")]
     public Transform[] enemies;
@@ -57,7 +59,10 @@ public class GameManager : MonoBehaviour
                 spawnedPlayers[0].tag = "P1";   
                 //TODO change this function to grab the correct character name.
                 //Mesko, Eston, Jaco
-                spawnedPlayers[0].Find("Third Person Character").GetChild(0).tag = "P1";
+                Transform spawnedPlayerCharacter = spawnedPlayers[0].Find("Third Person Character").GetChild(0);
+                spawnedPlayerCharacter.tag = "P1";
+
+
                 spawnedPlayers[0].GetComponentInChildren<CinemachineInputProvider>().PlayerIndex = InputUser.all[0].index;
 
                 GameObject[] virtualCameras = GameObject.FindGameObjectsWithTag("VirtualCamera");
@@ -70,6 +75,12 @@ public class GameManager : MonoBehaviour
 
                 spawnedPlayers[0].name = "P1";
                 spawnedPlayers[0].gameObject.SetActive(true);
+
+                if(choosePlayerSpawn)
+                {
+                    Debug.Log("Spawning Player: " + spawnedPlayerCharacter.name);
+                    SpawnPlayerAtPosition(spawnedPlayerPosition[0].position, spawnedPlayerCharacter);
+                }
 
                 //Setup Player 1 UI
                 setupUI(1);
@@ -206,22 +217,37 @@ public class GameManager : MonoBehaviour
 
     public void displayEnemyHealthBar()
     {
-        foreach (Transform enemy in enemies)
+        if(enemies.Length != 0)
         {
-            HealthBar enemyHealthBar = enemy.GetComponent<Bladeclubber>().healthBar;
-            RectTransform enemyHealthBarRT = enemyHealthBar.gameObject.GetComponent<RectTransform>();
-            enemyHealthBar.PositionEnemyHealthBar(spawnedPlayers[0].GetComponentInChildren<ThirdPersonMovement>().cam.GetComponent<Camera>(), enemy, spawnedPlayers[0].GetComponentInChildren<ThirdPersonMovement>().transform);
+            foreach (Transform enemy in enemies)
+            {
+                HealthBar enemyHealthBar = enemy.GetComponent<Bladeclubber>().healthBar;
+                RectTransform enemyHealthBarRT = enemyHealthBar.gameObject.GetComponent<RectTransform>();
+                enemyHealthBar.PositionEnemyHealthBar(spawnedPlayers[0].GetComponentInChildren<ThirdPersonMovement>().cam.GetComponent<Camera>(), enemy, spawnedPlayers[0].GetComponentInChildren<ThirdPersonMovement>().transform);
+            }
         }
     }
 
     public void displayEnemyPoiseBar()
     {
-        foreach (Transform enemy in enemies)
+        if(enemies.Length != 0)
         {
-            PoiseMeter enemyPoiseMeter = enemy.GetComponent<Bladeclubber>().poiseMeter;
-            RectTransform enemyPoiseMeterRT = enemyPoiseMeter.gameObject.GetComponent<RectTransform>();
-            enemyPoiseMeter.PositionEnemyPoiseMeter(spawnedPlayers[0].GetComponentInChildren<ThirdPersonMovement>().cam.GetComponent<Camera>(), enemy, spawnedPlayers[0].GetComponentInChildren<ThirdPersonMovement>().transform);
+            foreach (Transform enemy in enemies)
+            {
+                PoiseMeter enemyPoiseMeter = enemy.GetComponent<Bladeclubber>().poiseMeter;
+                RectTransform enemyPoiseMeterRT = enemyPoiseMeter.gameObject.GetComponent<RectTransform>();
+                enemyPoiseMeter.PositionEnemyPoiseMeter(spawnedPlayers[0].GetComponentInChildren<ThirdPersonMovement>().cam.GetComponent<Camera>(), enemy, spawnedPlayers[0].GetComponentInChildren<ThirdPersonMovement>().transform);
+            }
         }
+    }
+
+    public void SpawnPlayerAtPosition(Vector3 position, Transform player)
+    {
+        Debug.Log("Spawning player at: " + position);
+        //Turn character controller off to teleport player
+        player.GetComponent<CharacterController>().enabled = false;
+        player.position = position;
+        player.GetComponent<CharacterController>().enabled = true;
     }
 
 

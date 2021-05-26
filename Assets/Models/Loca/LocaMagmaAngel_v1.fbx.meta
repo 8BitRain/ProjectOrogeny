@@ -1,0 +1,238 @@
+fileFormatVersion: 2
+guid: d7e9d515957d546ff83ce2258c0cc0d2
+ModelImporter:
+  serializedVersion: 19300
+  internalIDToNameTable:
+  - first:
+      74: 3244176207696628330
+    second: BASE_MagmaAngel|BASE_Low Poly Man.001Action
+  - first:
+      74: 8975407440928304230
+    second: BASE_MagmaAngel|CubeAction
+  - first:
+      74: -7443209166700857873
+    second: BASE_MagmaAngel|CubeAction.001
+  - first:
+      74: 8800818882961427930
+    second: BASE_MagmaAngel|CubeAction.002
+  - first:
+      74: -5587003816947812313
+    second: BASE_MagmaAngel|CubeAction.003
+  - first:
+      74: -7123663297108538268
+    second: BASE_MagmaAngel|CubeAction.004
+  - first:
+      74: 247324289308698978
+    second: BASE_MagmaAngel|CubeAction.005
+  - first:
+      74: -5533080372298111512
+    second: BASE_MagmaAngel|CubeAction.006
+  - first:
+      74: 272509774210471061
+    second: BASE_MagmaAngel|MagmaAngelWing_1Action
+  - first:
+      74: 3895967730614548060
+    second: BASE_MagmaAngel|MagmaAngelWing_1Action.001
+  - first:
+      74: 7589975624780782573
+    second: BASE_MagmaAngel|MagmaAngelWing_1Action.002
+  - first:
+      74: -6389171324003263247
+    second: MagmaAngelWing_1|BASE_Low Poly Man.001Action
+  - first:
+      74: -1232054040841182985
+    second: MagmaAngelWing_1|CubeAction
+  - first:
+      74: 831098020150531251
+    second: MagmaAngelWing_1|CubeAction.001
+  - first:
+      74: 3991639597378005588
+    second: MagmaAngelWing_1|CubeAction.002
+  - first:
+      74: -733979251853099307
+    second: MagmaAngelWing_1|CubeAction.003
+  - first:
+      74: -5770367831449589695
+    second: MagmaAngelWing_1|CubeAction.004
+  - first:
+      74: 5166588955346336141
+    second: MagmaAngelWing_1|CubeAction.005
+  - first:
+      74: -9021629126828691349
+    second: MagmaAngelWing_1|CubeAction.006
+  - first:
+      74: 8088044622293796145
+    second: MagmaAngelWing_1|MagmaAngelWing_1Action
+  - first:
+      74: 6359859957908010364
+    second: MagmaAngelWing_1|MagmaAngelWing_1Action.001
+  - first:
+      74: 1623386219700408181
+    second: MagmaAngelWing_1|MagmaAngelWing_1Action.002
+  - first:
+      74: -307047052169143931
+    second: MagmaAngelWing_2|BASE_Low Poly Man.001Action
+  - first:
+      74: -910562040303249892
+    second: MagmaAngelWing_2|CubeAction
+  - first:
+      74: -4747314451813248973
+    second: MagmaAngelWing_2|CubeAction.001
+  - first:
+      74: -7038690238945161849
+    second: MagmaAngelWing_2|CubeAction.002
+  - first:
+      74: -1328282127656893046
+    second: MagmaAngelWing_2|CubeAction.003
+  - first:
+      74: -2393183311702951627
+    second: MagmaAngelWing_2|CubeAction.004
+  - first:
+      74: 1658723967410054844
+    second: MagmaAngelWing_2|CubeAction.005
+  - first:
+      74: 3979021621218961349
+    second: MagmaAngelWing_2|CubeAction.006
+  - first:
+      74: -4968981392414878629
+    second: MagmaAngelWing_2|MagmaAngelWing_1Action
+  - first:
+      74: -6677366998316656321
+    second: MagmaAngelWing_2|MagmaAngelWing_1Action.001
+  - first:
+      74: 3362483487925581150
+    second: MagmaAngelWing_2|MagmaAngelWing_1Action.002
+  - first:
+      74: -6951319082687077369
+    second: MagmaAngelWing_3|BASE_Low Poly Man.001Action
+  - first:
+      74: -3161580498909993209
+    second: MagmaAngelWing_3|CubeAction
+  - first:
+      74: -2657568644314958458
+    second: MagmaAngelWing_3|CubeAction.001
+  - first:
+      74: -8015391826519816216
+    second: MagmaAngelWing_3|CubeAction.002
+  - first:
+      74: 6119660587248307409
+    second: MagmaAngelWing_3|CubeAction.003
+  - first:
+      74: 4871640501749146563
+    second: MagmaAngelWing_3|CubeAction.004
+  - first:
+      74: -6103273984783628108
+    second: MagmaAngelWing_3|CubeAction.005
+  - first:
+      74: -2329433860293374971
+    second: MagmaAngelWing_3|CubeAction.006
+  - first:
+      74: 2110934528997318914
+    second: MagmaAngelWing_3|MagmaAngelWing_1Action
+  - first:
+      74: 3045077805648814220
+    second: MagmaAngelWing_3|MagmaAngelWing_1Action.001
+  - first:
+      74: 2481498089898391292
+    second: MagmaAngelWing_3|MagmaAngelWing_1Action.002
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Body.MagmaAngel
+    second: {fileID: 2100000, guid: f8746dc78720b44c99cabc1d4be413fa, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Rust
+    second: {fileID: 2100000, guid: d4ea4451aaac641f9938c7ca3b37b532, type: 2}
+  materials:
+    materialImportMode: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
