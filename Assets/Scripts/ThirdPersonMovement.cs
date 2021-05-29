@@ -267,7 +267,10 @@ public class ThirdPersonMovement : MonoBehaviour
         //We are in the air!
         if(!_isGrounded)
         {
-            if(dustTrails != null) dustTrails.SetActive(false);
+            if(!_isWallRunning)
+            {
+                if(dustTrails != null) dustTrails.SetActive(false);
+            }
             //Raycast and see if we are facing a ledge
             //print("Airborne");
             RaycastHit ledgeSeekerHit;
@@ -345,13 +348,8 @@ public class ThirdPersonMovement : MonoBehaviour
                     }
                 }
 
-                if(dustTrails != null && direction.magnitude != 0) 
-                {
-                    dustTrails.SetActive(true);
-                } else if(direction.magnitude == 0)
-                {
-                    dustTrails.SetActive(false);
-                }
+                //Dust Trails VFX
+                TriggerDustTrails(direction);
 
             }
 
@@ -366,15 +364,15 @@ public class ThirdPersonMovement : MonoBehaviour
             }
             if(isWallRight && enviromentActionInput)
             {
-                StartWallRun("right");
+                StartWallRun("right", direction);
             }
             if(isWallLeft && enviromentActionInput)
             {
-                StartWallRun("left");
+                StartWallRun("left", direction);
             }
             if(isWallInFront && enviromentActionInput)
             {
-                StartWallRun("front");
+                StartWallRun("front", direction);
             }
             if(!isWallLeft && !isWallRight && !isWallInFront || !enviromentActionInput)
             {
@@ -1268,28 +1266,45 @@ public class ThirdPersonMovement : MonoBehaviour
         return _actionTimer;
     }
 
-    void StartWallRun(string direction)
+    void StartWallRun(string direction, Vector3 directionVector)
     {
         animator.SetBool("WallRunning", true);
         animator.SetBool("Jumping", false);
+
+        TriggerDustTrails(directionVector);
+
         if(direction == "right")
         {
             //TODO: Implement 
-            animatorOverrideController["rig|wallRunLeft"] = wallRunningAnimationClip[0];
+            Debug.Log("StartWallRun: " + "Wall is to the Right.");
+            animatorOverrideController["eston_rig|WallRunLeft"] = wallRunningAnimationClip[0];
         }
 
         if(direction == "left")
         {
-            animatorOverrideController["rig|wallRunLeft"] = wallRunningAnimationClip[1];
+            Debug.Log("StartWallRun: " + "Wall is to the Left.");
+            animatorOverrideController["eston_rig|WallRunLeft"] = wallRunningAnimationClip[1];
         }
 
         if(direction == "front")
         {
-            animatorOverrideController["rig|wallRunLeft"] = wallRunningAnimationClip[2];
+            Debug.Log("StartWallRun: " + "Wall is in Front.");
+            animatorOverrideController["eston_rig|WallRunLeft"] = wallRunningAnimationClip[2];
         }
 
         print("wallrunning");
         _isWallRunning = true;
+    }
+
+    void TriggerDustTrails(Vector3 directionVector)
+    {
+        if(dustTrails != null && directionVector.magnitude != 0) 
+        {
+            dustTrails.SetActive(true);
+        } else if(directionVector.magnitude == 0)
+        {
+             dustTrails.SetActive(false);
+        }
     }
 
     void ExitWallRun()
@@ -1452,6 +1467,12 @@ public class ThirdPersonMovement : MonoBehaviour
 
     void Mantle()
     {
+        animator.SetBool("Falling", false);
+        if(!this.animator.GetCurrentAnimatorStateInfo(0).IsName("mantle"))
+        {
+            animator.Play("Grounded.mantle");
+        }
+
         canMove = false;
         if(_mantleTimer <= .5f)
         {
@@ -1464,8 +1485,8 @@ public class ThirdPersonMovement : MonoBehaviour
         }
         _mantleTimer += Time.deltaTime;
 
-        animator.SetBool("Landing", true);
-        animator.SetBool("Falling", false);
+        //animator.SetBool("Landing", true);
+        //animator.SetBool("Falling", false);
         print("Mantling");
     }
 

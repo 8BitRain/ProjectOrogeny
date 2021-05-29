@@ -13,7 +13,24 @@ MonoBehaviour:
   m_Name: PrefabPalette-Default
   m_EditorClassIdentifier: 
   prefabs:
-  - gameObject: {fileID: 5131278901837698981, guid: 9008973874f1a456cae78f9112e50510,
+  - gameObject: {fileID: 114165980277382032, guid: 6bbefee9edc0f4148a20fe49409c633c,
+      type: 3}
+    settings:
+      m_Strength: 50
+      m_RotationRangeMin: {x: 0, y: 0, z: 0}
+      m_RotationRangeMax: {x: 59.60265, y: 0, z: 0}
+      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
+      m_ScaleRangeMax: {x: 2, y: 2, z: 2}
+      m_UniformScale: {x: 1, y: 1}
+      m_UniformBool: 0
+      m_XRotationBool: 1
+      m_YRotationBool: 0
+      m_ZRotationBool: 0
+      m_XScaleBool: 1
+      m_YScaleBool: 1
+      m_ZScaleBool: 1
+    name: AsteroidwMantle
+  - gameObject: {fileID: 114165980277382032, guid: 1ea6ae981eaad4a1c95b201ed2dfa03b,
       type: 3}
     settings:
       m_Strength: 50
@@ -29,4 +46,4 @@ MonoBehaviour:
       m_XScaleBool: 0
       m_YScaleBool: 0
       m_ZScaleBool: 0
-    name: Asteroid_variation4
+    name: AsteroidwWallRun

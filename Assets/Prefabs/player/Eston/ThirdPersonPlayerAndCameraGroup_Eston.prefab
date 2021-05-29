@@ -1608,9 +1608,9 @@ MonoBehaviour:
   Orogene: {fileID: 3697220149502421911}
   Body: {fileID: 7724968650866828350}
   wallRunningAnimationClip:
-  - {fileID: 1742145234810461679, guid: 958778ec87c354760b47db7a2d4bc352, type: 3}
-  - {fileID: 8766899527109677652, guid: 958778ec87c354760b47db7a2d4bc352, type: 3}
-  - {fileID: -1186175002919557899, guid: 958778ec87c354760b47db7a2d4bc352, type: 3}
+  - {fileID: -3812084724311684749, guid: 7021a47d0648646e58c471f61657180e, type: 3}
+  - {fileID: -5971053573480235257, guid: 7021a47d0648646e58c471f61657180e, type: 3}
+  - {fileID: -5786856996621874915, guid: 7021a47d0648646e58c471f61657180e, type: 3}
   jumpingAnimationClip:
   - {fileID: 1742145234810461679, guid: 958778ec87c354760b47db7a2d4bc352, type: 3}
   combatAnimationClip:
@@ -2783,7 +2783,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 991437342543889560}
-  m_LocalRotation: {x: 0.05154675, y: 0.000000002147939, z: -1.10866656e-10, w: 0.9986706}
+  m_LocalRotation: {x: 0.051546745, y: -0.000000002147938, z: 1.108666e-10, w: 0.9986706}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -3493,7 +3493,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1513510514445309743}
-  m_LocalRotation: {x: 0.035190895, y: 0.00000003162307, z: -0.0000000011135339, w: 0.99938065}
+  m_LocalRotation: {x: 0.035190895, y: 0.000000030763285, z: -0.0000000010832585,
+    w: 0.99938065}
   m_LocalPosition: {x: 1.056, y: 4.306695, z: -8.953012}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
