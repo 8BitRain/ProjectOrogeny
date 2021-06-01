@@ -87,6 +87,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
     //Button to trigger enviromental action
     [Header("Enviromental Action")]
+    private bool _attachedToPlatform = false;
     private bool enviromentActionInput = false;
 
     [Header("VFX")]
@@ -179,6 +180,7 @@ public class ThirdPersonMovement : MonoBehaviour
     public Transform cam;
     //This is the reference to the player so we can pull components that are children
     public Transform Orogene;
+    public Transform ParentObj;
 
     private bool canMove = true;
     private bool canPlayerInputMove = true;
@@ -259,11 +261,13 @@ public class ThirdPersonMovement : MonoBehaviour
         _isGrounded = Physics.Raycast(_groundChecker.position, Vector3.down, out groundedRaycast, .2f, Ground);
         if(_isGrounded)
         {
-            //print("grounded");
+            print("grounded");
             //canMove = true;
+            AttachToMovingPlatform(groundedRaycast);
 
         }
 
+        RaycastHit ledgeSeekerRefernce = new RaycastHit();
         //We are in the air!
         if(!_isGrounded)
         {
@@ -274,13 +278,46 @@ public class ThirdPersonMovement : MonoBehaviour
             //Raycast and see if we are facing a ledge
             //print("Airborne");
             RaycastHit ledgeSeekerHit;
-            Vector3 _ledgeSeekerPosition = new Vector3(_groundChecker.position.x, _groundChecker.position.y + this._controller.height, _groundChecker.position.z);
-            if(Physics.Raycast(_ledgeSeekerPosition, _groundChecker.forward, out ledgeSeekerHit, 2f, Ledge))
+            Vector3 _ledgeSeekerPositionHigh = new Vector3(_groundChecker.position.x, _groundChecker.position.y + this._controller.height, _groundChecker.position.z);
+            Vector3 _ledgeSeekerPositionMid = new Vector3(_groundChecker.position.x, _groundChecker.position.y + this._controller.height/2.0f, _groundChecker.position.z);
+            if(Physics.Raycast(_ledgeSeekerPositionHigh, _groundChecker.forward, out ledgeSeekerHit, 2f, Ledge))
             {
-                print("Mantling");
+                print("Mantling: Grabbing Ledge");
                 _isMantling = true;
+                ledgeSeekerRefernce = ledgeSeekerHit;
+
+                if(ledgeSeekerHit.transform.tag == "Asteroid")
+                {
+                    //ledgeReference.transform.GetComponentInParent<>
+                    //Set the parent rigidbody isKinematic to true
+                    print(ledgeSeekerHit.transform.name);
+
+                    //Accessibility feature, when a player lands on a moving platform, have the platform stop moving so the player can keep their footing.
+                    ledgeSeekerHit.transform.GetComponent<MeshCollider>().enabled = false;
+                    ledgeSeekerHit.transform.GetComponent<Rigidbody>().isKinematic = true;
+                    ledgeSeekerHit.transform.GetComponent<MeshCollider>().enabled = true;
+                }
+            } 
+            else if(Physics.Raycast(_ledgeSeekerPositionMid, _groundChecker.forward, out ledgeSeekerHit, 2f, Ledge))
+            {
+                print("Mantling: vaulting");
+                _isMantling = true;
+                ledgeSeekerRefernce = ledgeSeekerHit;
+
+                if(ledgeSeekerHit.transform.tag == "Asteroid")
+                {
+                    //ledgeReference.transform.GetComponentInParent<>
+                    //Set the parent rigidbody isKinematic to true
+                    print(ledgeSeekerHit.transform.name);
+
+                    //Accessibility feature, when a player lands on a moving platform, have the platform stop moving so the player can keep their footing.
+                    ledgeSeekerHit.transform.GetComponent<MeshCollider>().enabled = false;
+                    ledgeSeekerHit.transform.GetComponent<Rigidbody>().isKinematic = true;
+                    ledgeSeekerHit.transform.GetComponent<MeshCollider>().enabled = true;
+                }
             }
-            Debug.DrawRay(_ledgeSeekerPosition, _groundChecker.forward, Color.green);
+            Debug.DrawRay(_ledgeSeekerPositionHigh, _groundChecker.forward, Color.green);
+            Debug.DrawRay(_ledgeSeekerPositionMid, _groundChecker.forward, Color.green);
             
         }
 
@@ -288,7 +325,7 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             if(_mantleTimer < .75f)
             {
-                Mantle();
+                Mantle(ledgeSeekerRefernce);
             }
 
             if(_mantleTimer >= .75f)
@@ -475,10 +512,13 @@ public class ThirdPersonMovement : MonoBehaviour
                     Vector3 slopeNormal;
                     if(Physics.Raycast(_groundChecker.position, Vector3.down, out slopeHit, GroundDistance, Ground))
                     {
+                        Debug.Log("Player touched the ground");
+                        AttachToMovingPlatform(slopeHit);
                         slopeNormal = slopeHit.normal;
                         Quaternion slopeOffset = Quaternion.FromToRotation(Vector3.up, slopeNormal);
                         //Multiply slope offset by move Direction. You can multiply a quaternion x a vector. Not a vector x a quaternion
                         _controller.Move(slopeOffset * moveDir.normalized * speed * Time.deltaTime);
+                        Debug.DrawRay(transform.position, Vector3.down, Color.red);
                     } 
                     
                     if(!glide && !_isGrounded)
@@ -575,6 +615,12 @@ public class ThirdPersonMovement : MonoBehaviour
             if (jumpInput && !displaySpecialAttackWindowInput){
                 if(_isGrounded && !_isWallRunning){
                     print("JUMP");
+                    //Deatach from platform
+                    if(_attachedToPlatform)
+                    {
+                        DetachFromMovingPlatform();
+                    }
+
                     //reset y_velocity to prevent super bouncing
                     _velocity.y = 0; 
                     _velocity.y += Mathf.Sqrt(JumpHeight * -2f * gravity);
@@ -588,10 +634,18 @@ public class ThirdPersonMovement : MonoBehaviour
                     //float duration = jumpVFXClone.GetChild(0).GetComponent<ParticleSystem>().main.duration;
                     //ParticleSystem particleSystem = jumpVFXClone.GetChild(0).GetComponent<ParticleSystem>();
                     //var main = particleSystem.main;
+
                     Destroy(jumpVFXClone, 2);
                 }
                 if(_isWallRunning && !_isGrounded){
                     //DetachFromWall
+
+                    //Deatach from platform
+                    if(_attachedToPlatform)
+                    {
+                        DetachFromMovingPlatform();
+                    }
+
                     print("WALLJUMP");
                     animator.SetBool("Running", false);
                     animator.SetBool("WallRunning", false);
@@ -972,6 +1026,35 @@ public class ThirdPersonMovement : MonoBehaviour
         specialAttack.GetComponent<SpecialAttack>().EnableSpecialAttack();
     }
 
+    void AttachToMovingPlatform(RaycastHit platform)
+    {
+        //Asteroid Condition
+        if(platform.transform.tag == "Asteroid")
+        {
+            //_controller.detectCollisions = false;
+            Debug.Log("Attaching to Asteroid");
+            //_isGrounded = true;
+            //animator.SetBool("Jumping", false);
+            //_velocity.y = 0;
+            _attachedToPlatform = true;
+            //platform.transform.GetComponent<MeshRenderer>().enabled = false;
+            platform.rigidbody.isKinematic = true;
+            //platform.transform.GetComponent<MeshRenderer>().enabled = true;
+            //this._controller.enabled = false;
+            //this.transform.position = platform.point - Vector3.up;
+            //this._controller.enabled = true;
+
+            //_controller.detectCollisions = true;
+        }
+    }
+
+    void DetachFromMovingPlatform()
+    {
+        Debug.Log("Detaching to Asteroid");
+        this.ParentObj.SetParent(null);
+        _attachedToPlatform = false;
+    }
+
     void SpawnCombatVFX(string vfxName)
     {
         switch (vfxName)
@@ -1229,7 +1312,7 @@ public class ThirdPersonMovement : MonoBehaviour
     void CheckForWall()
     {
         RaycastHit hit;
-        isWallRight = Physics.Raycast(_wallRunChecker.transform.position, _wallRunChecker.right, out hit, 1.0f, Wall);
+        isWallRight = Physics.Raycast(_wallRunChecker.transform.position, _wallRunChecker.right, out hit, 1.0f, Wall | Ground);
         if(isWallRight){
             Debug.DrawRay(_wallRunChecker.transform.position, _wallRunChecker.right.normalized * hit.distance, Color.magenta );
             wallVector = -Vector3.Cross(hit.normal, Vector3.up).normalized;
@@ -1239,7 +1322,7 @@ public class ThirdPersonMovement : MonoBehaviour
         }
 
        
-        isWallLeft = Physics.Raycast(_wallRunChecker.transform.position, -_wallRunChecker.right, out hit, 1.0f, Wall);
+        isWallLeft = Physics.Raycast(_wallRunChecker.transform.position, -_wallRunChecker.right, out hit, 1.0f, Wall | Ground);
         if(isWallLeft){
             Debug.DrawRay(_wallRunChecker.transform.position, -_wallRunChecker.right.normalized * hit.distance, Color.green );
             wallVector = Vector3.Cross(hit.normal, Vector3.up).normalized;
@@ -1465,8 +1548,22 @@ public class ThirdPersonMovement : MonoBehaviour
     }
 
 
-    void Mantle()
+    void Mantle(RaycastHit ledgeReference)
     {
+        //Adjust y velocity so player does not fall
+        _velocity.y = 0;
+
+        //Conditional to check if the ledge is an Asteroid.
+
+        /*if(ledgeReference.transform.tag == "Asteroid")
+        {
+            //ledgeReference.transform.GetComponentInParent<>
+            //Set the parent rigidbody isKinematic to true
+            print(ledgeReference.transform.name);
+            ledgeReference.transform.GetComponent<Rigidbody>().isKinematic = true;
+        }*/
+        
+
         animator.SetBool("Falling", false);
         if(!this.animator.GetCurrentAnimatorStateInfo(0).IsName("mantle"))
         {

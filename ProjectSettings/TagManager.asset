@@ -17,6 +17,7 @@ TagManager:
   - TargetLock
   - GameManager
   - Enemy
+  - Asteroid
   layers:
   - Default
   - TransparentFX

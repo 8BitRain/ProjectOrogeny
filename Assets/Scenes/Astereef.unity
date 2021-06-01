@@ -9334,6 +9334,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: AsteroidwMantle(Polybrush Clone)
       objectReference: {fileID: 0}
+    - target: {fileID: 372742948297325043, guid: 6bbefee9edc0f4148a20fe49409c633c,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4021363183012342147, guid: 6bbefee9edc0f4148a20fe49409c633c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9403,6 +9408,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 0.027882203
+      objectReference: {fileID: 0}
+    - target: {fileID: 4955363879600424081, guid: 6bbefee9edc0f4148a20fe49409c633c,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 112
+      objectReference: {fileID: 0}
+    - target: {fileID: 4955363879600424081, guid: 6bbefee9edc0f4148a20fe49409c633c,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6bbefee9edc0f4148a20fe49409c633c, type: 3}
