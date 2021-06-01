@@ -50,6 +50,8 @@ public class ThirdPersonMovement : MonoBehaviour
     public LayerMask Ledge;
     public float ledgeDistance = 2f;
     private bool _isMantling = false;
+    public enum MantleType {High, Mid};
+    public MantleType mantleType;
     private float _mantleTimer = 0;
 
 
@@ -296,6 +298,9 @@ public class ThirdPersonMovement : MonoBehaviour
                     ledgeSeekerHit.transform.GetComponent<MeshCollider>().enabled = false;
                     ledgeSeekerHit.transform.GetComponent<Rigidbody>().isKinematic = true;
                     ledgeSeekerHit.transform.GetComponent<MeshCollider>().enabled = true;
+
+                    //MantleType = MantleType.High;
+                    mantleType = MantleType.High;
                 }
             } 
             else if(Physics.Raycast(_ledgeSeekerPositionMid, _groundChecker.forward, out ledgeSeekerHit, 2f, Ledge))
@@ -314,6 +319,7 @@ public class ThirdPersonMovement : MonoBehaviour
                     ledgeSeekerHit.transform.GetComponent<MeshCollider>().enabled = false;
                     ledgeSeekerHit.transform.GetComponent<Rigidbody>().isKinematic = true;
                     ledgeSeekerHit.transform.GetComponent<MeshCollider>().enabled = true;
+                    mantleType = MantleType.Mid;
                 }
             }
             Debug.DrawRay(_ledgeSeekerPositionHigh, _groundChecker.forward, Color.green);
@@ -1553,23 +1559,24 @@ public class ThirdPersonMovement : MonoBehaviour
         //Adjust y velocity so player does not fall
         _velocity.y = 0;
 
-        //Conditional to check if the ledge is an Asteroid.
-
-        /*if(ledgeReference.transform.tag == "Asteroid")
-        {
-            //ledgeReference.transform.GetComponentInParent<>
-            //Set the parent rigidbody isKinematic to true
-            print(ledgeReference.transform.name);
-            ledgeReference.transform.GetComponent<Rigidbody>().isKinematic = true;
-        }*/
-        
-
         animator.SetBool("Falling", false);
-        if(!this.animator.GetCurrentAnimatorStateInfo(0).IsName("mantle"))
+        if(mantleType == MantleType.High)
         {
-            animator.Play("Grounded.mantle");
+            //Conditional that prevents animation from overwriting another animation
+            if(!this.animator.GetCurrentAnimatorStateInfo(0).IsName("mantle") && !this.animator.GetCurrentAnimatorStateInfo(0).IsName("ledgeHop"))
+            {
+                animator.Play("Grounded.mantle");
+            }    
         }
 
+        if(mantleType == MantleType.Mid)
+        {
+            if(!this.animator.GetCurrentAnimatorStateInfo(0).IsName("ledgeHop") && !this.animator.GetCurrentAnimatorStateInfo(0).IsName("mantle"))
+            {
+                animator.Play("Grounded.ledgeHop");
+            }    
+        }
+    
         canMove = false;
         if(_mantleTimer <= .5f)
         {

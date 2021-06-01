@@ -216,7 +216,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3037837737367510843}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 07859140747d8400e9bfb3d890e78264, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
@@ -236,7 +236,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   asteroidForce: 200
-  mantleRb: {fileID: 0}
+  mantleMeshCollider: {fileID: 1542088084032834910}
 --- !u!54 &4955363879600424081
 Rigidbody:
   m_ObjectHideFlags: 0
