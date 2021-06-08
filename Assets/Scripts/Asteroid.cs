@@ -47,19 +47,20 @@ public class Asteroid : MonoBehaviour
 
             //Accessibility feature, when a player lands on a moving platform, have the platform stop moving so the player can keep their footing.
             GetComponent<Rigidbody>().isKinematic = true;
+            
 
             //Reseting mesh collider so it doesn't push away when colliding wiht player
-            GetComponent<MeshCollider>().enabled = false;
-            GetComponent<MeshCollider>().enabled = true;
+            //GetComponent<MeshCollider>().enabled = false;
+            //GetComponent<MeshCollider>().enabled = true;
         }
 
         //Reset Mesh Collider when coming into contact with another object.
-        GetComponent<MeshCollider>().enabled = false;
-        GetComponent<MeshCollider>().enabled = true;
+        //GetComponent<MeshCollider>().enabled = false;
+        //GetComponent<MeshCollider>().enabled = true;
 
         //Reset the mantle Mesh Collider
-        mantleMeshCollider.enabled = false;
-        mantleMeshCollider.enabled = true;
+        //mantleMeshCollider.enabled = false;
+        //mantleMeshCollider.enabled = true;
 
         /*if(other.tag == "Asteroid")
         {

@@ -252,6 +252,10 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             characterName = "Generic";
         }
+
+        
+        //Gravity modifier
+        gravity = gravity/2.0f;
     }
 
     // Update is called once per frame
@@ -282,7 +286,7 @@ public class ThirdPersonMovement : MonoBehaviour
             RaycastHit ledgeSeekerHit;
             Vector3 _ledgeSeekerPositionHigh = new Vector3(_groundChecker.position.x, _groundChecker.position.y + this._controller.height, _groundChecker.position.z);
             Vector3 _ledgeSeekerPositionMid = new Vector3(_groundChecker.position.x, _groundChecker.position.y + this._controller.height/2.0f, _groundChecker.position.z);
-            if(Physics.Raycast(_ledgeSeekerPositionHigh, _groundChecker.forward, out ledgeSeekerHit, 2f, Ledge))
+            if(Physics.Raycast(_ledgeSeekerPositionHigh, _groundChecker.forward, out ledgeSeekerHit, 2f, Ledge | Ground))
             {
                 print("Mantling: Grabbing Ledge");
                 _isMantling = true;
@@ -295,15 +299,15 @@ public class ThirdPersonMovement : MonoBehaviour
                     print(ledgeSeekerHit.transform.name);
 
                     //Accessibility feature, when a player lands on a moving platform, have the platform stop moving so the player can keep their footing.
-                    ledgeSeekerHit.transform.GetComponent<MeshCollider>().enabled = false;
+                    //ledgeSeekerHit.transform.GetComponent<MeshCollider>().enabled = false;
                     ledgeSeekerHit.transform.GetComponent<Rigidbody>().isKinematic = true;
-                    ledgeSeekerHit.transform.GetComponent<MeshCollider>().enabled = true;
+                    //ledgeSeekerHit.transform.GetComponent<MeshCollider>().enabled = true;
 
                     //MantleType = MantleType.High;
                     mantleType = MantleType.High;
                 }
             } 
-            else if(Physics.Raycast(_ledgeSeekerPositionMid, _groundChecker.forward, out ledgeSeekerHit, 2f, Ledge))
+            else if(Physics.Raycast(_ledgeSeekerPositionMid, _groundChecker.forward, out ledgeSeekerHit, 2f, Ledge | Ground))
             {
                 print("Mantling: vaulting");
                 _isMantling = true;
@@ -316,9 +320,9 @@ public class ThirdPersonMovement : MonoBehaviour
                     print(ledgeSeekerHit.transform.name);
 
                     //Accessibility feature, when a player lands on a moving platform, have the platform stop moving so the player can keep their footing.
-                    ledgeSeekerHit.transform.GetComponent<MeshCollider>().enabled = false;
+                    //ledgeSeekerHit.transform.GetComponent<MeshCollider>().enabled = false;
                     ledgeSeekerHit.transform.GetComponent<Rigidbody>().isKinematic = true;
-                    ledgeSeekerHit.transform.GetComponent<MeshCollider>().enabled = true;
+                    //ledgeSeekerHit.transform.GetComponent<MeshCollider>().enabled = true;
                     mantleType = MantleType.Mid;
                 }
             }
@@ -515,16 +519,10 @@ public class ThirdPersonMovement : MonoBehaviour
 
 
                     RaycastHit slopeHit;
-                    Vector3 slopeNormal;
+                    Vector3 slopeNormal = Vector3.zero;
                     if(Physics.Raycast(_groundChecker.position, Vector3.down, out slopeHit, GroundDistance, Ground))
                     {
-                        Debug.Log("Player touched the ground");
-                        AttachToMovingPlatform(slopeHit);
-                        slopeNormal = slopeHit.normal;
-                        Quaternion slopeOffset = Quaternion.FromToRotation(Vector3.up, slopeNormal);
-                        //Multiply slope offset by move Direction. You can multiply a quaternion x a vector. Not a vector x a quaternion
-                        _controller.Move(slopeOffset * moveDir.normalized * speed * Time.deltaTime);
-                        Debug.DrawRay(transform.position, Vector3.down, Color.red);
+                        Slide(slopeNormal, slopeHit, moveDir);
                     } 
                     
                     if(!glide && !_isGrounded)
@@ -1030,6 +1028,27 @@ public class ThirdPersonMovement : MonoBehaviour
 
 
         specialAttack.GetComponent<SpecialAttack>().EnableSpecialAttack();
+    }
+
+    void Slide(Vector3 slopeNormal, RaycastHit slopeHit, Vector3 moveDir)
+    {
+        Debug.Log("Player touched the ground & is sliding down slope");
+        AttachToMovingPlatform(slopeHit);
+        slopeNormal = slopeHit.normal;
+        Quaternion slopeOffset = Quaternion.FromToRotation(Vector3.up, slopeNormal);
+        Debug.Log("Player Transform forward:" + transform.forward);
+        Debug.Log("Slope Normal:" + slopeHit.normal);
+
+        //Conditionals to logic out how the slide should play
+        if(transform.forward.z > 0)
+        {
+            animator.Play("Grounded.slide");
+        }
+        
+        Debug.Log("Slope quaternion: " + slopeOffset);
+        //Multiply slope offset by move Direction. You can multiply a quaternion x a vector. Not a vector x a quaternion
+        _controller.Move(slopeOffset * moveDir.normalized * speed * Time.deltaTime);
+        Debug.DrawRay(transform.position, Vector3.down, Color.red);
     }
 
     void AttachToMovingPlatform(RaycastHit platform)
