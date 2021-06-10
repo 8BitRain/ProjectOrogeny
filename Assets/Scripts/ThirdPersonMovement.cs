@@ -1039,12 +1039,18 @@ public class ThirdPersonMovement : MonoBehaviour
         Debug.Log("Player Transform forward:" + transform.forward);
         Debug.Log("Slope Normal:" + slopeHit.normal);
 
-        //Conditionals to logic out how the slide should play
-        if(transform.forward.z > 0)
+        //Ensure the slide animation plays when the player is moving down a slope and not up a slope
+        if(transform.forward.z > 0 && slopeOffset.x > 0)
         {
             animator.Play("Grounded.slide");
         }
-        
+
+        //Ensure the slide animation plays when the player is moving down a slope and not up a slope
+        if(transform.forward.z < 0 && slopeOffset.x < 0)
+        {
+            animator.Play("Grounded.slide");
+        }
+
         Debug.Log("Slope quaternion: " + slopeOffset);
         //Multiply slope offset by move Direction. You can multiply a quaternion x a vector. Not a vector x a quaternion
         _controller.Move(slopeOffset * moveDir.normalized * speed * Time.deltaTime);
