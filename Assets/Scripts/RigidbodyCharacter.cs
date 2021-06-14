@@ -11,7 +11,7 @@ public class RigidbodyCharacter : MonoBehaviour
     public float DashDistance = 5f;
     public LayerMask Ground;
 
-    private Rigidbody _body;
+    public Rigidbody _body;
     private Vector3 _inputs = Vector3.zero;
     private bool _isGrounded = true;
     //An object with a sphere collider that determines how a player can jump

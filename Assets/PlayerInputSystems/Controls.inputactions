@@ -140,6 +140,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "EnviromentInteractionGrapple",
+                    "type": "PassThrough",
+                    "id": "ddf32379-880e-43c6-bfd7-93b306bd1377",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -327,6 +335,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "SpecialAbilityWest",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ad45b0ab-65c3-431e-a5b1-9726155774dd",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "EnviromentInteractionGrapple",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

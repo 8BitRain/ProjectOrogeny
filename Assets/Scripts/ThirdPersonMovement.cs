@@ -1923,6 +1923,16 @@ public class ThirdPersonMovement : MonoBehaviour
 
     public void DisengageDynamicTargetLock()
     {
+        //Experimental for making sure only 1 target is the subject of the dynamic lock. Comment out if not needed
+        CinemachineTargetGroup targetGroup = lockOnCamera.GetComponentInChildren<CinemachineTargetGroup>();
+        foreach (var targetElement in targetGroup.m_Targets)
+        {
+            print("DisengageDynamicTargetLock: " + "Removing: " + targetElement.target.name);
+            targetGroup.RemoveMember(targetElement.target.transform);
+        }
+
+
+
         dynamicCameraFloatingTarget.SetActive(false);
         lockOnCamera.SetActive(false);
         freeLookCamera.SetActive(true);

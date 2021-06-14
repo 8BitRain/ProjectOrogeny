@@ -262,12 +262,19 @@ MonoBehaviour:
   camera: {fileID: 0}
   swingSpeed: 50
   originalPlayerSpeed: 5
-  maxDistance: 100
+  maxDistance: 300
   jointMaxDistance: 0.8
   jointMinDistance: 0
   spring: 2
   damper: 4
   massScale: 4.5
+  InputWindow: 1
+  inputWindowTimer: 1
+  jumpDuration: 2
+  enviromentInteractionButtonPressed: {fileID: 60543290306411700, guid: 0af20018adea947299606934573dfb0b,
+    type: 3}
+  jumpButtonPressed: {fileID: 5816153465140975876, guid: 0af20018adea947299606934573dfb0b,
+    type: 3}
 --- !u!1 &4582076607838078126
 GameObject:
   m_ObjectHideFlags: 0

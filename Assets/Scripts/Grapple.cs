@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Users;
 using UnityEngine;
 
 /*Courtesy of https://www.youtube.com/watch?v=Xgh4v1w5DxU&t=13s*/
@@ -7,6 +9,7 @@ public class Grapple : MonoBehaviour
 {
     private LineRenderer lineRenderer;
     private Vector3 grapplePoint;
+    [Header("Grapple Settings")]
     public LayerMask whatIsGrappleable;
     public Transform grappleTip, player;
     //To Set up with Third person view camera follow script
@@ -14,6 +17,7 @@ public class Grapple : MonoBehaviour
     public float swingSpeed = 50;
     public float originalPlayerSpeed = 5;
 
+    [Header("Spawned Spring Settings")]
     public float maxDistance = 100f;
 
     [Range(0,10)]public float jointMaxDistance = .8f;
@@ -26,7 +30,20 @@ public class Grapple : MonoBehaviour
     public float spring = 30;
     public float damper = 7f;
     public float massScale = 4.5f;
+
+    //Grapple Input timer
+    public bool InputWindow = true;
+    public float inputWindowTimer = 1.0f;
+
+    //Grapple Jump Duration
+    public float jumpDuration = 2f;
     
+
+    [Header("Player Inputs")]
+    /// <summary>Vector2 action for pressing a face button </summary>
+    [Tooltip("Vector2 action for Enviroment Interaction ")]
+    public InputActionReference enviromentInteractionButtonPressed;
+    public InputActionReference jumpButtonPressed;
 
     private bool _isGrappling = false;
 
@@ -38,6 +55,8 @@ public class Grapple : MonoBehaviour
     {
         player = transform.GetComponentInParent<AbilityEntity>().GetAgent();
         camera = player.GetComponent<ThirdPersonMovement>().cam;
+
+        StartCoroutine(InputWindowCoroutine(inputWindowTimer));
     }
 
     // Update is called once per frame
@@ -50,6 +69,13 @@ public class Grapple : MonoBehaviour
         else if(Input.GetKeyUp(KeyCode.G)){
             StopGrapple();
         }*/
+
+        if(jumpButtonPressed.action.triggered)
+        {
+            StopGrapple(true);
+            //print("Player Jumped out of grapple");
+        }
+
         if(player != null && !_isGrappling)
         {
             StartGrapple();
@@ -67,11 +93,27 @@ public class Grapple : MonoBehaviour
 
             joint.spring = spring;
             joint.damper = damper;
+
+            if(!InputWindow)
+            {
+                if(enviromentInteractionButtonPressed.action.ReadValue<float>() > 0)
+                {
+                    print("EnviromentInteraction Button held");
+                    //StopGrapple();
+                } else
+                {
+                    StopGrapple(false);
+                }
+            }
+
+            print("Read Value As Object" + enviromentInteractionButtonPressed.action.ReadValueAsObject());
+
+
         }
 
         if(distanceFromGrappleTarget != -1 && distanceFromGrappleTarget < 10)
         {
-            StopGrapple();
+            StopGrapple(false);
         }
     }
 
@@ -116,7 +158,7 @@ public class Grapple : MonoBehaviour
         }
     }
 
-    void StopGrapple(){
+    void StopGrapple(bool fromJump){
 
         _isGrappling = false;
         lineRenderer.positionCount = 0;
@@ -125,20 +167,34 @@ public class Grapple : MonoBehaviour
         RigidbodyCharacter.Speed = originalPlayerSpeed;
         Destroy(joint);
 
-        //Start Resetting players information
-        //Turn off character controller & Turn the rigid body on
+        // If the player isn't jumping we can sart Resetting players information
+        //Turn off rigidbody & turn character controller on
+        if(!fromJump)
+        {
+            ResetPlayer();
+            Destroy(this.transform.parent.gameObject);
+        }
+
+        if(fromJump)
+        {
+            StartCoroutine(JumpRigidbodyControlCoroutine(2.5f));
+            player.GetComponent<Animator>().Play("Grounded.Airborne.backflip");
+        }
+
+    }
+
+    void ResetPlayer()
+    {
         player.GetComponent<Rigidbody>().isKinematic = true;
         player.GetComponent<RigidbodyCharacter>().enabled = false;
         player.GetComponent<ThirdPersonMovement>()._controller.enabled = true;
         player.GetComponent<ThirdPersonMovement>().moveCharacter = true;
         player.GetComponent<ThirdPersonMovement>().togglePlayerMovementControl(true);
         player.GetComponent<ThirdPersonMovement>().applyGravity = true;
-
-
         player.GetComponent<ThirdPersonMovement>().DisengageDynamicTargetLock();
-
-        Destroy(this.transform.parent.gameObject);
     }
+
+
 
     void DrawGrapple(){
         //Don't draw grapple when there is no joint
@@ -146,5 +202,37 @@ public class Grapple : MonoBehaviour
 
         lineRenderer.SetPosition(0, grappleTip.position);
         lineRenderer.SetPosition(1, grapplePoint);
+    }
+
+    IEnumerator InputWindowCoroutine (float time) 
+    {
+        float elapsedTime = 0;
+
+        
+        while (elapsedTime < time)
+        {
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        InputWindow = false;
+    }
+
+    IEnumerator JumpRigidbodyControlCoroutine(float time)
+    {
+        float elapsedTime = 0;
+        player.GetComponent<RigidbodyCharacter>()._body.AddForce(Vector3.up * Mathf.Sqrt(player.GetComponent<RigidbodyCharacter>().JumpHeight * -2f * Physics.gravity.y), ForceMode.VelocityChange);
+        //Destroy the grapple line
+        lineRenderer.positionCount = 0;
+        distanceFromGrappleTarget = -1;
+
+        while (elapsedTime < time)
+        {
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        ResetPlayer();
+        Destroy(this.transform.parent.gameObject);
     }
 }
