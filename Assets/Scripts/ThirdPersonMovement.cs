@@ -56,7 +56,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
 
     //Movement Related
-    private bool moveCharacter;
+    public bool moveCharacter;
     private Vector2 movementInput;
 
     //Wall Running
@@ -267,7 +267,7 @@ public class ThirdPersonMovement : MonoBehaviour
         _isGrounded = Physics.Raycast(_groundChecker.position, Vector3.down, out groundedRaycast, .2f, Ground);
         if(_isGrounded)
         {
-            print("grounded");
+            //print("grounded");
             //canMove = true;
             AttachToMovingPlatform(groundedRaycast);
 
@@ -1063,7 +1063,7 @@ public class ThirdPersonMovement : MonoBehaviour
         if(platform.transform.tag == "Asteroid")
         {
             //_controller.detectCollisions = false;
-            Debug.Log("Attaching to Asteroid");
+            //Debug.Log("Attaching to Asteroid");
             //_isGrounded = true;
             //animator.SetBool("Jumping", false);
             //_velocity.y = 0;
@@ -1426,7 +1426,7 @@ public class ThirdPersonMovement : MonoBehaviour
          animator.SetBool("WallRunning", false);
         _isWallRunning = false;
     }
-    void togglePlayerMovementControl(bool toggle)
+    public void togglePlayerMovementControl(bool toggle)
     {
         canPlayerInputMove = toggle;
     }

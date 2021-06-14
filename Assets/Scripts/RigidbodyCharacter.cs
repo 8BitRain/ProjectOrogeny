@@ -20,8 +20,8 @@ public class RigidbodyCharacter : MonoBehaviour
     void Start()
     {
         _body = GetComponent<Rigidbody>();
-        _groundChecker = transform.GetChild(0);
-        print(transform.GetChild(0).name);
+        _groundChecker = transform.GetComponent<ThirdPersonMovement>()._groundChecker;
+        print(_groundChecker.name);
         
     }
 
