@@ -1952,5 +1952,15 @@ public class ThirdPersonMovement : MonoBehaviour
         this.specialAttackWindow.SetActive(value);
         this.specialAttackWindow.GetComponent<SpecialAttackInputWindowController>().SetAgentProperties(this.transform);
     }
+
+    public void SetPlayerVelocity(Vector3 velocity)
+    {
+        this._velocity = velocity;
+    }
+
+    public Vector3 GetPlayerVelocity()
+    {
+        return this._velocity;
+    }
     
 }

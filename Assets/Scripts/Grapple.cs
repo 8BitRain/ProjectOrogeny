@@ -85,10 +85,14 @@ public class Grapple : MonoBehaviour
 
         if(_isGrappling)
         {
+            //Force the player to look at the Grapple Point
+            player.LookAt(grapplePoint);
+
+            
+
             //Reel in!
             //joint.maxDistance = Vector3.Distance(player.position, grapplePoint);
             print("Grappling: Reeling player in " + "Distance to grapplePoint: " + joint.maxDistance);
-
             distanceFromGrappleTarget = Vector3.Distance(player.position, grapplePoint);
 
             joint.spring = spring;
@@ -105,10 +109,6 @@ public class Grapple : MonoBehaviour
                     StopGrapple(false);
                 }
             }
-
-            print("Read Value As Object" + enviromentInteractionButtonPressed.action.ReadValueAsObject());
-
-
         }
 
         if(distanceFromGrappleTarget != -1 && distanceFromGrappleTarget < 10)
@@ -116,6 +116,17 @@ public class Grapple : MonoBehaviour
             StopGrapple(false);
         }
     }
+
+    //Physics calls go
+    /*void FixedUpdate()
+    {
+        if(jumpButtonPressed.action.triggered)
+        {
+            player.GetComponent<RigidbodyCharacter>()._body.AddForce(Vector3.up * Mathf.Sqrt(player.GetComponent<RigidbodyCharacter>().JumpHeight * -2f * Physics.gravity.y), ForceMode.VelocityChange);
+            Debug.Log("Player Jumped from grapple, apply some force");
+        }
+        
+    }*/
 
     void LateUpdate()
     {
@@ -140,7 +151,7 @@ public class Grapple : MonoBehaviour
             //Some rules that can help with experimentation of grapple
             //https://answers.unity.com/questions/1690048/grappling-hook-with-spring-joint.html
             //Distnace grapple will try to keep from grapple point
-            joint.maxDistance = .1f;
+            joint.maxDistance = jointMaxDistance;
             joint.minDistance = 0;
 
             //Play around with these values
@@ -179,12 +190,18 @@ public class Grapple : MonoBehaviour
         {
             StartCoroutine(JumpRigidbodyControlCoroutine(2.5f));
             player.GetComponent<Animator>().Play("Grounded.Airborne.backflip");
+            player.GetComponent<RigidbodyCharacter>()._body.AddForce(Vector3.up * Mathf.Sqrt(player.GetComponent<RigidbodyCharacter>().JumpHeight * -4f * Physics.gravity.y), ForceMode.VelocityChange);
         }
 
     }
 
     void ResetPlayer()
     {
+        Debug.Log("Player Character Controller velocity is: " + player.GetComponent<ThirdPersonMovement>().GetPlayerVelocity());
+        //player.GetComponent<ThirdPersonMovement>().SetPlayerVelocity(player.GetComponent<RigidbodyCharacter>()._body.velocity);
+        Vector3 playerMomentum = new Vector3(player.GetComponent<RigidbodyCharacter>()._body.velocity.x/10, player.GetComponent<RigidbodyCharacter>()._body.velocity.y, player.GetComponent<RigidbodyCharacter>()._body.velocity.z/10);
+        player.GetComponent<ThirdPersonMovement>().SetPlayerVelocity(playerMomentum);
+        Debug.Log("Setting velocity of player to:  " + playerMomentum);
         player.GetComponent<Rigidbody>().isKinematic = true;
         player.GetComponent<RigidbodyCharacter>().enabled = false;
         player.GetComponent<ThirdPersonMovement>()._controller.enabled = true;
@@ -221,10 +238,10 @@ public class Grapple : MonoBehaviour
     IEnumerator JumpRigidbodyControlCoroutine(float time)
     {
         float elapsedTime = 0;
-        player.GetComponent<RigidbodyCharacter>()._body.AddForce(Vector3.up * Mathf.Sqrt(player.GetComponent<RigidbodyCharacter>().JumpHeight * -2f * Physics.gravity.y), ForceMode.VelocityChange);
         //Destroy the grapple line
         lineRenderer.positionCount = 0;
         distanceFromGrappleTarget = -1;
+        
 
         while (elapsedTime < time)
         {

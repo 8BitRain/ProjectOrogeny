@@ -22,6 +22,9 @@ public class RigidbodyCharacter : MonoBehaviour
         _body = GetComponent<Rigidbody>();
         _groundChecker = transform.GetComponent<ThirdPersonMovement>()._groundChecker;
         print(_groundChecker.name);
+
+        //Experimental, adds a lil pop to the character.
+        //_body.AddForce(Vector3.up * Mathf.Sqrt(JumpHeight * -2f * Physics.gravity.y), ForceMode.VelocityChange);
         
     }
 
@@ -30,20 +33,56 @@ public class RigidbodyCharacter : MonoBehaviour
         _isGrounded = Physics.CheckSphere(_groundChecker.position, GroundDistance, Ground, QueryTriggerInteraction.Ignore);
 
         _inputs = Vector3.zero;
-        _inputs.x = Input.GetAxis("Horizontal");
+        _inputs.x = -Input.GetAxis("Horizontal");
         _inputs.z = Input.GetAxis("Vertical");
-        if (_inputs != Vector3.zero)
-            transform.forward = _inputs;
 
-        if (Input.GetButtonDown("Jump") && _isGrounded)
+        Debug.Log("Rigidbody character transform forward before manipulation" + transform.forward);
+        if (_inputs != Vector3.zero)
+        {
+            //The value below at least works
+            //transform.forward = _inputs;
+
+            //Experimental
+            if(transform.forward.y > 0 && transform.forward.z > 0)
+            {
+                transform.forward = _inputs;
+            } 
+            else if(transform.forward.y < 0 && transform.forward.z > 0)
+            {
+                transform.forward = new Vector3(_inputs.x, _inputs.y, -_inputs.z);
+            } 
+            else if(transform.forward.y > 0 && transform.forward.z < 0)
+            {
+                transform.forward = new Vector3(-_inputs.x, _inputs.y, _inputs.z);
+            }
+            else if(transform.forward.y < 0 && transform.forward.z < 0)
+            {
+                transform.forward = new Vector3(-_inputs.x, _inputs.y, -_inputs.z);
+            }
+            /*if(transform.forward.z > 0 && transform.forward.y > 0)
+            {
+                transform.forward = _inputs;
+            } else if(transform.forward.z < -0.1f)
+            {
+                transform.forward = new Vector3(-_inputs.x, _inputs.y, -_inputs.z);
+            }*/
+        }
+
+
+        /*if (Input.GetButtonDown("Jump") && _isGrounded)
         {
             _body.AddForce(Vector3.up * Mathf.Sqrt(JumpHeight * -2f * Physics.gravity.y), ForceMode.VelocityChange);
-        }
+        }*/
+
         /*if (Input.GetButtonDown("Dash"))
         {
             Vector3 dashVelocity = Vector3.Scale(transform.forward, DashDistance * new Vector3((Mathf.Log(1f / (Time.deltaTime * _body.drag + 1)) / -Time.deltaTime), 0, (Mathf.Log(1f / (Time.deltaTime * _body.drag + 1)) / -Time.deltaTime)));
             _body.AddForce(dashVelocity, ForceMode.VelocityChange);
         }*/
+
+        print("Rigidbody Character _inputs: " + _inputs);
+        //print("Rigidbody Character velocity: " + _body.velocity);
+        //print("Rigidbody Character forward transform: " + transform.forward);
     }
 
 
