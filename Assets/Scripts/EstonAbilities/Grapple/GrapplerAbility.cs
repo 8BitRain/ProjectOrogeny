@@ -92,10 +92,24 @@ public class GrapplerAbility : SpecialAbility
             entity.GetComponent<GrapplerAbilityEntity>().GrappleTip.LookAt(cam.transform.forward);
 
             //Ensure the ability entity is connected to the object the player's reticle is currently aiming at
-            entity.GetComponent<GrapplerAbilityEntity>().ConnectedObject = agent.GetComponent<ThirdPersonMovement>().aimReticle.GetComponent<Reticle>().Target.transform;
+            try
+            {
+                entity.GetComponent<GrapplerAbilityEntity>().ConnectedObject = agent.GetComponent<ThirdPersonMovement>().aimReticle.GetComponent<Reticle>().Target.transform;
+            }
+            catch (System.Exception)
+            {
+                Debug.Log("Reticle is not looking at a target: destroy this ability");
+                //Ensure the entity resets player controls
+                entity.GetComponent<GrapplerAbilityEntity>().GetGrapple().ResetPlayer();
+                Destroy(entity.gameObject);
+                Destroy(this.gameObject);
+            }
             
             //Grab the Target that is connected to the grappler. This target is originally defined by the Reticle
-            agent.GetComponent<ThirdPersonMovement>().EngageDynamicTargetLock(entity.GetComponent<GrapplerAbilityEntity>().ConnectedObject);
+            /*if(entity.GetComponent<GrapplerAbilityEntity>().ConnectedObject != null)
+            {
+                agent.GetComponent<ThirdPersonMovement>().EngageDynamicTargetLock(entity.GetComponent<GrapplerAbilityEntity>().ConnectedObject);
+            }*/
 
             //Turn off character controller & Turn the rigid body on
             agent.GetComponent<ThirdPersonMovement>()._controller.enabled = false;

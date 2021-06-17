@@ -179,7 +179,7 @@ public abstract class SpecialAbility : MonoBehaviour
     public string GetAnimationStateName()
     {
         //Example Grounded.Reflector.eston_reflector_cast
-        print("Grounded." + char.ToUpper(this.abilityName[0]) + this.abilityName.Substring(1) + "." + this.agent.name.ToLower() + "_" + this.abilityName.ToLower() + "_" + this.abilityState.ToString().ToLower());
+        print("GetAnimationStateName: Grounded." + char.ToUpper(this.abilityName[0]) + this.abilityName.Substring(1) + "." + this.agent.name.ToLower() + "_" + this.abilityName.ToLower() + "_" + this.abilityState.ToString().ToLower());
         return "Grounded." + char.ToUpper(this.abilityName[0]) + this.abilityName.Substring(1) + "." + this.agent.name.ToLower() + "_" + this.abilityName.ToLower() + "_" + this.abilityState.ToString().ToLower();
     
     }

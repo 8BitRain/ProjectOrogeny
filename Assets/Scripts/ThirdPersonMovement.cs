@@ -123,6 +123,7 @@ public class ThirdPersonMovement : MonoBehaviour
     public GameObject aimCamera;
     public GameObject aimReticle;
     public GameObject freeLookCamera;
+    public GameObject freeLookCameraJumping;
     public GameObject lockOnCamera;
     public GameObject dynamicCameraFloatingTarget;
     private bool lockOnInput = false;
@@ -131,6 +132,8 @@ public class ThirdPersonMovement : MonoBehaviour
     private bool lockedOn = false;
     private int currentTarget = 0;
     private float _swapTimer = 0;
+    private float freeLookCameraTimer = 1;
+    private float freeLookCameraJumpingTimer = 1;
     public Transform targetToLock;
     public LayerMask Foe; 
     private Transform combatant;
@@ -271,12 +274,18 @@ public class ThirdPersonMovement : MonoBehaviour
             //canMove = true;
             AttachToMovingPlatform(groundedRaycast);
 
+            //Ensure jumping cam isn't playing
+            DisableJumpingFreeLookCamera();
+
         }
 
         RaycastHit ledgeSeekerRefernce = new RaycastHit();
         //We are in the air!
         if(!_isGrounded)
         {
+            //We are jumping, let's bring the camera out a bit
+            EnableJumpingFreeLookCamera();
+
             if(!_isWallRunning)
             {
                 if(dustTrails != null) dustTrails.SetActive(false);
@@ -1946,6 +1955,40 @@ public class ThirdPersonMovement : MonoBehaviour
         targetGroup.m_Targets[1].target = target.transform;
 
     }
+
+    public void EnableJumpingFreeLookCamera()
+    {
+        //if(freeLookCameraJumpingTimer == 0)
+        //{
+            freeLookCamera.GetComponent<CinemachineFreeLook>().m_Priority = 10;
+            freeLookCameraJumping.GetComponent<CinemachineFreeLook>().m_Priority = 11;
+            freeLookCameraJumping.GetComponent<CinemachineFreeLook>().m_RecenterToTargetHeading.m_enabled = true;
+            freeLookCameraJumping.GetComponent<CinemachineFreeLook>().m_RecenterToTargetHeading.m_enabled = false;
+        //}
+        //if(freeLookCameraJumpingTimer == 1)
+        //{
+            //JumpingFreeLookCameraWindow();
+        //}
+    }
+
+    public void DisableJumpingFreeLookCamera()
+    {
+        //print("Disabling freelook jumping camera");
+        freeLookCamera.GetComponent<CinemachineFreeLook>().m_Priority = 11;
+        freeLookCameraJumping.GetComponent<CinemachineFreeLook>().m_Priority = 10;
+        freeLookCamera.GetComponent<CinemachineFreeLook>().m_RecenterToTargetHeading.m_enabled = true;
+        freeLookCamera.GetComponent<CinemachineFreeLook>().m_RecenterToTargetHeading.m_enabled = false;
+    }
+
+    /*public void JumpingFreeLookCameraWindow()
+    {
+        float windowTimer = 1;
+        while(windowTimer < )
+        {
+            windowTimer += Time.deltaTime();
+        }
+
+    }*/
 
     public void ToggleSpecialAttackWindow(bool value)
     {

@@ -90,4 +90,9 @@ public class RigidbodyCharacter : MonoBehaviour
     {
         _body.MovePosition(_body.position + _inputs * Speed * Time.fixedDeltaTime);
     }
+
+    public Vector3 GetInputVector()
+    {
+        return _inputs;
+    }
 }

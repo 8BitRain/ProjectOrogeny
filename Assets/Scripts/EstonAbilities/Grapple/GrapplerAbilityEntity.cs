@@ -15,7 +15,7 @@ public class GrapplerAbilityEntity : AbilityEntity
     public override void UpdateAbilityEntity()
     {
         Camera cam = GetAgent().GetComponent<ThirdPersonMovement>().cam.GetComponent<Camera>();
-        
+
         if(GrappleTip != null)
         {
             GrappleTip.LookAt(cam.transform.forward);
@@ -25,6 +25,11 @@ public class GrapplerAbilityEntity : AbilityEntity
         {
             Debug.Log("Grappler Connected Object: Grappler is connected to " + ConnectedObject.name);
         }
+    }
+
+    public Grapple GetGrapple()
+    {
+        return GrappleTip.GetComponent<Grapple>();
     }
 
 }

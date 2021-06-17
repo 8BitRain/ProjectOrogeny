@@ -88,6 +88,13 @@ public class Grapple : MonoBehaviour
             //Force the player to look at the Grapple Point
             player.LookAt(grapplePoint);
 
+            //Force the player to look at the Grapple Point if the player isn't moving (buggy)
+            /*if(player.GetComponent<RigidbodyCharacter>().GetInputVector() == Vector3.zero)
+            {
+                player.LookAt(grapplePoint);
+            }*/
+
+
             
 
             //Reel in!
@@ -118,15 +125,15 @@ public class Grapple : MonoBehaviour
     }
 
     //Physics calls go
-    /*void FixedUpdate()
+    void FixedUpdate()
     {
         if(jumpButtonPressed.action.triggered)
         {
-            player.GetComponent<RigidbodyCharacter>()._body.AddForce(Vector3.up * Mathf.Sqrt(player.GetComponent<RigidbodyCharacter>().JumpHeight * -2f * Physics.gravity.y), ForceMode.VelocityChange);
+            player.GetComponent<RigidbodyCharacter>()._body.AddForce(Vector3.up * Mathf.Sqrt(player.GetComponent<RigidbodyCharacter>().JumpHeight * -4f * Physics.gravity.y), ForceMode.VelocityChange);
             Debug.Log("Player Jumped from grapple, apply some force");
         }
         
-    }*/
+    }
 
     void LateUpdate()
     {
@@ -178,6 +185,9 @@ public class Grapple : MonoBehaviour
         RigidbodyCharacter.Speed = originalPlayerSpeed;
         Destroy(joint);
 
+        //Camera manipulation
+        player.GetComponent<ThirdPersonMovement>().EnableJumpingFreeLookCamera();
+
         // If the player isn't jumping we can sart Resetting players information
         //Turn off rigidbody & turn character controller on
         if(!fromJump)
@@ -195,11 +205,18 @@ public class Grapple : MonoBehaviour
 
     }
 
-    void ResetPlayer()
+    public void ResetPlayer()
     {
         Debug.Log("Player Character Controller velocity is: " + player.GetComponent<ThirdPersonMovement>().GetPlayerVelocity());
         //player.GetComponent<ThirdPersonMovement>().SetPlayerVelocity(player.GetComponent<RigidbodyCharacter>()._body.velocity);
-        Vector3 playerMomentum = new Vector3(player.GetComponent<RigidbodyCharacter>()._body.velocity.x/10, player.GetComponent<RigidbodyCharacter>()._body.velocity.y, player.GetComponent<RigidbodyCharacter>()._body.velocity.z/10);
+        
+        /*Passing velocity, Momentum? test. What is the best way to take the momentum gained from swinging, and then transfer that momentum the the CharacterController script?*/
+        //The following line add x,y, and z velocity
+        //Vector3 playerMomentum = new Vector3(player.GetComponent<RigidbodyCharacter>()._body.velocity.x/10, player.GetComponent<RigidbodyCharacter>()._body.velocity.y, player.GetComponent<RigidbodyCharacter>()._body.velocity.z/10);
+        
+        // the following line adds y and z velocity
+        Vector3 playerMomentum = new Vector3(0, player.GetComponent<RigidbodyCharacter>()._body.velocity.y, player.GetComponent<RigidbodyCharacter>()._body.velocity.z/10);
+
         player.GetComponent<ThirdPersonMovement>().SetPlayerVelocity(playerMomentum);
         Debug.Log("Setting velocity of player to:  " + playerMomentum);
         player.GetComponent<Rigidbody>().isKinematic = true;
@@ -208,7 +225,7 @@ public class Grapple : MonoBehaviour
         player.GetComponent<ThirdPersonMovement>().moveCharacter = true;
         player.GetComponent<ThirdPersonMovement>().togglePlayerMovementControl(true);
         player.GetComponent<ThirdPersonMovement>().applyGravity = true;
-        player.GetComponent<ThirdPersonMovement>().DisengageDynamicTargetLock();
+        //player.GetComponent<ThirdPersonMovement>().DisengageDynamicTargetLock();
     }
 
 
