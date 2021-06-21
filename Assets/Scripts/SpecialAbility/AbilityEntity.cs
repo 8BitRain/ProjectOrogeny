@@ -39,7 +39,7 @@ public abstract class AbilityEntity : MonoBehaviour
         if(_timer > 0)
         {
             _timer -= Time.deltaTime;
-            Debug.Log("Timer running");
+            //Debug.Log("Timer running");
         }
 
         //Ability Entity is completed. Delete it

@@ -167,6 +167,7 @@ public class ThirdPersonMovement : MonoBehaviour
     private float combatStateIndex = 0;
     
     private bool groundMeleeAttack1Input = false;
+    private bool groundHeavyAttackInput = false;
     private bool iframe = false;
 
     private float animationWindow = 0;
@@ -743,6 +744,12 @@ public class ThirdPersonMovement : MonoBehaviour
                     animator.SetBool("CosmicPalmAttack", false);
                     moveCharacter = true;
                 }
+            }
+
+            //HeavyAttackGrounded
+            if(groundHeavyAttackInput && !displaySpecialAttackWindowInput)
+            {
+                animator.Play("Grounded.heavyAttack");
             }
 
             //GroundMeleeAttack1
@@ -1451,6 +1458,7 @@ public class ThirdPersonMovement : MonoBehaviour
     public void OnEnviromentInteraction(InputAction.CallbackContext ctx) => enviromentActionInput = ctx.ReadValueAsButton();
     public void OnKickThrownSpecialAttack(InputAction.CallbackContext ctx) => kickThrownSpecialAttackInput = ctx.ReadValueAsButton();
     public void OnGroundMeleeAttack1(InputAction.CallbackContext ctx) => groundMeleeAttack1Input = ctx.ReadValueAsButton();
+    public void OnHeavyAttack(InputAction.CallbackContext ctx) => groundHeavyAttackInput = ctx.ReadValueAsButton();
     public void OnDisplaySpecialAttackInputWindow(InputAction.CallbackContext ctx) => displaySpecialAttackWindowInput = ctx.ReadValueAsButton();
     
     /*public void OnSouthButtonPressed(InputAction.CallbackContext ctx) => southButtonInput = ctx.ReadValueAsButton();

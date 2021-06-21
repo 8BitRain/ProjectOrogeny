@@ -235,4 +235,25 @@ public abstract class SpecialAbility : MonoBehaviour
         this.spawnedAbilityEntities.Add(abilityEntity);
     }
 
+    public IEnumerator AdjustTime(float timeScale, float duration)
+    {
+        
+        Time.timeScale = timeScale;
+
+        float timer = 0;
+        /*while(timer < duration)
+        {
+            Debug.Log("Timer is running:" + timer);
+            timer += Time.unscaledDeltaTime;
+            yield return null;
+        }*/
+
+        print(Time.time);
+        yield return new WaitForSecondsRealtime(2);
+        print(Time.time);
+
+        Debug.Log("Resetting timescale");
+        Time.timeScale = 1;
+    }
+
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Users;
+using Cinemachine;
 using UnityEngine;
 
 /*Courtesy of https://www.youtube.com/watch?v=Xgh4v1w5DxU&t=13s*/
@@ -173,6 +174,11 @@ public class Grapple : MonoBehaviour
 
             _isGrappling = true;
 
+            StartCoroutine(AdjustTime(0,.1f));
+            //StartCoroutine(_ProcessShake(1000f,2f));
+
+            CinemachineScreenShake.Instance.screenShake(20.0f, .1f);
+
         }
     }
 
@@ -226,6 +232,9 @@ public class Grapple : MonoBehaviour
         player.GetComponent<ThirdPersonMovement>().togglePlayerMovementControl(true);
         player.GetComponent<ThirdPersonMovement>().applyGravity = true;
         //player.GetComponent<ThirdPersonMovement>().DisengageDynamicTargetLock();
+
+        //Reset the timescale
+        ResetTime();
     }
 
 
@@ -268,5 +277,66 @@ public class Grapple : MonoBehaviour
 
         ResetPlayer();
         Destroy(this.transform.parent.gameObject);
+    }
+
+    IEnumerator AdjustTime(float timeScale, float duration)
+    {
+        
+        Time.timeScale = timeScale;
+
+        float timer = 0;
+
+        while(timer < duration)
+        {
+            //Really smooth slowmo effect
+            //Time.timeScale = Mathf.Lerp(1,timeScale, timer/duration);
+            Debug.Log("Time Scale adjustment: " + timer/duration);
+
+            //duration makes a cool effect
+            //Time.timeScale = Mathf.Lerp(1,timeScale, timer);
+            Debug.Log("Timer is running:" + timer);
+            timer += Time.unscaledDeltaTime;
+            yield return null;
+        }
+
+        /*print(Time.time);
+        yield return new WaitForSecondsRealtime(duration);
+        print(Time.time);*/
+
+        /*print(Time.time);
+        yield return new WaitForSecondsRealtime(duration);
+        print(Time.time);*/
+
+        Debug.Log("Resetting timescale");
+        ResetTime();
+    }
+
+    public void ResetTime()
+    {
+        Time.timeScale = 1;
+    }
+
+    public IEnumerator _ProcessShake(float shakeIntensity, float shakeTiming)
+    {
+        Noise(1, shakeIntensity);
+        yield return new WaitForSecondsRealtime(shakeTiming);
+        Noise(0, 0);
+    }
+    
+    // /https://forum.unity.com/threads/how-to-shake-camera-with-cinemachine.485724/
+    public void Noise(float amplitudeGain, float frequencyGain)
+    {
+        CinemachineFreeLook cmFreeCam =  CinemachineCore.Instance.GetActiveBrain(0).ActiveVirtualCamera.VirtualCameraGameObject.GetComponent<CinemachineFreeLook>();
+        print("Active Cinemachine Camera: " + cmFreeCam.name);
+        CinemachineFreeLook cmFreeCam2 = player.GetComponent<ThirdPersonMovement>().freeLookCameraJumping.GetComponent<CinemachineFreeLook>();
+        cmFreeCam2.GetRig(0).GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = amplitudeGain;
+        cmFreeCam2.GetRig(0).GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = frequencyGain;
+        //cmFreeCam2.GetRig(0).GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_PivotOffset = new Vector3(Random.Range(-3,6), Random.Range(-3,6), Random.Range(-3,6));
+        cmFreeCam2.GetRig(1).GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = amplitudeGain;
+        cmFreeCam2.GetRig(1).GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = frequencyGain;
+        //cmFreeCam2.GetRig(1).GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_PivotOffset = new Vector3(Random.Range(-3,6), Random.Range(-3,6), Random.Range(-3,6));
+        cmFreeCam2.GetRig(2).GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = amplitudeGain;
+        cmFreeCam2.GetRig(2).GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = frequencyGain;  
+        //cmFreeCam2.GetRig(2).GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_PivotOffset = new Vector3(Random.Range(-3,6), Random.Range(-3,6), Random.Range(-3,6));   
     }
 }
