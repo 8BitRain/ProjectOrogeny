@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.AI;
+using Cinemachine;
 using UnityEngine;
 
 public class Bladeclubber : MonoBehaviour
@@ -28,7 +29,12 @@ public class Bladeclubber : MonoBehaviour
     public HealthBar healthBar;
     public PoiseMeter poiseMeter;
 
+    public float hitStunDuration = 0.5f;
+    public float shakeMultiplier = 0.03f;
+    public float shakeSpeed = 40f;
+
     protected bool _floatState = false;
+    protected bool _stunned = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -54,13 +60,15 @@ public class Bladeclubber : MonoBehaviour
                 AssignTarget();
             }
 
-            if(!this.animator.GetBool("Attacking"))
+            if(!this.animator.GetBool("Attacking") && !GetStunStatus())
             {
                 SeekPlayer();   
             }
             
-
-            EngageCombat();
+            if(!GetStunStatus())
+            {
+                EngageCombat();
+            }
         } 
     }
 
@@ -69,6 +77,7 @@ public class Bladeclubber : MonoBehaviour
         if(this.navMeshAgent != null && target != null)
         {
             transform.LookAt(target);
+
 
             Vector3 position = transform.position + hitBox.center;
             float targetDistance = (transform.position - target.position).magnitude;
@@ -282,30 +291,70 @@ public class Bladeclubber : MonoBehaviour
         Debug.Log("Combat: Poise UP add some hitstun shake");
         Debug.Log("Combat: NavMesh Value: " + transform.GetComponent<NavMeshAgent>().enabled);
         transform.GetComponent<NavMeshAgent>().enabled = false;
+        transform.GetComponent<Rigidbody>().isKinematic = false;
+        transform.GetComponent<Rigidbody>().useGravity = false;
+
         Debug.Log("Combat: NavMesh Value: " + transform.GetComponent<NavMeshAgent>().enabled);
-
-        StartCoroutine(HitStunEnumerator(10));
-
-
+        animator.SetBool("Attacking", false);
+        PlayHitStunAnimation();
+        SetStunStatus(true);
+        StartCoroutine(HitStunEnumerator(hitStunDuration));
+        
     }
 
-    IEnumerator HitStunEnumerator (int frames) 
+    public bool GetStunStatus()
     {
-        int count = frames;
-        while (count > 0) {
-            float shakeFactor = Mathf.Sin(Time.time * 2f) * .1f;
-            Debug.Log("HitStun: " + transform.name + " Frame: " + count + " Timestamp: " + Time.time);
-            Vector3 objectShakeVector = new Vector3(transform.transform.position.x + shakeFactor , transform.transform.position.y + shakeFactor, transform.transform.position.z);
+        return _stunned;
+    }
+
+    public void SetStunStatus(bool isStunned)
+    {
+        _stunned = isStunned;
+    }
+
+    public void PlayHitStunAnimation()
+    {
+        int animationIndex = Random.Range(0,2);
+
+        switch (animationIndex)
+        {
+            case 0:
+                animator.Play("rig|Hit");
+                break;
+            case 1:
+                animator.Play("rig|Hit2");
+                break;
+            case 2:
+                animator.Play("rig|Hit3");
+                break;
+            default:
+                break;
+        }
+    }
+
+    IEnumerator HitStunEnumerator (float time) 
+    {
+        
+        float elapsedTime = 0;
+        while (elapsedTime < time) {
+            float shakeFactor = Mathf.Sin(Time.time * shakeSpeed) * shakeMultiplier;
+            Debug.Log("HitStun: " + transform.name + " Time: " + elapsedTime + " Timestamp: " + Time.time);
+            Vector3 objectShakeVector = new Vector3(transform.transform.position.x + shakeFactor , transform.transform.position.y + shakeFactor, transform.transform.position.z + shakeFactor);
             transform.transform.position = objectShakeVector;
             Debug.Log("HitStun: Shake vector: " + objectShakeVector);
-            count--;
+            elapsedTime+= Time.deltaTime;
+            yield return null;
         }
         transform.GetComponent<NavMeshAgent>().enabled = true;
+        transform.GetComponent<Rigidbody>().isKinematic = true;
+        animator.SetTrigger("EndHitStun");
+        SetStunStatus(false);
 
-        yield return null;
 
 
     }
+
+
 
     public void HandleFloatState(GameObject aggresor)
     {
@@ -333,6 +382,7 @@ public class Bladeclubber : MonoBehaviour
         Debug.Log("Combat: Float Force " + 300);
         transform.GetComponent<Rigidbody>().useGravity = false;
         transform.GetComponent<Rigidbody>().isKinematic = true;
+        transform.GetComponent<Rigidbody>().useGravity = true;
         //transform.GetComponentInParent<Rigidbody>().AddForce((Vector3.up) * 200);
         transform.rotation = Quaternion.Euler(0,0,90);
 

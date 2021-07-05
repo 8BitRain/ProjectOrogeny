@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Users;
+using Cinemachine;
 using UnityEngine;
 
 public class CombatAction : MonoBehaviour
@@ -89,7 +90,14 @@ public class CombatAction : MonoBehaviour
         //shake the target if it has poise
         if(targetPoiseReference.GetPoise() > 0)
         {
-            target.GetComponentInParent<Bladeclubber>().HandleHitStun();  
+            target.GetComponentInParent<Bladeclubber>().HandleHitStun();
+
+            //Shake Camera if a player is dealing pose damage to target (Could also simply check if wielder is the player)
+            if(wielder.tag == "P1" || wielder.tag == "P2")
+            {
+                //Debug.Log("SCREENSHAKE");
+                //CinemachineScreenShake.Instance.screenShake(160.0f, 3f);
+            }
         }
         
     }
@@ -124,6 +132,27 @@ public class CombatAction : MonoBehaviour
             wielder.GetComponent<ThirdPersonMovement>().EngageDynamicCameraTargetFloating(targetReference);
             target.GetComponentInParent<Bladeclubber>().HandleFloatState(wielder);
         }
+    }
+
+    public IEnumerator _ProcessShake(float shakeIntensity, float shakeTiming, CinemachineFreeLook cm)
+    {
+        Noise(cm, 1, shakeIntensity);
+        yield return new WaitForSecondsRealtime(shakeTiming);
+        Noise(cm, 0, 0);
+    }
+    
+    // /https://forum.unity.com/threads/how-to-shake-camera-with-cinemachine.485724/
+    public void Noise(CinemachineFreeLook cinemamchineFreeLook, float amplitudeGain, float frequencyGain)
+    {
+        cinemamchineFreeLook.GetRig(0).GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = amplitudeGain;
+        cinemamchineFreeLook.GetRig(0).GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = frequencyGain;
+        
+        cinemamchineFreeLook.GetRig(1).GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = amplitudeGain;
+        cinemamchineFreeLook.GetRig(1).GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = frequencyGain;
+        
+        cinemamchineFreeLook.GetRig(2).GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = amplitudeGain;
+        cinemamchineFreeLook.GetRig(2).GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = frequencyGain;  
+        
     }
 
     public void Initialize(float damage, float impactForce, AnimatorStateInfo animatorStateInfo, GameObject wielder, GameObject target, GameObject combatVFX, int hitCount)

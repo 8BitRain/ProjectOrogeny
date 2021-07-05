@@ -29,7 +29,7 @@ public class CinemachineScreenShake : MonoBehaviour
             if(shakeTimer <= 0)
             {
                 CinemachineBasicMultiChannelPerlin cinemachineBasicMultiChannelPerlin =
-                    cinemachineCam.GetRig(1).GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+                cinemachineCam.GetRig(1).GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
         
                 cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = 0;
             }
@@ -38,6 +38,7 @@ public class CinemachineScreenShake : MonoBehaviour
 
     public void screenShake(float intensity, float timer)
     {
+        Debug.Log("ScreenShake: Shake the screeeen");
         CinemachineBasicMultiChannelPerlin cinemachineBasicMultiChannelPerlin =
                     cinemachineCam.GetRig(1).GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
         cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = intensity;

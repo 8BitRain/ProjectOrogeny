@@ -386,6 +386,7 @@ public class ThirdPersonMovement : MonoBehaviour
                     print("Not falling");
                     animator.SetBool("Landing", true);
                     animator.SetBool("Falling", false);
+                    animator.SetBool("Sprinting", false);
                 }
 
                 if(!_isWallRunning)
@@ -396,12 +397,21 @@ public class ThirdPersonMovement : MonoBehaviour
                         speed = 20;
                         freeLookCamera.GetComponent<CinemachineFreeLook>().m_Lens.FieldOfView = 80;
                         speedLines.SetActive(true);
+
+                        
+                        if(_isGrounded && !animator.GetBool("PerformingSprintingLightAttack"))
+                        {
+                            //animator.Play
+                            animator.SetBool("Sprinting", true);
+                            animator.Play("Grounded.eston_rig|Sprint");
+                        }
                     }
                     else
                     {
                         speed = defaultSpeed;
                         freeLookCamera.GetComponent<CinemachineFreeLook>().m_Lens.FieldOfView = 40;
                         speedLines.SetActive(false);
+                        animator.SetBool("Sprinting", false);
                     }
                 }
 
@@ -640,6 +650,7 @@ public class ThirdPersonMovement : MonoBehaviour
                     _velocity.y += Mathf.Sqrt(JumpHeight * -2f * gravity);
                     animator.SetBool("Running", false);
                     animator.SetBool("Jumping", true);
+                    animator.SetBool("Sprinting", false);
 
                     //play jump vfx
                     GameObject jumpVFXClone;
@@ -664,6 +675,7 @@ public class ThirdPersonMovement : MonoBehaviour
                     animator.SetBool("Running", false);
                     animator.SetBool("WallRunning", false);
                     animator.SetBool("Jumping", true);
+                    animator.SetBool("Sprinting", false);
                     isWallLeft = false;
                     isWallRight = false;
                     isWallInFront = false;
@@ -753,7 +765,7 @@ public class ThirdPersonMovement : MonoBehaviour
             }
 
             //GroundMeleeAttack1
-            if(groundMeleeAttack1Input && !displaySpecialAttackWindowInput)
+            /*if(groundMeleeAttack1Input && !displaySpecialAttackWindowInput)
             {
                 
                 if(combatStateIndex == 0)
@@ -793,7 +805,7 @@ public class ThirdPersonMovement : MonoBehaviour
                     combatStateIndex = 3;
                     return;
                 }
-            }
+            }*/
 
 
 
@@ -1170,6 +1182,7 @@ public class ThirdPersonMovement : MonoBehaviour
                 {
                     animator.SetBool("Jumping", false);
                     animator.SetBool("Falling", true);
+                    animator.SetBool("Sprinting", false);
                 }
                 animator.Play("Grounded.freeRun", 0, 0.5f);
                 animator.speed = 0;
@@ -1280,6 +1293,7 @@ public class ThirdPersonMovement : MonoBehaviour
                 {
                     animator.SetBool("Jumping", false);
                     animator.SetBool("Falling", true);
+                    animator.SetBool("Sprinting", false);
                 }
                 animator.Play("Grounded.sideDodgeLeft", 0, 0.5f);
                 animator.speed = 0;
@@ -1400,6 +1414,7 @@ public class ThirdPersonMovement : MonoBehaviour
     {
         animator.SetBool("WallRunning", true);
         animator.SetBool("Jumping", false);
+        animator.SetBool("Sprinting", false);
 
         TriggerDustTrails(directionVector);
 
@@ -1482,7 +1497,7 @@ public class ThirdPersonMovement : MonoBehaviour
        print("Adding impact: " + impact);
 
        //Apply screenshake TODO: Supply a variable to this function that holds the intensity and time values, that way each effect that defines an impact can define a screenshake!
-       CinemachineScreenShake.Instance.screenShake(10.0f, .5f);
+       //CinemachineScreenShake.Instance.screenShake(10.0f, .5f);
     }
 
 
@@ -1581,6 +1596,7 @@ public class ThirdPersonMovement : MonoBehaviour
             }
             animator.SetBool("Running", false);
             animator.SetBool("Jumping", true);
+            animator.SetBool("Sprinting", false);
             print("CosmicWind Rise Stay function");
             _velocity.y += windRiseSpeed * Time.deltaTime;
             _controller.Move(_velocity * Time.deltaTime);
@@ -1740,6 +1756,7 @@ public class ThirdPersonMovement : MonoBehaviour
     void EngageCombatSlide()
     {
         combatSlide = true;
+        InitiateForwardMomentum();
 
         //TODO: Experiment with toggling player control of movement off. 
         togglePlayerMovementControl(false);
@@ -1970,8 +1987,9 @@ public class ThirdPersonMovement : MonoBehaviour
         //{
             freeLookCamera.GetComponent<CinemachineFreeLook>().m_Priority = 10;
             freeLookCameraJumping.GetComponent<CinemachineFreeLook>().m_Priority = 11;
-            freeLookCameraJumping.GetComponent<CinemachineFreeLook>().m_RecenterToTargetHeading.m_enabled = true;
-            freeLookCameraJumping.GetComponent<CinemachineFreeLook>().m_RecenterToTargetHeading.m_enabled = false;
+
+            //freeLookCameraJumping.GetComponent<CinemachineFreeLook>().m_RecenterToTargetHeading.m_enabled = true;
+            //freeLookCameraJumping.GetComponent<CinemachineFreeLook>().m_RecenterToTargetHeading.m_enabled = false;
         //}
         //if(freeLookCameraJumpingTimer == 1)
         //{
@@ -1984,8 +2002,8 @@ public class ThirdPersonMovement : MonoBehaviour
         //print("Disabling freelook jumping camera");
         freeLookCamera.GetComponent<CinemachineFreeLook>().m_Priority = 11;
         freeLookCameraJumping.GetComponent<CinemachineFreeLook>().m_Priority = 10;
-        freeLookCamera.GetComponent<CinemachineFreeLook>().m_RecenterToTargetHeading.m_enabled = true;
-        freeLookCamera.GetComponent<CinemachineFreeLook>().m_RecenterToTargetHeading.m_enabled = false;
+        //freeLookCamera.GetComponent<CinemachineFreeLook>().m_RecenterToTargetHeading.m_enabled = true;
+        //freeLookCamera.GetComponent<CinemachineFreeLook>().m_RecenterToTargetHeading.m_enabled = false;
     }
 
     /*public void JumpingFreeLookCameraWindow()
@@ -2002,6 +2020,11 @@ public class ThirdPersonMovement : MonoBehaviour
     {
         this.specialAttackWindow.SetActive(value);
         this.specialAttackWindow.GetComponent<SpecialAttackInputWindowController>().SetAgentProperties(this.transform);
+    }
+
+    public bool GetSpecialAttackInputWindowActive()
+    {
+        return this.displaySpecialAttackWindowInput;
     }
 
     public void SetPlayerVelocity(Vector3 velocity)
