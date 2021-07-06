@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2663400724676279312}
   - component: {fileID: 6653263823454569719}
   - component: {fileID: 7354794600599629352}
+  - component: {fileID: 2054241556252402394}
   m_Layer: 0
   m_Name: HitBox
   m_TagString: Untagged
@@ -51,6 +52,7 @@ MonoBehaviour:
   spawnPoint: {fileID: 0}
   combatAction: {fileID: 394299875675437646, guid: 5ec5d61db3ae043f8a93ad962902874d,
     type: 3}
+  screenShakeImpulse: {fileID: 0}
   combatType: 0
 --- !u!65 &7354794600599629352
 BoxCollider:
@@ -65,3 +67,97 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.01, y: 0.01, z: 0.01}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2054241556252402394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4256169823131978472}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd438dd108a0f284aa931a2da434f1d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ImpulseDefinition:
+    m_ImpulseChannel: 1
+    m_RawSignal: {fileID: 11400000, guid: 8c8d8a9d59dcd40e0a8ab718e821b4fb, type: 2}
+    m_AmplitudeGain: 1
+    m_FrequencyGain: 1
+    m_RepeatMode: 0
+    m_Randomize: 1
+    m_TimeEnvelope:
+      m_AttackShape:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 2
+          outSlope: 2
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_DecayShape:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 2
+          outSlope: 2
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 0.4618987
+          value: 0.35821313
+          inSlope: 0.20311034
+          outSlope: 0.20311034
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.27216738
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 1
+          value: 0.004716754
+          inSlope: 0.34685642
+          outSlope: 0.34685642
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.21179378
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_AttackTime: 0
+      m_SustainTime: 0.2
+      m_DecayTime: 0.7
+      m_ScaleWithImpact: 1
+      m_HoldForever: 0
+    m_ImpactRadius: 100
+    m_DirectionMode: 1
+    m_DissipationMode: 2
+    m_DissipationDistance: 1000
+    m_PropagationSpeed: 343
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 1048576
+  m_IgnoreTag: 
+  m_UseImpactDirection: 0
+  m_ScaleImpactWithMass: 0
+  m_ScaleImpactWithSpeed: 0

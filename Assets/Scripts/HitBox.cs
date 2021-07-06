@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
+using Cinemachine;
 using UnityEngine;
 
 public class HitBox : MonoBehaviour
@@ -9,6 +10,8 @@ public class HitBox : MonoBehaviour
     public LayerMask[] layers;
     public Transform spawnPoint;
     public GameObject combatAction;
+
+    public CinemachineImpulseSource screenShakeImpulse;
     
     public CombatType combatType;
     public enum CombatType {Light, Medium, Heavy, Misc};
@@ -45,6 +48,8 @@ public class HitBox : MonoBehaviour
                     Gamepad.current.SetMotorSpeeds(0.25f,0.55f);
                     StartCoroutine(RumbleCountdown(.2f));
                     rumble = false;
+
+                    screenShakeImpulse.GenerateImpulse();
                 }
             }
         }
