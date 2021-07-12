@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class Bladeclubber : MonoBehaviour
 {
+    [Header("Bladeclubber Configuration")]
     public Transform Head;
     public Transform Body;
 
@@ -25,6 +26,7 @@ public class Bladeclubber : MonoBehaviour
 
     public Animator animator;
     public float combatTimer = 0;
+    public float seekPlayerRange = 15;
 
     public HealthBar healthBar;
     public PoiseMeter poiseMeter;
@@ -32,6 +34,9 @@ public class Bladeclubber : MonoBehaviour
     public float hitStunDuration = 0.5f;
     public float shakeMultiplier = 0.03f;
     public float shakeSpeed = 40f;
+
+    [Header("Bladeclubber ON/OFF")]
+    public bool targetDummy;
 
     protected bool _floatState = false;
     protected bool _stunned = false;
@@ -53,7 +58,7 @@ public class Bladeclubber : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!_floatState)
+        if(!_floatState && !targetDummy)
         {
             if(target == null)
             {
@@ -76,17 +81,19 @@ public class Bladeclubber : MonoBehaviour
     {
         if(this.navMeshAgent != null && target != null)
         {
+            
+
             transform.LookAt(target);
-
-
             Vector3 position = transform.position + hitBox.center;
-            float targetDistance = (transform.position - target.position).magnitude;
+            float targetDistance = (position - target.position).magnitude;
 
-            if(targetDistance >= 15)
+            if(targetDistance <= seekPlayerRange)
             {
                 //print("Navigate to player");
                 if(navMeshAgent.enabled)
                 {
+                    
+                    animator.SetBool("Running", true);
                     navMeshAgent.SetDestination(target.transform.position);
                     
                 }
@@ -98,6 +105,12 @@ public class Bladeclubber : MonoBehaviour
                 //navMeshAgent.
                 //print("Avoid player");
                 //OrbitTarget();
+            }
+
+            if(targetDistance > seekPlayerRange)
+            {
+                navMeshAgent.isStopped = true;
+                animator.SetBool("Running", false);
             }
         }
     }
@@ -124,7 +137,7 @@ public class Bladeclubber : MonoBehaviour
     {
         Gizmos.color = Color.yellow;
         Vector3 position = transform.position + this.hitBox.center;
-        Gizmos.DrawWireSphere(position, 15f);
+        Gizmos.DrawWireSphere(position, seekPlayerRange);
 
     }
 
@@ -165,6 +178,7 @@ public class Bladeclubber : MonoBehaviour
         {
             if(!this.animator.GetBool("Attacking"))
             {
+                animator.SetBool("Running", false);
                 animator.SetTrigger("Initiate-AttackString");
                 animator.SetBool("Attacking", true);
                 animator.SetBool("WindUp-AttackStringI", true);

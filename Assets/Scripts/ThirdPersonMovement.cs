@@ -119,6 +119,7 @@ public class ThirdPersonMovement : MonoBehaviour
     
     //Camera Management
     [Header("Camera Management")]
+    public CameraController cameraController;
     public GameObject mainCamera;
     public GameObject aimCamera;
     public GameObject aimReticle;
@@ -228,6 +229,8 @@ public class ThirdPersonMovement : MonoBehaviour
         //I have to generate a new Avatar at runtime because I'm overriding the runtime animator.
         Avatar avatar = AvatarBuilder.BuildGenericAvatar(this.gameObject, "");
         animator.avatar = avatar;
+        
+        
 
         defaultSpeed = speed;
         defaultDashSpeed = dashSpeed;
@@ -928,6 +931,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
                 //Need a better way to determine enemy
                 Transform targetToLockHead = targetToLock.GetComponent<Bladeclubber>().Head;
+                print("Target to lock: " + targetToLockHead);
                 if(targetToLockHead == null)
                 {
                     print("Reassinging bladeclubber head");
@@ -1060,12 +1064,12 @@ public class ThirdPersonMovement : MonoBehaviour
 
     void Slide(Vector3 slopeNormal, RaycastHit slopeHit, Vector3 moveDir)
     {
-        Debug.Log("Player touched the ground & is sliding down slope");
+        /*Debug.Log("Player touched the ground & is sliding down slope");*/
         AttachToMovingPlatform(slopeHit);
         slopeNormal = slopeHit.normal;
         Quaternion slopeOffset = Quaternion.FromToRotation(Vector3.up, slopeNormal);
-        Debug.Log("Player Transform forward:" + transform.forward);
-        Debug.Log("Slope Normal:" + slopeHit.normal);
+        /*Debug.Log("Player Transform forward:" + transform.forward);
+        Debug.Log("Slope Normal:" + slopeHit.normal);*/
 
         //Ensure the slide animation plays when the player is moving down a slope and not up a slope
         if(transform.forward.z > 0 && slopeOffset.x > 0)
@@ -1079,7 +1083,7 @@ public class ThirdPersonMovement : MonoBehaviour
             animator.Play("Grounded.slide");
         }
 
-        Debug.Log("Slope quaternion: " + slopeOffset);
+        /*Debug.Log("Slope quaternion: " + slopeOffset);*/
         //Multiply slope offset by move Direction. You can multiply a quaternion x a vector. Not a vector x a quaternion
         _controller.Move(slopeOffset * moveDir.normalized * speed * Time.deltaTime);
         Debug.DrawRay(transform.position, Vector3.down, Color.red);
@@ -1543,9 +1547,16 @@ public class ThirdPersonMovement : MonoBehaviour
 
     public GameObject GetCurrentTarget()
     {
-        print("Current Target" + foes[currentTarget].name);
-        //return targetToLock.GetComponent<Foe>().Head.gameObject;
-        return targetToLock.GetComponent<Bladeclubber>().Head.gameObject;
+        try
+        {
+            print("Current Target" + foes[currentTarget].name);
+            //return targetToLock.GetComponent<Foe>().Head.gameObject;
+            return targetToLock.GetComponent<Bladeclubber>().Head.gameObject; 
+        }
+        catch (System.Exception)
+        {
+            return null;
+        }
     }
 
     public int GetPlayerID()
@@ -1924,8 +1935,10 @@ public class ThirdPersonMovement : MonoBehaviour
 
     public void EngageDynamicCameraTargetFloating(GameObject target)
     {
+        print("Engage Dynamic Camera Target Floating");
         freeLookCamera.SetActive(false);
-        lockOnCamera.SetActive(false);
+        freeLookCamera.GetComponent<CinemachineFreeLook>().m_Priority = 10;
+        lockOnCamera.GetComponent<CinemachineVirtualCamera>().m_Priority = 10;
         //DisengageDynamicTargetLock();
 
         CinemachineTargetGroup targetGroup = dynamicCameraFloatingTarget.GetComponentInChildren<CinemachineTargetGroup>();
@@ -1933,11 +1946,13 @@ public class ThirdPersonMovement : MonoBehaviour
         targetGroup.AddMember(target.transform, 1, 6);
 
         dynamicCameraFloatingTarget.SetActive(true);
+        dynamicCameraFloatingTarget.GetComponent<CinemachineVirtualCamera>().m_Priority = 12;
 
     }
 
     public void DisengageDynamicCameraTargetFloating()
     {
+        dynamicCameraFloatingTarget.GetComponent<CinemachineVirtualCamera>().m_Priority = 10;
         dynamicCameraFloatingTarget.SetActive(false);
         freeLookCamera.SetActive(true);
         lockOnCamera.SetActive(false);
@@ -1945,14 +1960,17 @@ public class ThirdPersonMovement : MonoBehaviour
 
     public void EngageDynamicTargetLock(Transform target)
     {
-        freeLookCamera.SetActive(false);
+        //freeLookCamera.SetActive(false);
+        lockOnCamera.SetActive(true);
+        lockOnCamera.GetComponent<CinemachineVirtualCamera>().m_Priority = 12;
+        freeLookCamera.GetComponent<CinemachineFreeLook>().m_Priority = 10;
         dynamicCameraFloatingTarget.SetActive(false);
 
         CinemachineTargetGroup targetGroup = lockOnCamera.GetComponentInChildren<CinemachineTargetGroup>();
         targetGroup.AddMember(this.transform, 1, 2);
         targetGroup.AddMember(target.transform, 1.5f, 4);
 
-        lockOnCamera.SetActive(true);
+
     }
 
     public void DisengageDynamicTargetLock()
@@ -1968,8 +1986,8 @@ public class ThirdPersonMovement : MonoBehaviour
 
 
         dynamicCameraFloatingTarget.SetActive(false);
-        lockOnCamera.SetActive(false);
-        freeLookCamera.SetActive(true);
+        lockOnCamera.GetComponent<CinemachineVirtualCamera>().m_Priority = 10;
+        freeLookCamera.GetComponent<CinemachineFreeLook>().m_Priority = 11;
     }
 
     public void UpdateDynamicTargetLock(Transform target)
@@ -1984,9 +2002,11 @@ public class ThirdPersonMovement : MonoBehaviour
     public void EnableJumpingFreeLookCamera()
     {
         //if(freeLookCameraJumpingTimer == 0)
-        //{
+        if(GetCurrentTarget() == null)
+        {
             freeLookCamera.GetComponent<CinemachineFreeLook>().m_Priority = 10;
             freeLookCameraJumping.GetComponent<CinemachineFreeLook>().m_Priority = 11;
+        }
 
             //freeLookCameraJumping.GetComponent<CinemachineFreeLook>().m_RecenterToTargetHeading.m_enabled = true;
             //freeLookCameraJumping.GetComponent<CinemachineFreeLook>().m_RecenterToTargetHeading.m_enabled = false;
@@ -2035,6 +2055,37 @@ public class ThirdPersonMovement : MonoBehaviour
     public Vector3 GetPlayerVelocity()
     {
         return this._velocity;
+    }
+
+    public void FaceTarget()
+    {
+        if(GetCurrentTarget() != null)
+        {
+            Vector3 targetPos = new Vector3(GetCurrentTarget().transform.position.x, transform.position.y,GetCurrentTarget().transform.position.z);
+            this.transform.LookAt(targetPos);
+
+            //Vector3 relativePos = GetCurrentTarget().transform.position - transform.position;
+
+            // the second argument, upwards, defaults to Vector3.up
+            //Quaternion rotation = Quaternion.LookRotation(GetCurrentTarget().transform.position, Vector3.up);
+        }
+    }
+
+    public float GetDistanceToTarget()
+    {
+        if(GetCurrentTarget() != null)
+        {
+            return Vector3.Distance(this.transform.position, GetCurrentTarget().transform.position);
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    public void ResetCinemachineCams()
+    {
+        cameraController.resetCams();
     }
     
 }
