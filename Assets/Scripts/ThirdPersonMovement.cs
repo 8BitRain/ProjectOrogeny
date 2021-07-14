@@ -156,6 +156,7 @@ public class ThirdPersonMovement : MonoBehaviour
     private bool kickThrownSpecialAttackInput = false;
 
     [Header("Combat Settings")]
+    private bool blockInput = false;
     public float maxCombatSlideSpeed = 10.0f;
     public float currentCombatSlideSpeed = 0;
     public float combatSlideFriction = 20;
@@ -361,7 +362,21 @@ public class ThirdPersonMovement : MonoBehaviour
         }
 
         
-        if(canMove)
+        //blockInput
+        if(blockInput && !displaySpecialAttackWindowInput && instancedSpecialAttack == null)
+        {
+            print("Blocking");
+            BlockingMovement();
+        }
+
+        if(!blockInput)
+        {
+            animator.SetBool("Blocking", false);
+            //Update Blocking Layer Weight
+            animator.SetLayerWeight(1,0);
+        }
+            
+        if(canMove && !animator.GetBool("Blocking"))
         {
             //Player x and y movement OLD Unity Input Manager
             /*float horizontal = Input.GetAxisRaw("Horizontal");
@@ -814,7 +829,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
 
 
-            //This could be a general melee skill that transforms!
+            //This could be a general melee skill that transforms! *Note block button will cause this issues*
             if(kickThrownSpecialAttackInput && !displaySpecialAttackWindowInput)
             {
                 
@@ -831,6 +846,7 @@ public class ThirdPersonMovement : MonoBehaviour
                 }
                 kickThrownSpecialAttackInput = false;
             }
+
 
             if(movementInput.x != 0 || movementInput.y != 0)
             {
@@ -1479,6 +1495,7 @@ public class ThirdPersonMovement : MonoBehaviour
     public void OnGroundMeleeAttack1(InputAction.CallbackContext ctx) => groundMeleeAttack1Input = ctx.ReadValueAsButton();
     public void OnHeavyAttack(InputAction.CallbackContext ctx) => groundHeavyAttackInput = ctx.ReadValueAsButton();
     public void OnDisplaySpecialAttackInputWindow(InputAction.CallbackContext ctx) => displaySpecialAttackWindowInput = ctx.ReadValueAsButton();
+    public void OnBlock(InputAction.CallbackContext ctx) => blockInput = ctx.ReadValueAsButton();
     
     /*public void OnSouthButtonPressed(InputAction.CallbackContext ctx) => southButtonInput = ctx.ReadValueAsButton();
     public void OnNorthButtonPressed(InputAction.CallbackContext ctx) => northButtonInput = ctx.ReadValueAsButton();
@@ -2086,6 +2103,27 @@ public class ThirdPersonMovement : MonoBehaviour
     public void ResetCinemachineCams()
     {
         cameraController.resetCams();
+    }
+
+    public void BlockingMovement()
+    {
+        //Update Blocking Layer Weight
+        animator.SetLayerWeight(1, 1);
+        Vector3 direction = new Vector3(0,0,0);
+        if(canPlayerInputMove)
+        {
+            //locking movement to right or left
+            direction = new Vector3(movementInput.x, 0, 0).normalized;
+        }
+        _controller.Move(direction * speed * Time.deltaTime);
+
+        animator.SetBool("Blocking", true);
+        if(direction.x != 0)
+        {
+            animator.Play("Grounded.blockWalkRight");
+        }
+
+
     }
     
 }

@@ -1542,6 +1542,21 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 179c8ec4-9c53-4fcd-919c-456e06da1536
     m_ActionName: Gameplay/HeavyMeleeAttack[/DualShock4GamepadHID/buttonNorth]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7218219859856613832}
+        m_MethodName: OnBlock
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 4cb6f164-6749-4f60-b890-e359e26549ad
+    m_ActionName: Gameplay/Block[/DualShock4GamepadHID/buttonEast]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Gameplay
@@ -2430,7 +2445,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 452318112611042100}
-  m_LocalRotation: {x: 0.10881638, y: -5.274103e-18, z: 6.98851e-17, w: 0.9940619}
+  m_LocalRotation: {x: 0.10881637, y: -0.000000007406339, z: 8.1074525e-10, w: 0.9940619}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -4133,8 +4148,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1513510514445309743}
-  m_LocalRotation: {x: 0.0054186317, y: -0.00000003100753, z: 1.6802086e-10, w: 0.9999854}
-  m_LocalPosition: {x: 1.0560002, y: 3.8232796, z: -13.922123}
+  m_LocalRotation: {x: 0.0054186317, y: 0.000000031020143, z: -1.6808914e-10, w: 0.9999854}
+  m_LocalPosition: {x: 1.0559999, y: 3.8232796, z: -13.922123}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2398749671249235683}
@@ -9382,7 +9397,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4131174822631384711}
-  m_LocalRotation: {x: 0.072635315, y: -0.000000004290232, z: 3.1244773e-10, w: 0.99735856}
+  m_LocalRotation: {x: 0.072635315, y: 0.0000000042902335, z: -3.1244785e-10, w: 0.99735856}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -13150,7 +13165,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6279922386538411655}
-  m_LocalRotation: {x: 0.0035996046, y: -0.0000000172307, z: 6.2024115e-11, w: 0.99999356}
+  m_LocalRotation: {x: 0.0035996048, y: 0.000000017238264, z: -6.205134e-11, w: 0.99999356}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -13255,7 +13270,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6324375310343905274}
-  m_LocalRotation: {x: 0.0907169, y: -0.000000004283858, z: 3.9022735e-10, w: 0.9958767}
+  m_LocalRotation: {x: 0.0907169, y: 0.0000000042838586, z: -3.902274e-10, w: 0.9958767}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -17748,7 +17763,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8226402252794440901}
-  m_LocalRotation: {x: -0.014542329, y: 5.376427e-10, z: 7.819403e-12, w: 0.99989426}
+  m_LocalRotation: {x: -0.014542329, y: -5.376425e-10, z: -7.8194e-12, w: 0.99989426}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
